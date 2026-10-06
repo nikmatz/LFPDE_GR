@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Αυτοαξιολόγηση — Μιγαδική Μορφή, Φάσμα Συχνοτήτων και Εφαρμογές · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Αυτοαξιολόγηση — Μιγαδική Μορφή, Φάσμα Συχνοτήτων και Εφαρμογές">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../assets/style.css">
+<script src="../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../index.html">Αρχική</a> › <a href="../../index.html#ch06">Κεφάλαιο 6</a> › Κουίζ</nav>
+<p><span class="badge quiz">? Quiz</span></p>
+<h1>Αυτοαξιολόγηση — Μιγαδική Μορφή, Φάσμα Συχνοτήτων και Εφαρμογές</h1>
+<p class="subtitle">Κεφάλαιο 6 · 12 ερωτήσεις πολλαπλής επιλογής με άμεση ανατροφοδότηση</p>
+<div class="card" id="quiz">
+<div class="row" style="justify-content:space-between"><strong id="cnt"></strong><span class="small muted">Επιλέξτε μία απάντηση· η αιτιολόγηση εμφανίζεται αμέσως.</span></div>
+<div class="progress"><div id="bar"></div></div>
+<div class="quiz-q" data-a="1">
+<div class="stem">Αν $a_3=2$ και $b_3=-2$, ο μιγαδικός συντελεστής $c_3$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$1-i$</button><button class="opt" type="button"><span class="l">(β)</span>$1+i$</button><button class="opt" type="button"><span class="l">(γ)</span>$2+2i$</button><button class="opt" type="button"><span class="l">(δ)</span>$2-2i$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$c_n=\frac{a_n-ib_n}{2}=\frac{2+2i}{2}=1+i$ (Πρόταση 6.2).</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Ένα πραγματικό σήμα έχει $c_2=3-4i$. Το πλάτος $A_2$ της δεύτερης αρμονικής είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$5$</button><button class="opt" type="button"><span class="l">(β)</span>$25$</button><button class="opt" type="button"><span class="l">(γ)</span>$10$</button><button class="opt" type="button"><span class="l">(δ)</span>$7$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$A_n=2|c_n|=2\sqrt{9+16}=10$ (Ορισμός 6.3)· επιπλέον $c_{-2}=\conj{c_2}=3+4i$.</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Αν $c_1=-1-i$, η φάση $\varphi_1$ στη μορφή $A_1\cos(\omega_0t-\varphi_1)$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$3\pi/4$</button><button class="opt" type="button"><span class="l">(β)</span>$-\pi/4$</button><button class="opt" type="button"><span class="l">(γ)</span>$\pi/4$</button><button class="opt" type="button"><span class="l">(δ)</span>$-3\pi/4$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$\arg c_1=-\frac{3\pi}{4}$ (3ο τεταρτημόριο) και $\varphi_1=-\arg c_1=\frac{3\pi}{4}$. Ισοδύναμα $a_1=-2$, $b_1=2$ και ο $a_1+ib_1$ βρίσκεται στο 2ο τεταρτημόριο· το $\arctan\frac{b_1}{a_1}=-\frac\pi4$ είναι λάθος κατά $\pi$ (Σχόλιο 6.3).</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Μια παλμοσειρά έχει λόγο κατάτμησης $d=1/5$. Ποιες αρμονικές λείπουν από το φάσμα της;</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>οι άρτιες</button><button class="opt" type="button"><span class="l">(β)</span>καμία</button><button class="opt" type="button"><span class="l">(γ)</span>οι πολλαπλάσιες του $10$</button><button class="opt" type="button"><span class="l">(δ)</span>οι πολλαπλάσιες του $5$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$c_n=Ad\sinc(n\pi d)$ μηδενίζεται όταν $\frac{n\pi}{5}=k\pi$, δηλαδή για $n=5k$, $k\neq0$ (Παραδείγματα 6.3 και 6.7).</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Όταν ένα περιοδικό σήμα καθυστερεί κατά $t_0$:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>αλλάζουν τα πλάτη $|c_n|$ αλλά όχι οι φάσεις</button><button class="opt" type="button"><span class="l">(β)</span>δεν αλλάζει τίποτα στο φάσμα</button><button class="opt" type="button"><span class="l">(γ)</span>τα $|c_n|$ μένουν ίδια και κάθε φάση $\arg c_n$ μειώνεται κατά $n\omega_0t_0$</button><button class="opt" type="button"><span class="l">(δ)</span>όλες οι φάσεις μειώνονται κατά την ίδια ποσότητα $\omega_0t_0$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Πρόταση 6.3: $d_n=c_n\,e^{-in\omega_0t_0}$. Η μεταβολή της φάσης είναι ανάλογη της συχνότητας, ώστε όλες οι αρμονικές να καθυστερούν κατά τον ίδιο χρόνο $t_0$.</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Η μέση ισχύς του σήματος $f(t)=1+2\cos t+\sin3t$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$3{,}5$</button><button class="opt" type="button"><span class="l">(β)</span>$4$</button><button class="opt" type="button"><span class="l">(γ)</span>$6$</button><button class="opt" type="button"><span class="l">(δ)</span>$2{,}5$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Από την ταυτότητα Parseval (Θεώρημα 6.1), $P=A_0^2+\sum\frac{A_n^2}{2}=1+\frac42+\frac12=3{,}5$.</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Η ενεργός τιμή ενός τετραγωνικού κύματος που εναλλάσσεται μεταξύ $-V$ και $V$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$V/\sqrt2$</button><button class="opt" type="button"><span class="l">(β)</span>$V$</button><button class="opt" type="button"><span class="l">(γ)</span>$V/2$</button><button class="opt" type="button"><span class="l">(δ)</span>$2V/\pi$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$f^2=V^2$ σε κάθε σημείο, άρα $P=V^2$ και $f_{\mathrm{rms}}=V$ (Ορισμός 6.4). Το $V/\sqrt2$ ισχύει για ημιτονοειδή τάση πλάτους $V$.</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Η ολική αρμονική παραμόρφωση (THD) του τετραγωνικού κύματος είναι περίπου:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$12\%$</button><button class="opt" type="button"><span class="l">(β)</span>$29\%$</button><button class="opt" type="button"><span class="l">(γ)</span>$100\%$</button><button class="opt" type="button"><span class="l">(δ)</span>$48\%$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Παράδειγμα 6.8: $\mathrm{THD}=\sqrt{\frac{\pi^2}{8}-1}\approx48{,}3\%$· η θεμελιώδης περιέχει περίπου το $81\%$ της ισχύος.</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Για $T$-περιοδική, τμηματικά συνεχή $f$, η σειρά που προκύπτει από ολοκλήρωση όρο προς όρο της σειράς Fourier της:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>δεν ορίζεται όταν $a_0\neq0$</button><button class="opt" type="button"><span class="l">(β)</span>συγκλίνει μόνο αν η $f$ είναι συνεχής</button><button class="opt" type="button"><span class="l">(γ)</span>συγκλίνει μόνο στα σημεία συνέχειας της $f$</button><button class="opt" type="button"><span class="l">(δ)</span>συγκλίνει ομοιόμορφα στο $\int_0^tf\,ds$ (με τον όρο $\frac{a_0}{2}t$), ακόμη κι αν η $f$ έχει άλματα</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Θεώρημα 6.2: η ολοκλήρωση διαιρεί τους συντελεστές με $n\omega_0$ και «λειαίνει» τη σειρά· επιτρέπεται πάντα. Αν $a_0\neq0$ προκύπτει και ο γραμμικός όρος $\frac{a_0}{2}t$.</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Η παραγώγιση όρο προς όρο της σειράς $2\sum_{n\ge1}\frac{(-1)^{n+1}}{n}\sin nx$ της πριονωτής:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>δίνει σειρά που αποκλίνει</button><button class="opt" type="button"><span class="l">(β)</span>δίνει τη σειρά της $f'=1$</button><button class="opt" type="button"><span class="l">(γ)</span>δίνει τη σειρά του τετραγωνικού παλμού</button><button class="opt" type="button"><span class="l">(δ)</span>επιτρέπεται, γιατί η $f$ είναι τμηματικά ομαλή</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Προκύπτει η $2\sum(-1)^{n+1}\cos nx$, της οποίας οι όροι δεν τείνουν στο μηδέν. Η περιοδική επέκταση έχει άλματα, οπότε το Θεώρημα 6.3 δεν εφαρμόζεται (Παράδειγμα 6.11).</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Ο ταλαντωτής χωρίς απόσβεση $y''+9y=q(t)$, όπου $q$ ο τετραγωνικός παλμός περιόδου $2\pi$:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>έχει $2\pi$-περιοδική λύση, γιατί η διέγερση είναι φραγμένη</button><button class="opt" type="button"><span class="l">(β)</span>συντονίζεται με τη θεμελιώδη αρμονική</button><button class="opt" type="button"><span class="l">(γ)</span>συντονίζεται με την 3η αρμονική και δεν έχει $2\pi$-περιοδική λύση</button><button class="opt" type="button"><span class="l">(δ)</span>έχει $2\pi$-περιοδική λύση, γιατί η $q$ είναι περιττή</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$\omega_{\mathrm n}=3=3\omega_0$ και η $q$ περιέχει την 3η αρμονική ($b_3=\frac{4}{3\pi}\neq0$), άρα δεν υπάρχει περιοδική λύση (Πρόταση 6.5(β)).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Ένα σήμα δειγματοληπτείται με $N=8$ δείγματα ανά περίοδο. Στον DFT η 9η αρμονική του εμφανίζεται:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>ως 9η αρμονική</button><button class="opt" type="button"><span class="l">(β)</span>στη θέση της θεμελιώδους ($k=1$)</button><button class="opt" type="button"><span class="l">(γ)</span>στη θέση της 7ης αρμονικής</button><button class="opt" type="button"><span class="l">(δ)</span>δεν εμφανίζεται καθόλου</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Θεώρημα 6.5: $\frac{X_k}{N}=\sum_jc_{k+jN}$, και $9=1+8$, οπότε ο $c_9$ προστίθεται στον $X_1$: αναδίπλωση (Λυμένη Άσκηση 6.6).</div></div>
+</div>
+<div class="qnav"><button class="btn" id="prev" type="button">‹ Προηγούμενη</button><button class="btn primary" id="next" type="button">Επόμενη ›</button></div>
+</div>
+<div class="card" id="result" style="display:none"></div>
+<p class="small muted">Οι παραπομπές (Θεώρημα, Πρόταση, Ενότητα) αφορούν το βιβλίο.</p>
+
+<script>
+(function(){
+  var qs = Array.prototype.slice.call(document.querySelectorAll('.quiz-q'));
+  var N = qs.length, cur = 0, answered = new Array(N).fill(null);
+  var bar = document.getElementById('bar'), cnt = document.getElementById('cnt');
+  var prev = document.getElementById('prev'), next = document.getElementById('next');
+  var res = document.getElementById('result');
+  function show(k){
+    qs.forEach(function(q,i){ q.classList.toggle('active', i===k); });
+    cur = k; cnt.textContent = 'Ερώτηση ' + (k+1) + ' / ' + N;
+    bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+    prev.disabled = (k===0);
+    next.textContent = (k===N-1) ? 'Αποτελέσματα ›' : 'Επόμενη ›';
+    next.disabled = (answered[k]===null);
+    window.scrollTo({top: document.getElementById('quiz').offsetTop - 10, behavior: 'smooth'});
+  }
+  qs.forEach(function(q,i){
+    var ok = parseInt(q.getAttribute('data-a'),10);
+    var opts = q.querySelectorAll('.opt');
+    opts.forEach(function(b,j){
+      b.addEventListener('click', function(){
+        if (answered[i]!==null) return;
+        answered[i] = (j===ok);
+        opts.forEach(function(x,m){ x.disabled = true; if (m===ok) x.classList.add('correct'); });
+        if (j!==ok) b.classList.add('wrong');
+        var fb = q.querySelector('.feedback');
+        fb.querySelector('.verdict').innerHTML = (j===ok) ? '<strong style="color:var(--ok)">✓ Σωστά!</strong>' :
+          '<strong style="color:var(--bad)">✗ Όχι ακριβώς.</strong> Η σωστή απάντηση είναι η (' + 'αβγδ'[ok] + ').';
+        fb.classList.add('show');
+        next.disabled = false;
+        bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+      });
+    });
+  });
+  prev.addEventListener('click', function(){ if (cur>0) show(cur-1); });
+  next.addEventListener('click', function(){
+    if (cur<N-1) { show(cur+1); return; }
+    var score = answered.filter(function(x){return x===true;}).length;
+    var wrong = []; answered.forEach(function(x,i){ if (x!==true) wrong.push(i+1); });
+    var msg = score===N ? 'Εξαιρετικά! Είστε έτοιμοι για το επόμενο κεφάλαιο.' :
+              score>=Math.ceil(0.7*N) ? 'Πολύ καλά. Ξαναδείτε τις ερωτήσεις που χάσατε.' :
+              'Χρειάζεται επανάληψη: ξαναδιαβάστε τις ενότητες των ερωτήσεων που χάσατε.';
+    res.innerHTML = '<div class="score">Σκορ: ' + score + ' / ' + N + '</div><p>' + msg + '</p>' +
+      (wrong.length ? '<p class="small muted">Ερωτήσεις για επανάληψη: ' + wrong.join(', ') + '. Πατήστε «Προηγούμενη» για να τις δείτε μαζί με την αιτιολόγηση.</p>' : '') +
+      '<p><button class="btn primary" type="button" onclick="location.reload()">↺ Ξανά από την αρχή</button></p>';
+    res.style.display = 'block'; res.scrollIntoView({behavior: 'smooth'});
+  });
+  show(0);
+})();
+</script>
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

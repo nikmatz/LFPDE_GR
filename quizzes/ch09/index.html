@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Αυτοαξιολόγηση — Η Κυματική Εξίσωση και η Μέθοδος d&#x27;Alembert · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Αυτοαξιολόγηση — Η Κυματική Εξίσωση και η Μέθοδος d&#x27;Alembert">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../assets/style.css">
+<script src="../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../index.html">Αρχική</a> › <a href="../../index.html#ch09">Κεφάλαιο 9</a> › Κουίζ</nav>
+<p><span class="badge quiz">? Quiz</span></p>
+<h1>Αυτοαξιολόγηση — Η Κυματική Εξίσωση και η Μέθοδος d'Alembert</h1>
+<p class="subtitle">Κεφάλαιο 9 · 12 ερωτήσεις πολλαπλής επιλογής με άμεση ανατροφοδότηση</p>
+<div class="card" id="quiz">
+<div class="row" style="justify-content:space-between"><strong id="cnt"></strong><span class="small muted">Επιλέξτε μία απάντηση· η αιτιολόγηση εμφανίζεται αμέσως.</span></div>
+<div class="progress"><div id="bar"></div></div>
+<div class="quiz-q" data-a="2">
+<div class="stem">Μια χορδή έχει τάση $T=100\,\mathrm N$ και γραμμική πυκνότητα $\rho=0{,}01\,\mathrm{kg/m}$. Η ταχύτητα των κυμάτων είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$1000\,\mathrm{m/s}$</button><button class="opt" type="button"><span class="l">(β)</span>$10\,\mathrm{m/s}$</button><button class="opt" type="button"><span class="l">(γ)</span>$100\,\mathrm{m/s}$</button><button class="opt" type="button"><span class="l">(δ)</span>$10^4\,\mathrm{m/s}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$c=\sqrt{T/\rho}=\sqrt{10^4}=100\,\mathrm{m/s}$ (Ενότητα 9.1).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Ποια από τις συναρτήσεις ΔΕΝ λύνει την $u_{tt}=4u_{xx}$;</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$x^2-4t^2$</button><button class="opt" type="button"><span class="l">(β)</span>$\sin(x-2t)$</button><button class="opt" type="button"><span class="l">(γ)</span>$(x+2t)^3$</button><button class="opt" type="button"><span class="l">(δ)</span>$e^{x}\cosh2t$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Η $x^2-4t^2=(x+2t)(x-2t)$ είναι γινόμενο και όχι άθροισμα δύο κυμάτων: $u_{tt}-4u_{xx}=-8-8=-16\neq0$ (Παράδειγμα 9.2(δ)). Η $e^x\cosh2t=\frac12e^{x+2t}+\frac12e^{x-2t}$ είναι λύση.</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Η λύση της $u_{tt}=u_{xx}$ με $u(x,0)=0$ και $u_t(x,0)=\cos x$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\cos(x-t)$</button><button class="opt" type="button"><span class="l">(β)</span>$\cos x\cos t$</button><button class="opt" type="button"><span class="l">(γ)</span>$\sin x\cos t$</button><button class="opt" type="button"><span class="l">(δ)</span>$\cos x\sin t$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Τύπος του d'Alembert (Θεώρημα 9.2): $u=\frac12\int_{x-t}^{x+t}\cos s\,ds=\frac12[\sin(x+t)-\sin(x-t)]=\cos x\sin t$.</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Μια χορδή απείρου μήκους ($f=0$) δέχεται αρχική ταχύτητα $g$ που μηδενίζεται έξω από το $[-1,1]$. Καθώς $t\to\infty$, κάθε σημείο της:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>επιστρέφει στη θέση ισορροπίας</button><button class="opt" type="button"><span class="l">(β)</span>μένει ανυψωμένο κατά $\frac{1}{2c}\int g$</button><button class="opt" type="button"><span class="l">(γ)</span>ταλαντώνεται επ' άπειρον</button><button class="opt" type="button"><span class="l">(δ)</span>απομακρύνεται απεριόριστα</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Για μεγάλο $t$ το διάστημα $[x-ct,x+ct]$ περιέχει όλο το $[-1,1]$, άρα $u=\frac1{2c}\int_{-1}^{1}g$: μόνιμο ίχνος της κρούσης (Παράδειγμα 9.5, Σχόλιο 9.3).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Για $c=2$, το χωρίο εξάρτησης του σημείου $(x_0,t_0)=(1,3)$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$[-2,4]$</button><button class="opt" type="button"><span class="l">(β)</span>$[-5,7]$</button><button class="opt" type="button"><span class="l">(γ)</span>$[1,7]$</button><button class="opt" type="button"><span class="l">(δ)</span>$[-1,3]$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$[x_0-ct_0,\,x_0+ct_0]=[1-6,\,1+6]$ (Ορισμός 9.2): μόνο τα αρχικά δεδομένα σε αυτό το διάστημα επηρεάζουν την $u(1,3)$.</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Μια διαταραχή περιορίζεται αρχικά στο $[0,1]$ σε χορδή με $c=4\,\mathrm{m/s}$. Πότε φτάνει για πρώτη φορά στο σημείο $x=13\,\mathrm m$;</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>αμέσως, για κάθε $t&gt;0$</button><button class="opt" type="button"><span class="l">(β)</span>$t=3{,}25\,\mathrm s$</button><button class="opt" type="button"><span class="l">(γ)</span>$t=3{,}5\,\mathrm s$</button><button class="opt" type="button"><span class="l">(δ)</span>$t=3\,\mathrm s$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Η περιοχή επιρροής του $[0,1]$ είναι $-4t\le x\le1+4t$ (Πρόταση 9.3): το $x=13$ επηρεάζεται όταν $1+4t\ge13$, δηλαδή $t\ge3$. Η απάντηση «αμέσως» θα ίσχυε για τη διάχυση, όχι για τα κύματα.</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Ένας θετικός παλμός φτάνει στο στερεωμένο άκρο ($u(0,t)=0$) μιας ημιάπειρης χορδής. Ο ανακλώμενος παλμός είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>αντεστραμμένος, με το ίδιο πλάτος</button><button class="opt" type="button"><span class="l">(β)</span>όρθιος, με το ίδιο πλάτος</button><button class="opt" type="button"><span class="l">(γ)</span>όρθιος, με διπλάσιο πλάτος</button><button class="opt" type="button"><span class="l">(δ)</span>δεν υπάρχει ανάκλαση</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Περιττή επέκταση (Πρόταση 9.4(α)): το είδωλο $-f(-x)$ έρχεται από την αρνητική πλευρά, οπότε ο ανακλώμενος παλμός είναι αντεστραμμένος. Στο ελεύθερο άκρο (άρτια επέκταση) ανακλάται όρθιος.</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Σε ελεύθερο άκρο ($u_x(0,t)=0$) φτάνει ένας παλμός ύψους $h$. Τη στιγμή που η κορυφή του βρίσκεται ακριβώς στο άκρο, η απομάκρυνση του άκρου είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$h/2$</button><button class="opt" type="button"><span class="l">(β)</span>$0$</button><button class="opt" type="button"><span class="l">(γ)</span>$2h$</button><button class="opt" type="button"><span class="l">(δ)</span>$h$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Με την άρτια επέκταση ο παλμός και το είδωλό του φτάνουν μαζί στο $x=0$ και οι απομακρύνσεις τους προστίθενται: στιγμιαίος διπλασιασμός (Παράδειγμα 9.11(β)).</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Οι ιδιοσυχνότητες μιας χορδής μήκους $L$ με στερεωμένα άκρα είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$f_n=\frac{n\pi c}{L}$</button><button class="opt" type="button"><span class="l">(β)</span>$f_n=\frac{nc}{L}$</button><button class="opt" type="button"><span class="l">(γ)</span>$f_n=\frac{(2n-1)c}{4L}$</button><button class="opt" type="button"><span class="l">(δ)</span>$f_n=\frac{nc}{2L}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$\omega_n=\frac{n\pi c}{L}$ και $f_n=\frac{\omega_n}{2\pi}=\frac{nc}{2L}$ (Ορισμός 9.3). Ο τύπος $\frac{(2n-1)c}{4L}$ αφορά σωλήνα κλειστό στο ένα άκρο και ανοικτό στο άλλο (Εφαρμογή 9.3), ενώ το $\frac{n\pi c}{L}$ είναι κυκλική συχνότητα.</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Μια χορδή τραβιέται στο σημείο $x=L/4$ και αφήνεται. Ποιες αρμονικές λείπουν από τον ήχο της;</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>οι περιττές</button><button class="opt" type="button"><span class="l">(β)</span>οι άρτιες</button><button class="opt" type="button"><span class="l">(γ)</span>όσες έχουν δείκτη πολλαπλάσιο του $4$</button><button class="opt" type="button"><span class="l">(δ)</span>καμία</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Οι συντελεστές είναι ανάλογοι του $\frac{1}{n^2}\sin\frac{n\pi}{4}$, που μηδενίζεται για $n=4,8,12,\dots$: λείπουν οι αρμονικές που έχουν δεσμό στο σημείο διέγερσης (Παράδειγμα 9.13).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Η ενέργεια $E(t)=\frac12\int_0^L(\rho u_t^2+Tu_x^2)\,dx$ μιας χορδής με στερεωμένα άκρα:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>μειώνεται εκθετικά</button><button class="opt" type="button"><span class="l">(β)</span>μένει σταθερή</button><button class="opt" type="button"><span class="l">(γ)</span>αυξάνεται γραμμικά</button><button class="opt" type="button"><span class="l">(δ)</span>ταλαντώνεται με συχνότητα $2f_1$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Θεώρημα 9.5: $E'(t)=T\bigl[u_tu_x\bigr]_0^L=0$, αφού $u_t=0$ στα στερεωμένα άκρα. Από αυτό προκύπτει η μοναδικότητα της λύσης (Θεώρημα 9.6).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Για το πρόβλημα $2u_{xx}+u_{xy}-u_{yy}=0$, $u(x,0)=f(x)$, $u_y(x,0)=g(x)$, η λύση έχει τη μορφή:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\Phi(x-y)+\Psi(x+2y)$</button><button class="opt" type="button"><span class="l">(β)</span>$\Phi(x+y)+\Psi(x-2y)$</button><button class="opt" type="button"><span class="l">(γ)</span>$\Phi(x-2y)+\Psi(x+y)$</button><button class="opt" type="button"><span class="l">(δ)</span>$\Phi(2x-y)+\Psi(x+y)$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Εδώ $A=2$, $B=\frac12$, $C=-1$· οι ρίζες της $C\lambda^2-2B\lambda+A=-\lambda^2-\lambda+2=0$ είναι $\lambda_1=1$ και $\lambda_2=-2$, και $u=\Phi(x-\lambda_1y)+\Psi(x-\lambda_2y)$ (Πρόταση 9.2, Παράδειγμα 9.8).</div></div>
+</div>
+<div class="qnav"><button class="btn" id="prev" type="button">‹ Προηγούμενη</button><button class="btn primary" id="next" type="button">Επόμενη ›</button></div>
+</div>
+<div class="card" id="result" style="display:none"></div>
+<p class="small muted">Οι παραπομπές (Θεώρημα, Πρόταση, Ενότητα) αφορούν το βιβλίο.</p>
+
+<script>
+(function(){
+  var qs = Array.prototype.slice.call(document.querySelectorAll('.quiz-q'));
+  var N = qs.length, cur = 0, answered = new Array(N).fill(null);
+  var bar = document.getElementById('bar'), cnt = document.getElementById('cnt');
+  var prev = document.getElementById('prev'), next = document.getElementById('next');
+  var res = document.getElementById('result');
+  function show(k){
+    qs.forEach(function(q,i){ q.classList.toggle('active', i===k); });
+    cur = k; cnt.textContent = 'Ερώτηση ' + (k+1) + ' / ' + N;
+    bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+    prev.disabled = (k===0);
+    next.textContent = (k===N-1) ? 'Αποτελέσματα ›' : 'Επόμενη ›';
+    next.disabled = (answered[k]===null);
+    window.scrollTo({top: document.getElementById('quiz').offsetTop - 10, behavior: 'smooth'});
+  }
+  qs.forEach(function(q,i){
+    var ok = parseInt(q.getAttribute('data-a'),10);
+    var opts = q.querySelectorAll('.opt');
+    opts.forEach(function(b,j){
+      b.addEventListener('click', function(){
+        if (answered[i]!==null) return;
+        answered[i] = (j===ok);
+        opts.forEach(function(x,m){ x.disabled = true; if (m===ok) x.classList.add('correct'); });
+        if (j!==ok) b.classList.add('wrong');
+        var fb = q.querySelector('.feedback');
+        fb.querySelector('.verdict').innerHTML = (j===ok) ? '<strong style="color:var(--ok)">✓ Σωστά!</strong>' :
+          '<strong style="color:var(--bad)">✗ Όχι ακριβώς.</strong> Η σωστή απάντηση είναι η (' + 'αβγδ'[ok] + ').';
+        fb.classList.add('show');
+        next.disabled = false;
+        bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+      });
+    });
+  });
+  prev.addEventListener('click', function(){ if (cur>0) show(cur-1); });
+  next.addEventListener('click', function(){
+    if (cur<N-1) { show(cur+1); return; }
+    var score = answered.filter(function(x){return x===true;}).length;
+    var wrong = []; answered.forEach(function(x,i){ if (x!==true) wrong.push(i+1); });
+    var msg = score===N ? 'Εξαιρετικά! Είστε έτοιμοι για το επόμενο κεφάλαιο.' :
+              score>=Math.ceil(0.7*N) ? 'Πολύ καλά. Ξαναδείτε τις ερωτήσεις που χάσατε.' :
+              'Χρειάζεται επανάληψη: ξαναδιαβάστε τις ενότητες των ερωτήσεων που χάσατε.';
+    res.innerHTML = '<div class="score">Σκορ: ' + score + ' / ' + N + '</div><p>' + msg + '</p>' +
+      (wrong.length ? '<p class="small muted">Ερωτήσεις για επανάληψη: ' + wrong.join(', ') + '. Πατήστε «Προηγούμενη» για να τις δείτε μαζί με την αιτιολόγηση.</p>' : '') +
+      '<p><button class="btn primary" type="button" onclick="location.reload()">↺ Ξανά από την αρχή</button></p>';
+    res.style.display = 'block'; res.scrollIntoView({behavior: 'smooth'});
+  });
+  show(0);
+})();
+</script>
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

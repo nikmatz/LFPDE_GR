@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Αυτοαξιολόγηση — Μαθηματικό Υπόβαθρο · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Αυτοαξιολόγηση — Μαθηματικό Υπόβαθρο">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../assets/style.css">
+<script src="../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../index.html">Αρχική</a> › <a href="../../index.html#ch00">Κεφάλαιο 0</a> › Κουίζ</nav>
+<p><span class="badge quiz">? Quiz</span></p>
+<h1>Αυτοαξιολόγηση — Μαθηματικό Υπόβαθρο</h1>
+<p class="subtitle">Κεφάλαιο 0 · 15 ερωτήσεις πολλαπλής επιλογής με άμεση ανατροφοδότηση</p>
+<div class="card" id="quiz">
+<div class="row" style="justify-content:space-between"><strong id="cnt"></strong><span class="small muted">Επιλέξτε μία απάντηση· η αιτιολόγηση εμφανίζεται αμέσως.</span></div>
+<div class="progress"><div id="bar"></div></div>
+<div class="quiz-q" data-a="1">
+<div class="stem">Η εκθετική μορφή του $z=-1+i\sqrt3$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$2e^{i\pi/3}$</button><button class="opt" type="button"><span class="l">(β)</span>$2e^{2\pi i/3}$</button><button class="opt" type="button"><span class="l">(γ)</span>$4e^{2\pi i/3}$</button><button class="opt" type="button"><span class="l">(δ)</span>$2e^{-i\pi/3}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$|z|=\sqrt{1+3}=2$. Ο $z$ βρίσκεται στο 2ο τεταρτημόριο με $\cos\theta=-\tfrac12$, $\sin\theta=\tfrac{\sqrt3}{2}$, άρα $\theta=\tfrac{2\pi}{3}$ (Ενότητα 0.1).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Για $\lambda=-2+3i$, καθώς $t\to+\infty$ η $e^{\lambda t}$:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>αποκλίνει ταλαντευόμενη</button><button class="opt" type="button"><span class="l">(β)</span>τείνει στο $0$</button><button class="opt" type="button"><span class="l">(γ)</span>έχει σταθερό μέτρο $1$</button><button class="opt" type="button"><span class="l">(δ)</span>τείνει στο $+\infty$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$|e^{\lambda t}|=e^{\Re\lambda\,t}=e^{-2t}\to0$. Το φανταστικό μέρος δίνει μόνο ταλάντωση (Πρόταση 0.1).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Η $3\cos2t+4\sin2t$ γράφεται $R\cos(2t-\varphi)$ με:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$R=7$, $\varphi=\pi/4$</button><button class="opt" type="button"><span class="l">(β)</span>$R=5$, $\varphi=\arctan\frac43$</button><button class="opt" type="button"><span class="l">(γ)</span>$R=5$, $\varphi=\arctan\frac34$</button><button class="opt" type="button"><span class="l">(δ)</span>$R=1$, $\varphi=\arctan\frac43$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$R=\sqrt{3^2+4^2}=5$ και $\varphi$ είναι το όρισμα του $3+4i$, δηλαδή $\arctan\frac43\approx0{,}93$ (Πρόταση 0.2).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Στην ανάλυση $\dfrac{2s+3}{(s-1)(s+2)}=\dfrac{A}{s-1}+\dfrac{B}{s+2}$ ο συντελεστής $A$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\frac53$</button><button class="opt" type="button"><span class="l">(β)</span>$\frac13$</button><button class="opt" type="button"><span class="l">(γ)</span>$1$</button><button class="opt" type="button"><span class="l">(δ)</span>$5$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Κανόνας της κάλυψης: καλύπτουμε το $s-1$ και θέτουμε $s=1$: $A=\frac{2+3}{1+2}=\frac53$ (Πρόταση 0.3).</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Πόσες άγνωστες σταθερές έχει η ανάλυση σε απλά κλάσματα της $\dfrac{1}{s^2(s^2+4)^2}$;</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>3</button><button class="opt" type="button"><span class="l">(β)</span>4</button><button class="opt" type="button"><span class="l">(γ)</span>6</button><button class="opt" type="button"><span class="l">(δ)</span>8</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Όσες ο βαθμός του παρονομαστή: $\frac{A_1}{s}+\frac{A_2}{s^2}+\frac{B_1s+C_1}{s^2+4}+\frac{B_2s+C_2}{(s^2+4)^2}$, δηλαδή $2+4=6$ (Θεώρημα 0.1).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Το $\displaystyle\int_1^\infty\frac{dx}{x^p}$ συγκλίνει αν και μόνο αν:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$p\ge1$</button><button class="opt" type="button"><span class="l">(β)</span>$p&gt;1$</button><button class="opt" type="button"><span class="l">(γ)</span>$p&lt;1$</button><button class="opt" type="button"><span class="l">(δ)</span>$p&gt;0$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Για $p\neq1$ το ολοκλήρωμα ισούται με $\lim_{R\to\infty}\frac{R^{1-p}-1}{1-p}$, πεπερασμένο μόνο για $p&gt;1$· για $p=1$ δίνει $\ln R\to\infty$.</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Το $\displaystyle\int_0^1\frac{dx}{x^p}$ (δευτέρου είδους) συγκλίνει αν και μόνο αν:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$p&lt;1$</button><button class="opt" type="button"><span class="l">(β)</span>$p&gt;1$</button><button class="opt" type="button"><span class="l">(γ)</span>$p\le1$</button><button class="opt" type="button"><span class="l">(δ)</span>για κάθε $p&gt;0$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Η κατάσταση αντιστρέφεται σε σχέση με το $[1,\infty)$: κοντά στο $0$ η $x^{-p}$ είναι ολοκληρώσιμη μόνο για $p&lt;1$ (π.χ. $\int_0^1 x^{-1/2}dx=2$).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Το $\displaystyle\int_0^\infty t^3e^{-2t}\,dt$ ισούται με:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\frac38$</button><button class="opt" type="button"><span class="l">(β)</span>$\frac{3}{16}$</button><button class="opt" type="button"><span class="l">(γ)</span>$\frac34$</button><button class="opt" type="button"><span class="l">(δ)</span>$\frac18$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Από την Πρόταση 0.4(α), $\int_0^\infty t^ne^{-at}dt=\frac{n!}{a^{n+1}}=\frac{3!}{2^4}=\frac{6}{16}=\frac38$.</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Το $\displaystyle\int_{-\infty}^{\infty}\frac{x}{1+x^2}\,dx$:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>ισούται με $0$, γιατί η ολοκληρωτέα είναι περιττή</button><button class="opt" type="button"><span class="l">(β)</span>ισούται με $\pi$</button><button class="opt" type="button"><span class="l">(γ)</span>αποκλίνει· μόνο η κύρια τιμή του είναι $0$</button><button class="opt" type="button"><span class="l">(δ)</span>ισούται με $\ln2$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$\int_0^R\frac{x\,dx}{1+x^2}=\frac12\ln(1+R^2)\to\infty$, άρα το γενικευμένο ολοκλήρωμα αποκλίνει. Το $0$ είναι η κύρια τιμή $\lim_{R\to\infty}\int_{-R}^{R}$ (Σχόλιο 0.3).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Το $\displaystyle\int_{-\pi}^{\pi}(2+\cos x)^2\,dx$ ισούται με:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$9\pi$</button><button class="opt" type="button"><span class="l">(β)</span>$8\pi$</button><button class="opt" type="button"><span class="l">(γ)</span>$10\pi$</button><button class="opt" type="button"><span class="l">(δ)</span>$4\pi$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$(2+\cos x)^2=4+4\cos x+\cos^2x$. Στο $[-\pi,\pi]$: $\int4=8\pi$, $\int\cos x=0$ και $\int\cos^2x=\pi$ (Θεώρημα 0.3). Σύνολο $9\pi$.</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Η $x^2\sin nx$ στο $[-\pi,\pi]$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>άρτια, άρα $\int_{-\pi}^{\pi}=2\int_0^{\pi}$</button><button class="opt" type="button"><span class="l">(β)</span>περιττή, άρα $\int_{-\pi}^{\pi}x^2\sin nx\,dx=0$</button><button class="opt" type="button"><span class="l">(γ)</span>ούτε άρτια ούτε περιττή</button><button class="opt" type="button"><span class="l">(δ)</span>περιοδική με περίοδο $\pi$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Άρτια ($x^2$) επί περιττή ($\sin nx$) δίνει περιττή, και το ολοκλήρωμα περιττής σε συμμετρικό διάστημα μηδενίζεται (Πρόταση 0.6).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Ο ολοκληρωτικός παράγοντας της $y'+\dfrac{2}{t}\,y=t$, $t&gt;0$, είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$t^2$</button><button class="opt" type="button"><span class="l">(β)</span>$e^{t^2}$</button><button class="opt" type="button"><span class="l">(γ)</span>$2\ln t$</button><button class="opt" type="button"><span class="l">(δ)</span>$\dfrac{1}{t^2}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$\mu=e^{\int 2/t\,dt}=e^{2\ln t}=t^2$. Τότε $(t^2y)'=t^3$ (Πρόταση 0.7).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Οι ρίζες της χαρακτηριστικής εξίσωσης της $y''+4y'+13y=0$ είναι $-2\pm3i$. Η γενική λύση είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$C_1e^{-2t}+C_2e^{3t}$</button><button class="opt" type="button"><span class="l">(β)</span>$e^{-2t}(C_1\cos3t+C_2\sin3t)$</button><button class="opt" type="button"><span class="l">(γ)</span>$e^{3t}(C_1\cos2t+C_2\sin2t)$</button><button class="opt" type="button"><span class="l">(δ)</span>$(C_1+C_2t)\,e^{-2t}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Για ρίζες $\alpha\pm i\beta$ η λύση είναι $e^{\alpha t}(C_1\cos\beta t+C_2\sin\beta t)$ με $\alpha=-2$, $\beta=3$ (Θεώρημα 0.6).</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Για την $y''+9y=\cos3t$ η κατάλληλη δοκιμαστική μερική λύση είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$A\cos3t$</button><button class="opt" type="button"><span class="l">(β)</span>$A\cos3t+B\sin3t$</button><button class="opt" type="button"><span class="l">(γ)</span>$t\,(A\cos3t+B\sin3t)$</button><button class="opt" type="button"><span class="l">(δ)</span>$t^2(A\cos3t+B\sin3t)$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Το $3i$ είναι απλή ρίζα της $r^2+9=0$, οπότε η «αφελής» δοκιμή λύνει την ομογενή· ο κανόνας τροποποίησης την πολλαπλασιάζει με $t$ (συντονισμός, Πίνακας 0.2).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Αν $u(x,t)=F(x-ct)$, με $F$ παραγωγίσιμη, τότε από τον κανόνα της αλυσίδας:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$u_t+c\,u_x=0$</button><button class="opt" type="button"><span class="l">(β)</span>$u_t-c\,u_x=0$</button><button class="opt" type="button"><span class="l">(γ)</span>$u_t=c^2u_{xx}$</button><button class="opt" type="button"><span class="l">(δ)</span>$u_x=c\,u_t$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Με $\xi=x-ct$: $u_x=F'(\xi)$ και $u_t=F'(\xi)\cdot(-c)$, άρα $u_t+c\,u_x=0$. Η $u$ είναι κύμα που ταξιδεύει προς τα δεξιά με ταχύτητα $c$ (Ενότητα 0.7).</div></div>
+</div>
+<div class="qnav"><button class="btn" id="prev" type="button">‹ Προηγούμενη</button><button class="btn primary" id="next" type="button">Επόμενη ›</button></div>
+</div>
+<div class="card" id="result" style="display:none"></div>
+<p class="small muted">Οι παραπομπές (Θεώρημα, Πρόταση, Ενότητα) αφορούν το βιβλίο.</p>
+
+<script>
+(function(){
+  var qs = Array.prototype.slice.call(document.querySelectorAll('.quiz-q'));
+  var N = qs.length, cur = 0, answered = new Array(N).fill(null);
+  var bar = document.getElementById('bar'), cnt = document.getElementById('cnt');
+  var prev = document.getElementById('prev'), next = document.getElementById('next');
+  var res = document.getElementById('result');
+  function show(k){
+    qs.forEach(function(q,i){ q.classList.toggle('active', i===k); });
+    cur = k; cnt.textContent = 'Ερώτηση ' + (k+1) + ' / ' + N;
+    bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+    prev.disabled = (k===0);
+    next.textContent = (k===N-1) ? 'Αποτελέσματα ›' : 'Επόμενη ›';
+    next.disabled = (answered[k]===null);
+    window.scrollTo({top: document.getElementById('quiz').offsetTop - 10, behavior: 'smooth'});
+  }
+  qs.forEach(function(q,i){
+    var ok = parseInt(q.getAttribute('data-a'),10);
+    var opts = q.querySelectorAll('.opt');
+    opts.forEach(function(b,j){
+      b.addEventListener('click', function(){
+        if (answered[i]!==null) return;
+        answered[i] = (j===ok);
+        opts.forEach(function(x,m){ x.disabled = true; if (m===ok) x.classList.add('correct'); });
+        if (j!==ok) b.classList.add('wrong');
+        var fb = q.querySelector('.feedback');
+        fb.querySelector('.verdict').innerHTML = (j===ok) ? '<strong style="color:var(--ok)">✓ Σωστά!</strong>' :
+          '<strong style="color:var(--bad)">✗ Όχι ακριβώς.</strong> Η σωστή απάντηση είναι η (' + 'αβγδ'[ok] + ').';
+        fb.classList.add('show');
+        next.disabled = false;
+        bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+      });
+    });
+  });
+  prev.addEventListener('click', function(){ if (cur>0) show(cur-1); });
+  next.addEventListener('click', function(){
+    if (cur<N-1) { show(cur+1); return; }
+    var score = answered.filter(function(x){return x===true;}).length;
+    var wrong = []; answered.forEach(function(x,i){ if (x!==true) wrong.push(i+1); });
+    var msg = score===N ? 'Εξαιρετικά! Είστε έτοιμοι για το επόμενο κεφάλαιο.' :
+              score>=Math.ceil(0.7*N) ? 'Πολύ καλά. Ξαναδείτε τις ερωτήσεις που χάσατε.' :
+              'Χρειάζεται επανάληψη: ξαναδιαβάστε τις ενότητες των ερωτήσεων που χάσατε.';
+    res.innerHTML = '<div class="score">Σκορ: ' + score + ' / ' + N + '</div><p>' + msg + '</p>' +
+      (wrong.length ? '<p class="small muted">Ερωτήσεις για επανάληψη: ' + wrong.join(', ') + '. Πατήστε «Προηγούμενη» για να τις δείτε μαζί με την αιτιολόγηση.</p>' : '') +
+      '<p><button class="btn primary" type="button" onclick="location.reload()">↺ Ξανά από την αρχή</button></p>';
+    res.style.display = 'block'; res.scrollIntoView({behavior: 'smooth'});
+  });
+  show(0);
+})();
+</script>
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

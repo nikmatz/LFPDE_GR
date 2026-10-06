@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Αυτοαξιολόγηση — Βηματικές, Dirac και Περιοδικές Συναρτήσεις · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Αυτοαξιολόγηση — Βηματικές, Dirac και Περιοδικές Συναρτήσεις">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../assets/style.css">
+<script src="../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../index.html">Αρχική</a> › <a href="../../index.html#ch02">Κεφάλαιο 2</a> › Κουίζ</nav>
+<p><span class="badge quiz">? Quiz</span></p>
+<h1>Αυτοαξιολόγηση — Βηματικές, Dirac και Περιοδικές Συναρτήσεις</h1>
+<p class="subtitle">Κεφάλαιο 2 · 12 ερωτήσεις πολλαπλής επιλογής με άμεση ανατροφοδότηση</p>
+<div class="card" id="quiz">
+<div class="row" style="justify-content:space-between"><strong id="cnt"></strong><span class="small muted">Επιλέξτε μία απάντηση· η αιτιολόγηση εμφανίζεται αμέσως.</span></div>
+<div class="progress"><div id="bar"></div></div>
+<div class="quiz-q" data-a="2">
+<div class="stem">Η $f(t)=t^2$ για $0\le t&lt;2$ και $f(t)=4$ για $t\ge2$ γράφεται με βηματικές ως:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$t^2-4\,u(t-2)$</button><button class="opt" type="button"><span class="l">(β)</span>$t^2\,u(t-2)+4$</button><button class="opt" type="button"><span class="l">(γ)</span>$t^2+(4-t^2)\,u(t-2)$</button><button class="opt" type="button"><span class="l">(δ)</span>$t^2+(t^2-4)\,u(t-2)$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Κάθε «διακόπτης» προσθέτει τη διαφορά «νέος τύπος μείον παλιός»: $f=t^2+(4-t^2)\,u(t-2)$ (Πρόταση 2.1).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Ο $\Lap\{(t-3)^2\,u(t-3)\}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\dfrac{2e^{-3s}}{s^3}$</button><button class="opt" type="button"><span class="l">(β)</span>$\dfrac{2}{(s-3)^3}$</button><button class="opt" type="button"><span class="l">(γ)</span>$\dfrac{2e^{3s}}{s^3}$</button><button class="opt" type="button"><span class="l">(δ)</span>$e^{-3s}\Bigl(\dfrac{2}{s^3}-\dfrac{6}{s^2}+\dfrac{9}{s}\Bigr)$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Η συνάρτηση είναι η $t^2$ καθυστερημένη κατά $3$, οπότε από το δεύτερο θεώρημα μετατόπισης $\Lap=e^{-3s}\cdot\frac{2}{s^3}$ (Θεώρημα 2.1).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Ο $\Lap\{t\,u(t-2)\}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\dfrac{e^{-2s}}{s^2}$</button><button class="opt" type="button"><span class="l">(β)</span>$e^{-2s}\Bigl(\dfrac{1}{s^2}+\dfrac{2}{s}\Bigr)$</button><button class="opt" type="button"><span class="l">(γ)</span>$\dfrac{e^{-2s}}{s^2}+\dfrac{2}{s}$</button><button class="opt" type="button"><span class="l">(δ)</span>$\dfrac{2e^{-2s}}{s^2}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Η $t$ δεν είναι καθυστερημένη συνάρτηση. Με την πρακτική μορφή, $g(t+2)=t+2$, άρα $\Lap=e^{-2s}\bigl(\frac1{s^2}+\frac2s\bigr)$ (Πρόταση 2.2). Η απάντηση $\frac{e^{-2s}}{s^2}$ είναι το συνηθισμένο λάθος της «ενεργοποίησης» (Σχόλιο 2.3).</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Ο $\Lapinv\left\{\dfrac{e^{-\pi s}}{s^2+1}\right\}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\sin t\;u(t-\pi)$</button><button class="opt" type="button"><span class="l">(β)</span>$\sin(t+\pi)$</button><button class="opt" type="button"><span class="l">(γ)</span>$e^{-\pi t}\sin t$</button><button class="opt" type="button"><span class="l">(δ)</span>$-\sin t\;u(t-\pi)$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Από την αντίστροφη μορφή, $u(t-\pi)\sin(t-\pi)$, και $\sin(t-\pi)=-\sin t$ (Πρόταση 2.3).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Το $\displaystyle\int_0^\infty e^{-t}\cos t\;\delta(t-\pi)\,dt$ ισούται με:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$-e^{-\pi}$</button><button class="opt" type="button"><span class="l">(β)</span>$e^{-\pi}$</button><button class="opt" type="button"><span class="l">(γ)</span>$0$</button><button class="opt" type="button"><span class="l">(δ)</span>$-1$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Ιδιότητα επιλογής: η δέλτα «διαλέγει» την τιμή της ολοκληρωτέας στο $t=\pi$, δηλαδή $e^{-\pi}\cos\pi=-e^{-\pi}$ (Πρόταση 2.4).</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Για $a&gt;0$, ο $\Lap\{\delta(t-a)\}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$1$</button><button class="opt" type="button"><span class="l">(β)</span>$\dfrac{e^{-as}}{s}$</button><button class="opt" type="button"><span class="l">(γ)</span>$e^{-as}$</button><button class="opt" type="button"><span class="l">(δ)</span>$s\,e^{-as}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Από την ιδιότητα επιλογής με $g(t)=e^{-st}$: $\int_0^\infty e^{-st}\delta(t-a)\,dt=e^{-as}$ (Θεώρημα 2.2). Το $\frac{e^{-as}}{s}$ είναι ο μετασχηματισμός της $u(t-a)$.</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Η γενικευμένη παράγωγος της $f(t)=2u(t-1)-u(t-3)$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$2u(t-1)$</button><button class="opt" type="button"><span class="l">(β)</span>$0$</button><button class="opt" type="button"><span class="l">(γ)</span>$\delta(t-1)-\delta(t-3)$</button><button class="opt" type="button"><span class="l">(δ)</span>$2\delta(t-1)-\delta(t-3)$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Κάθε άλμα ύψους $J$ τη στιγμή $a$ συνεισφέρει την κρούση $J\,\delta(t-a)$ (Πρόταση 2.5). Με τη συνήθη έννοια η παράγωγος είναι $0$ παντού εκτός από τα άλματα.</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Αν η $f$ έχει άλμα $J$ στο $t=a&gt;0$ και είναι κατά τα άλλα ομαλή, για τη <em>συνήθη</em> παράγωγο ισχύει:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\Lap\{f'\}=sF(s)-f(0)$</button><button class="opt" type="button"><span class="l">(β)</span>$\Lap\{f'\}=sF(s)-f(0)-J\,e^{-as}$</button><button class="opt" type="button"><span class="l">(γ)</span>$\Lap\{f'\}=sF(s)-f(0)+J\,e^{-as}$</button><button class="opt" type="button"><span class="l">(δ)</span>$\Lap\{f'\}=sF(s)-J$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Ο όρος $-J\,e^{-as}$ αφαιρεί την κρούση $J\,\delta(t-a)$ που περιέχει η γενικευμένη παράγωγος (Θεώρημα 2.3).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Για περιοδική $f$ με περίοδο $T$ ισχύει $\Lap\{f\}=$</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\displaystyle\int_0^Te^{-st}f(t)\,dt$</button><button class="opt" type="button"><span class="l">(β)</span>$\dfrac{1}{1-e^{-Ts}}\displaystyle\int_0^Te^{-st}f(t)\,dt$</button><button class="opt" type="button"><span class="l">(γ)</span>$\dfrac{1}{1+e^{-Ts}}\displaystyle\int_0^Te^{-st}f(t)\,dt$</button><button class="opt" type="button"><span class="l">(δ)</span>$\bigl(1-e^{-Ts}\bigr)\displaystyle\int_0^Te^{-st}f(t)\,dt$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Η $f$ είναι άθροισμα αντιγράφων της πρώτης περιόδου καθυστερημένων κατά $nT$, και η γεωμετρική σειρά $\sum e^{-nTs}$ δίνει τον παράγοντα $\frac{1}{1-e^{-Ts}}$ (Θεώρημα 2.4).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Το τετραγωνικό κύμα με τιμή $1$ στο $[0,1)$ και $0$ στο $[1,2)$, περιόδου $2$, έχει μετασχηματισμό:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\dfrac{1}{s\,(1+e^{-s})}$</button><button class="opt" type="button"><span class="l">(β)</span>$\dfrac{1}{s\,(1-e^{-s})}$</button><button class="opt" type="button"><span class="l">(γ)</span>$\dfrac{1-e^{-s}}{s}$</button><button class="opt" type="button"><span class="l">(δ)</span>$\dfrac1s\tanh\dfrac s2$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$F_T=\frac{1-e^{-s}}{s}$ και $1-e^{-2s}=(1-e^{-s})(1+e^{-s})$, οπότε $F=\frac{1}{s(1+e^{-s})}$. Το $\frac1s\tanh\frac s2$ αντιστοιχεί στο κύμα $\pm1$ (Παράδειγμα 2.15).</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Για περιοδική $f$ με περίοδο $T$, το $\lim_{s\to0^+}sF(s)$ ισούται με:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$f(0)$</button><button class="opt" type="button"><span class="l">(β)</span>$\lim_{t\to\infty}f(t)$</button><button class="opt" type="button"><span class="l">(γ)</span>τη μέση τιμή $\frac1T\int_0^Tf(t)\,dt$</button><button class="opt" type="button"><span class="l">(δ)</span>$0$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Το όριο υπάρχει πάντα και ισούται με τη μέση τιμή σε μία περίοδο (Πρόταση 2.6). Το θεώρημα τελικής τιμής δεν εφαρμόζεται, αφού το $\lim_{t\to\infty}f(t)$ δεν υπάρχει (εκτός αν η $f$ είναι σταθερή).</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Σώμα σε ελατήριο, $my''+ky=J\,\delta(t-a)$, δέχεται ώθηση τη στιγμή $a$. Εκείνη τη στιγμή:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>η θέση παρουσιάζει άλμα $J/m$</button><button class="opt" type="button"><span class="l">(β)</span>θέση και ταχύτητα μένουν συνεχείς</button><button class="opt" type="button"><span class="l">(γ)</span>η ταχύτητα παρουσιάζει άλμα $J$</button><button class="opt" type="button"><span class="l">(δ)</span>η ταχύτητα παρουσιάζει άλμα $J/m$ και η θέση μένει συνεχής</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Ολοκληρώνοντας την εξίσωση σε ένα μικρό διάστημα γύρω από το $a$: $m\,[y'(a^+)-y'(a^-)]=J$. Η θέση δεν προλαβαίνει να αλλάξει (Εφαρμογή 2.2).</div></div>
+</div>
+<div class="qnav"><button class="btn" id="prev" type="button">‹ Προηγούμενη</button><button class="btn primary" id="next" type="button">Επόμενη ›</button></div>
+</div>
+<div class="card" id="result" style="display:none"></div>
+<p class="small muted">Οι παραπομπές (Θεώρημα, Πρόταση, Ενότητα) αφορούν το βιβλίο.</p>
+
+<script>
+(function(){
+  var qs = Array.prototype.slice.call(document.querySelectorAll('.quiz-q'));
+  var N = qs.length, cur = 0, answered = new Array(N).fill(null);
+  var bar = document.getElementById('bar'), cnt = document.getElementById('cnt');
+  var prev = document.getElementById('prev'), next = document.getElementById('next');
+  var res = document.getElementById('result');
+  function show(k){
+    qs.forEach(function(q,i){ q.classList.toggle('active', i===k); });
+    cur = k; cnt.textContent = 'Ερώτηση ' + (k+1) + ' / ' + N;
+    bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+    prev.disabled = (k===0);
+    next.textContent = (k===N-1) ? 'Αποτελέσματα ›' : 'Επόμενη ›';
+    next.disabled = (answered[k]===null);
+    window.scrollTo({top: document.getElementById('quiz').offsetTop - 10, behavior: 'smooth'});
+  }
+  qs.forEach(function(q,i){
+    var ok = parseInt(q.getAttribute('data-a'),10);
+    var opts = q.querySelectorAll('.opt');
+    opts.forEach(function(b,j){
+      b.addEventListener('click', function(){
+        if (answered[i]!==null) return;
+        answered[i] = (j===ok);
+        opts.forEach(function(x,m){ x.disabled = true; if (m===ok) x.classList.add('correct'); });
+        if (j!==ok) b.classList.add('wrong');
+        var fb = q.querySelector('.feedback');
+        fb.querySelector('.verdict').innerHTML = (j===ok) ? '<strong style="color:var(--ok)">✓ Σωστά!</strong>' :
+          '<strong style="color:var(--bad)">✗ Όχι ακριβώς.</strong> Η σωστή απάντηση είναι η (' + 'αβγδ'[ok] + ').';
+        fb.classList.add('show');
+        next.disabled = false;
+        bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+      });
+    });
+  });
+  prev.addEventListener('click', function(){ if (cur>0) show(cur-1); });
+  next.addEventListener('click', function(){
+    if (cur<N-1) { show(cur+1); return; }
+    var score = answered.filter(function(x){return x===true;}).length;
+    var wrong = []; answered.forEach(function(x,i){ if (x!==true) wrong.push(i+1); });
+    var msg = score===N ? 'Εξαιρετικά! Είστε έτοιμοι για το επόμενο κεφάλαιο.' :
+              score>=Math.ceil(0.7*N) ? 'Πολύ καλά. Ξαναδείτε τις ερωτήσεις που χάσατε.' :
+              'Χρειάζεται επανάληψη: ξαναδιαβάστε τις ενότητες των ερωτήσεων που χάσατε.';
+    res.innerHTML = '<div class="score">Σκορ: ' + score + ' / ' + N + '</div><p>' + msg + '</p>' +
+      (wrong.length ? '<p class="small muted">Ερωτήσεις για επανάληψη: ' + wrong.join(', ') + '. Πατήστε «Προηγούμενη» για να τις δείτε μαζί με την αιτιολόγηση.</p>' : '') +
+      '<p><button class="btn primary" type="button" onclick="location.reload()">↺ Ξανά από την αρχή</button></p>';
+    res.style.display = 'block'; res.scrollIntoView({behavior: 'smooth'});
+  });
+  show(0);
+})();
+</script>
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Αυτοαξιολόγηση — Περιοδικές Συναρτήσεις και Σειρές Fourier · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Αυτοαξιολόγηση — Περιοδικές Συναρτήσεις και Σειρές Fourier">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../assets/style.css">
+<script src="../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../index.html">Αρχική</a> › <a href="../../index.html#ch05">Κεφάλαιο 5</a> › Κουίζ</nav>
+<p><span class="badge quiz">? Quiz</span></p>
+<h1>Αυτοαξιολόγηση — Περιοδικές Συναρτήσεις και Σειρές Fourier</h1>
+<p class="subtitle">Κεφάλαιο 5 · 12 ερωτήσεις πολλαπλής επιλογής με άμεση ανατροφοδότηση</p>
+<div class="card" id="quiz">
+<div class="row" style="justify-content:space-between"><strong id="cnt"></strong><span class="small muted">Επιλέξτε μία απάντηση· η αιτιολόγηση εμφανίζεται αμέσως.</span></div>
+<div class="progress"><div id="bar"></div></div>
+<div class="quiz-q" data-a="3">
+<div class="stem">Η θεμελιώδης περίοδος της $f(t)=2\cos6t-\sin9t$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\pi/9$</button><button class="opt" type="button"><span class="l">(β)</span>$2\pi/9$</button><button class="opt" type="button"><span class="l">(γ)</span>$2\pi$</button><button class="opt" type="button"><span class="l">(δ)</span>$2\pi/3$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Οι όροι έχουν περιόδους $\frac{2\pi}{6}$ και $\frac{2\pi}{9}$. Ο μέγιστος κοινός διαιρέτης των συχνοτήτων $6$ και $9$ είναι το $3$, άρα $T=\frac{2\pi}{3}$: σε αυτόν τον χρόνο ο πρώτος όρος κάνει $2$ κύκλους και ο δεύτερος $3$ (Ενότητα 5.1).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Η $2\cos3t-2\sqrt3\sin3t$ γράφεται στη μορφή πλάτους–φάσης ως:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$4\cos(3t+\pi/3)$</button><button class="opt" type="button"><span class="l">(β)</span>$4\cos(3t-\pi/3)$</button><button class="opt" type="button"><span class="l">(γ)</span>$4\cos(3t-2\pi/3)$</button><button class="opt" type="button"><span class="l">(δ)</span>$2\cos(3t+\pi/3)$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$A=\sqrt{4+12}=4$ και $\varphi=\arg(2-2\sqrt3\,i)=-\frac\pi3$ (4ο τεταρτημόριο), οπότε $A\cos(3t-\varphi)=4\cos(3t+\frac\pi3)$. Έλεγχος: $4\cos(3t+\frac\pi3)=2\cos3t-2\sqrt3\sin3t$ (Ενότητα 5.1).</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Το $\displaystyle\int_{-\pi}^{\pi}(1+2\sin3x)^2\,dx$ ισούται με:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$2\pi$</button><button class="opt" type="button"><span class="l">(β)</span>$4\pi$</button><button class="opt" type="button"><span class="l">(γ)</span>$6\pi$</button><button class="opt" type="button"><span class="l">(δ)</span>$10\pi$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$(1+2\sin3x)^2=1+4\sin3x+4\sin^23x$. Από την ορθογωνιότητα (Θεώρημα 5.1): $\int1=2\pi$, $\int\sin3x=0$, $\int\sin^23x=\pi$. Σύνολο $2\pi+4\pi=6\pi$, χωρίς κανέναν υπολογισμό ολοκληρώματος (Παράδειγμα 5.5).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Ένα σήμα PWM εναλλάσσεται μεταξύ $0$ και $5\,\mathrm V$ με κύκλο λειτουργίας $25\%$. Ο σταθερός όρος $a_0/2$ της σειράς Fourier του είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$2{,}5\,\mathrm V$</button><button class="opt" type="button"><span class="l">(β)</span>$1{,}25\,\mathrm V$</button><button class="opt" type="button"><span class="l">(γ)</span>$0{,}25\,\mathrm V$</button><button class="opt" type="button"><span class="l">(δ)</span>$5\,\mathrm V$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Ο $\frac{a_0}{2}=\frac1T\int_0^Tv\,dt$ είναι η μέση τιμή του σήματος σε μια περίοδο: $5\cdot0{,}25=1{,}25\,\mathrm V$ (Ορισμός 5.5, Λυμένη Άσκηση 5.5).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Η σειρά Fourier της $2\pi$-περιοδικής επέκτασης της $f(x)=x^2+x$, $-\pi&lt;x\le\pi$, στο σημείο $x=\pi$ έχει άθροισμα:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\pi^2+\pi$</button><button class="opt" type="button"><span class="l">(β)</span>$\pi^2$</button><button class="opt" type="button"><span class="l">(γ)</span>$\pi^2-\pi$</button><button class="opt" type="button"><span class="l">(δ)</span>$0$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Η επέκταση πηδά στο $x=\pi$ από την τιμή $\pi^2+\pi$ (από αριστερά) στην $\pi^2-\pi$ (από δεξιά). Το θεώρημα Dirichlet (Θεώρημα 5.4) δίνει το μέσο του άλματος, $\pi^2$ (Εφαρμογή 5.1).</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Από τη σειρά $q(x)\sim\frac4\pi\sum_{k\ge1}\frac{\sin(2k-1)x}{2k-1}$ του τετραγωνικού παλμού στο $x=\frac\pi2$ προκύπτει ότι $1-\frac13+\frac15-\frac17+\cdots$ ισούται με:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\pi/2$</button><button class="opt" type="button"><span class="l">(β)</span>$1$</button><button class="opt" type="button"><span class="l">(γ)</span>$\pi^2/8$</button><button class="opt" type="button"><span class="l">(δ)</span>$\pi/4$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Στο $x=\frac\pi2$ η $q$ είναι συνεχής με $q=1$ και $\sin\frac{(2k-1)\pi}{2}=(-1)^{k+1}$, άρα $1=\frac4\pi\sum\frac{(-1)^{k+1}}{2k-1}$: η σειρά του Leibniz (Εφαρμογή 5.1(δ)).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Η σειρά Fourier της $2\pi$-περιοδικής $f(x)=x|x|$, $-\pi&lt;x&lt;\pi$:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>περιέχει μόνο ημίτονα</button><button class="opt" type="button"><span class="l">(β)</span>περιέχει μόνο συνημίτονα</button><button class="opt" type="button"><span class="l">(γ)</span>έχει μη μηδενικό σταθερό όρο</button><button class="opt" type="button"><span class="l">(δ)</span>περιέχει μόνο περιττές αρμονικές</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Η $x|x|$ είναι περιττή, άρα $a_n=0$ για κάθε $n$ (Πρόταση 5.5). Δεν έχει συμμετρία ημικύματος, οπότε εμφανίζονται και άρτιες αρμονικές· π.χ. $b_2=-\pi\neq0$.</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Οι συντελεστές Fourier της $2\pi$-περιοδικής επέκτασης της $f(x)=x^2$, $-\pi\le x\le\pi$, μικραίνουν σαν:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$1/n$</button><button class="opt" type="button"><span class="l">(β)</span>$1/n^3$</button><button class="opt" type="button"><span class="l">(γ)</span>$1/n^2$</button><button class="opt" type="button"><span class="l">(δ)</span>$e^{-n}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Η επέκταση είναι συνεχής ($f(-\pi)=f(\pi)$) αλλά η παράγωγος $2x$ πηδά από $2\pi$ σε $-2\pi$ στα $\pm\pi$ (γωνία). Πράγματι $a_n=\frac{4(-1)^n}{n^2}$ (Πρόταση 5.4, Πίνακας 5.1).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Καθώς $N\to\infty$, η μέγιστη τιμή της μερικής σειράς $S_N$ του τετραγωνικού παλμού ($\pm1$) δεξιά από το άλμα $x=0$:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>τείνει περίπου στο $1{,}179$</button><button class="opt" type="button"><span class="l">(β)</span>τείνει στο $1$</button><button class="opt" type="button"><span class="l">(γ)</span>απειρίζεται</button><button class="opt" type="button"><span class="l">(δ)</span>τείνει στο $1{,}5$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Φαινόμενο Gibbs (Πρόταση 5.3): το πρώτο μέγιστο τείνει στο $\frac2\pi\Si(\pi)\approx1{,}179$, δηλαδή υπέρβαση περίπου $9\%$ του άλματος $2$, όσο μεγάλο κι αν είναι το $N$.</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Το ημιτονικό ανάπτυγμα της $f(x)=1$ στο $(0,\pi)$ δίνει στα σημεία $x=0$ και $x=\pi$ την τιμή:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$1$</button><button class="opt" type="button"><span class="l">(β)</span>$0$</button><button class="opt" type="button"><span class="l">(γ)</span>$\frac12$</button><button class="opt" type="button"><span class="l">(δ)</span>$-1$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Το ημιτονικό ανάπτυγμα είναι η σειρά της περιττής επέκτασης, που πηδά από $-1$ σε $1$ στο $0$ και από $1$ σε $-1$ στο $\pi$· η σειρά δίνει το μέσο $0$ (Ορισμός 5.7, Θεώρημα 5.4). Άλλωστε κάθε όρος $\sin nx$ μηδενίζεται εκεί.</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Αν η $2L$-περιοδική $f$ ικανοποιεί $f(x+L)=-f(x)$ για κάθε $x$, η σειρά Fourier της:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>περιέχει μόνο συνημίτονα</button><button class="opt" type="button"><span class="l">(β)</span>περιέχει μόνο ημίτονα</button><button class="opt" type="button"><span class="l">(γ)</span>έχει σταθερό όρο ίσο με $f(0)$</button><button class="opt" type="button"><span class="l">(δ)</span>περιέχει μόνο περιττές αρμονικές</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Συμμετρία ημικύματος (Σχόλιο 5.4): οι συντελεστές με άρτιο $n$ (μαζί και ο $a_0$) μηδενίζονται. Παράδειγμα: ο τετραγωνικός παλμός και η $8\sin^3x$.</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Η βέλτιστη προσέγγιση κατά μέση τιμή τετραγώνου μιας $2\pi$-περιοδικής $f$ από τριγωνομετρικό πολυώνυμο βαθμού το πολύ $N$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>το πολυώνυμο Taylor βαθμού $N$ στο $0$</button><button class="opt" type="button"><span class="l">(β)</span>το πολυώνυμο παρεμβολής σε $2N+1$ ισαπέχοντα σημεία</button><button class="opt" type="button"><span class="l">(γ)</span>η μερική σειρά Fourier $S_N$</button><button class="opt" type="button"><span class="l">(δ)</span>ένα πολυώνυμο του οποίου όλοι οι συντελεστές αλλάζουν όταν αυξάνεται το $N$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Θεώρημα 5.2: οι βέλτιστοι συντελεστές είναι οι συντελεστές Fourier (ορθογώνια προβολή) και, χάρη στην ορθογωνιότητα, δεν αλλάζουν όταν προσθέτουμε όρους.</div></div>
+</div>
+<div class="qnav"><button class="btn" id="prev" type="button">‹ Προηγούμενη</button><button class="btn primary" id="next" type="button">Επόμενη ›</button></div>
+</div>
+<div class="card" id="result" style="display:none"></div>
+<p class="small muted">Οι παραπομπές (Θεώρημα, Πρόταση, Ενότητα) αφορούν το βιβλίο.</p>
+
+<script>
+(function(){
+  var qs = Array.prototype.slice.call(document.querySelectorAll('.quiz-q'));
+  var N = qs.length, cur = 0, answered = new Array(N).fill(null);
+  var bar = document.getElementById('bar'), cnt = document.getElementById('cnt');
+  var prev = document.getElementById('prev'), next = document.getElementById('next');
+  var res = document.getElementById('result');
+  function show(k){
+    qs.forEach(function(q,i){ q.classList.toggle('active', i===k); });
+    cur = k; cnt.textContent = 'Ερώτηση ' + (k+1) + ' / ' + N;
+    bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+    prev.disabled = (k===0);
+    next.textContent = (k===N-1) ? 'Αποτελέσματα ›' : 'Επόμενη ›';
+    next.disabled = (answered[k]===null);
+    window.scrollTo({top: document.getElementById('quiz').offsetTop - 10, behavior: 'smooth'});
+  }
+  qs.forEach(function(q,i){
+    var ok = parseInt(q.getAttribute('data-a'),10);
+    var opts = q.querySelectorAll('.opt');
+    opts.forEach(function(b,j){
+      b.addEventListener('click', function(){
+        if (answered[i]!==null) return;
+        answered[i] = (j===ok);
+        opts.forEach(function(x,m){ x.disabled = true; if (m===ok) x.classList.add('correct'); });
+        if (j!==ok) b.classList.add('wrong');
+        var fb = q.querySelector('.feedback');
+        fb.querySelector('.verdict').innerHTML = (j===ok) ? '<strong style="color:var(--ok)">✓ Σωστά!</strong>' :
+          '<strong style="color:var(--bad)">✗ Όχι ακριβώς.</strong> Η σωστή απάντηση είναι η (' + 'αβγδ'[ok] + ').';
+        fb.classList.add('show');
+        next.disabled = false;
+        bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+      });
+    });
+  });
+  prev.addEventListener('click', function(){ if (cur>0) show(cur-1); });
+  next.addEventListener('click', function(){
+    if (cur<N-1) { show(cur+1); return; }
+    var score = answered.filter(function(x){return x===true;}).length;
+    var wrong = []; answered.forEach(function(x,i){ if (x!==true) wrong.push(i+1); });
+    var msg = score===N ? 'Εξαιρετικά! Είστε έτοιμοι για το επόμενο κεφάλαιο.' :
+              score>=Math.ceil(0.7*N) ? 'Πολύ καλά. Ξαναδείτε τις ερωτήσεις που χάσατε.' :
+              'Χρειάζεται επανάληψη: ξαναδιαβάστε τις ενότητες των ερωτήσεων που χάσατε.';
+    res.innerHTML = '<div class="score">Σκορ: ' + score + ' / ' + N + '</div><p>' + msg + '</p>' +
+      (wrong.length ? '<p class="small muted">Ερωτήσεις για επανάληψη: ' + wrong.join(', ') + '. Πατήστε «Προηγούμενη» για να τις δείτε μαζί με την αιτιολόγηση.</p>' : '') +
+      '<p><button class="btn primary" type="button" onclick="location.reload()">↺ Ξανά από την αρχή</button></p>';
+    res.style.display = 'block'; res.scrollIntoView({behavior: 'smooth'});
+  });
+  show(0);
+})();
+</script>
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

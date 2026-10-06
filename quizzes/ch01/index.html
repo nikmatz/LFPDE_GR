@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Αυτοαξιολόγηση — Ο Μετασχηματισμός Laplace · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Αυτοαξιολόγηση — Ο Μετασχηματισμός Laplace">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../assets/style.css">
+<script src="../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../index.html">Αρχική</a> › <a href="../../index.html#ch01">Κεφάλαιο 1</a> › Κουίζ</nav>
+<p><span class="badge quiz">? Quiz</span></p>
+<h1>Αυτοαξιολόγηση — Ο Μετασχηματισμός Laplace</h1>
+<p class="subtitle">Κεφάλαιο 1 · 12 ερωτήσεις πολλαπλής επιλογής με άμεση ανατροφοδότηση</p>
+<div class="card" id="quiz">
+<div class="row" style="justify-content:space-between"><strong id="cnt"></strong><span class="small muted">Επιλέξτε μία απάντηση· η αιτιολόγηση εμφανίζεται αμέσως.</span></div>
+<div class="progress"><div id="bar"></div></div>
+<div class="quiz-q" data-a="1">
+<div class="stem">Ο $\Lap\{1\}=\dfrac1s$ υπάρχει για:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>κάθε $s\in\R$</button><button class="opt" type="button"><span class="l">(β)</span>$s&gt;0$</button><button class="opt" type="button"><span class="l">(γ)</span>$s\ge0$</button><button class="opt" type="button"><span class="l">(δ)</span>$s&lt;0$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$\int_0^R e^{-st}dt=\frac{1-e^{-sR}}{s}\to\frac1s$ μόνο αν $s&gt;0$· για $s\le0$ το ολοκλήρωμα αποκλίνει (Παράδειγμα 1.2).</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Ποια από τις παρακάτω συναρτήσεις ΔΕΝ είναι εκθετικής τάξης;</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$t^{10}$</button><button class="opt" type="button"><span class="l">(β)</span>$e^{3t}\cos t$</button><button class="opt" type="button"><span class="l">(γ)</span>$e^{t^2}$</button><button class="opt" type="button"><span class="l">(δ)</span>$\sinh5t$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Για κάθε $c$ ισχύει $e^{t^2}/e^{ct}=e^{t(t-c)}\to\infty$. Οι άλλες φράσσονται από $Me^{ct}$ για κατάλληλο $c$ (Ενότητα 1.2.2).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Ο $\Lap\{t^3\}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\dfrac{3}{s^3}$</button><button class="opt" type="button"><span class="l">(β)</span>$\dfrac{6}{s^4}$</button><button class="opt" type="button"><span class="l">(γ)</span>$\dfrac{3}{s^4}$</button><button class="opt" type="button"><span class="l">(δ)</span>$\dfrac{6}{s^3}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$\Lap\{t^n\}=\dfrac{n!}{s^{n+1}}$ με $n=3$ (Πρόταση 1.2).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Ο $\Lap\{\sqrt t\}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\dfrac{\sqrt\pi}{2s^{3/2}}$</button><button class="opt" type="button"><span class="l">(β)</span>$\dfrac{\sqrt\pi}{s^{1/2}}$</button><button class="opt" type="button"><span class="l">(γ)</span>$\dfrac{1}{2s^{3/2}}$</button><button class="opt" type="button"><span class="l">(δ)</span>δεν υπάρχει</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$\Lap\{t^a\}=\dfrac{\Gamma(a+1)}{s^{a+1}}$ με $a=\frac12$ και $\Gamma(\frac32)=\frac12\Gamma(\frac12)=\frac{\sqrt\pi}{2}$ (Πρόταση 1.3).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Ο $\Lap\{\cos3t\}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\dfrac{3}{s^2+9}$</button><button class="opt" type="button"><span class="l">(β)</span>$\dfrac{s}{s^2+9}$</button><button class="opt" type="button"><span class="l">(γ)</span>$\dfrac{s}{s^2-9}$</button><button class="opt" type="button"><span class="l">(δ)</span>$\dfrac{s}{s^2+3}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$\Lap\{\cos\omega t\}=\dfrac{s}{s^2+\omega^2}$ με $\omega=3$ (Πρόταση 1.4). Το $\dfrac{s}{s^2-9}$ είναι ο $\Lap\{\cosh3t\}$.</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Ο $\Lap\{e^{-2t}\sin3t\}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\dfrac{3}{(s-2)^2+9}$</button><button class="opt" type="button"><span class="l">(β)</span>$\dfrac{3}{(s+2)^2+9}$</button><button class="opt" type="button"><span class="l">(γ)</span>$\dfrac{s+2}{(s+2)^2+9}$</button><button class="opt" type="button"><span class="l">(δ)</span>$\dfrac{3}{(s^2+9)(s+2)}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Πρώτο θεώρημα μετατόπισης: $\Lap\{e^{at}f(t)\}=F(s-a)$ με $a=-2$, δηλαδή $s\to s+2$ στο $\dfrac{3}{s^2+9}$ (Θεώρημα 1.3).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Αν $\Lap\{f(t)\}=F(s)$, τότε ο $\Lap\{f(3t)\}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$3F(3s)$</button><button class="opt" type="button"><span class="l">(β)</span>$\frac13F\bigl(\frac s3\bigr)$</button><button class="opt" type="button"><span class="l">(γ)</span>$F\bigl(\frac s3\bigr)$</button><button class="opt" type="button"><span class="l">(δ)</span>$\frac13F(3s)$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Αλλαγή κλίμακας: $\Lap\{f(at)\}=\frac1aF\bigl(\frac sa\bigr)$ για $a&gt;0$ (Πρόταση 1.5).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Ο $\Lap\{t\,e^{2t}\}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\dfrac{1}{(s-2)^2}$</button><button class="opt" type="button"><span class="l">(β)</span>$\dfrac{2}{(s-2)^2}$</button><button class="opt" type="button"><span class="l">(γ)</span>$\dfrac{1}{s^2-4}$</button><button class="opt" type="button"><span class="l">(δ)</span>$-\dfrac{1}{(s-2)^2}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$\Lap\{t\}=\frac{1}{s^2}$ και μετατόπιση $s\to s-2$· ή $-\frac{d}{ds}\frac{1}{s-2}=\frac{1}{(s-2)^2}$ (Θεώρημα 1.4).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Ο $\Lap\{t\sin t\}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\dfrac{2s}{(s^2+1)^2}$</button><button class="opt" type="button"><span class="l">(β)</span>$\dfrac{1}{(s^2+1)^2}$</button><button class="opt" type="button"><span class="l">(γ)</span>$-\dfrac{2s}{(s^2+1)^2}$</button><button class="opt" type="button"><span class="l">(δ)</span>$\dfrac{s}{(s^2+1)^2}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$\Lap\{t f(t)\}=-F'(s)$: $-\frac{d}{ds}\frac{1}{s^2+1}=\frac{2s}{(s^2+1)^2}$ (Παράδειγμα 1.14).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Αν $y(0)=2$ και $y'(0)=-1$, τότε ο $\Lap\{y''\}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$s^2Y-2s+1$</button><button class="opt" type="button"><span class="l">(β)</span>$s^2Y-2s-1$</button><button class="opt" type="button"><span class="l">(γ)</span>$s^2Y+2s-1$</button><button class="opt" type="button"><span class="l">(δ)</span>$s^2Y-2+s$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$\Lap\{y''\}=s^2Y-s\,y(0)-y'(0)=s^2Y-2s-(-1)=s^2Y-2s+1$ (Πρόταση 1.7).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Για $F(s)=\dfrac{3s+1}{s(s+1)}$ η αρχική τιμή $f(0^+)$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$1$</button><button class="opt" type="button"><span class="l">(β)</span>$3$</button><button class="opt" type="button"><span class="l">(γ)</span>$0$</button><button class="opt" type="button"><span class="l">(δ)</span>$+\infty$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$f(0^+)=\lim_{s\to\infty}sF(s)=\lim_{s\to\infty}\frac{3s+1}{s+1}=3$. Πράγματι $f(t)=1+2e^{-t}$ (Θεώρημα 1.7).</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Για $F(s)=\dfrac{1}{s(s^2+4)}$ το $\lim_{t\to\infty}f(t)$:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>ισούται με $\frac14$</button><button class="opt" type="button"><span class="l">(β)</span>ισούται με $0$</button><button class="opt" type="button"><span class="l">(γ)</span>δεν υπάρχει: η $sF(s)$ έχει πόλους $\pm2i$ στον φανταστικό άξονα</button><button class="opt" type="button"><span class="l">(δ)</span>είναι $+\infty$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Το $\lim_{s\to0}sF(s)=\frac14$ υπάρχει, όμως $f(t)=\frac14(1-\cos2t)$, που ταλαντώνεται. Το θεώρημα τελικής τιμής απαιτεί όλοι οι πόλοι της $sF(s)$ να έχουν $\Re s&lt;0$ (Σχόλιο 1.5).</div></div>
+</div>
+<div class="qnav"><button class="btn" id="prev" type="button">‹ Προηγούμενη</button><button class="btn primary" id="next" type="button">Επόμενη ›</button></div>
+</div>
+<div class="card" id="result" style="display:none"></div>
+<p class="small muted">Οι παραπομπές (Θεώρημα, Πρόταση, Ενότητα) αφορούν το βιβλίο.</p>
+
+<script>
+(function(){
+  var qs = Array.prototype.slice.call(document.querySelectorAll('.quiz-q'));
+  var N = qs.length, cur = 0, answered = new Array(N).fill(null);
+  var bar = document.getElementById('bar'), cnt = document.getElementById('cnt');
+  var prev = document.getElementById('prev'), next = document.getElementById('next');
+  var res = document.getElementById('result');
+  function show(k){
+    qs.forEach(function(q,i){ q.classList.toggle('active', i===k); });
+    cur = k; cnt.textContent = 'Ερώτηση ' + (k+1) + ' / ' + N;
+    bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+    prev.disabled = (k===0);
+    next.textContent = (k===N-1) ? 'Αποτελέσματα ›' : 'Επόμενη ›';
+    next.disabled = (answered[k]===null);
+    window.scrollTo({top: document.getElementById('quiz').offsetTop - 10, behavior: 'smooth'});
+  }
+  qs.forEach(function(q,i){
+    var ok = parseInt(q.getAttribute('data-a'),10);
+    var opts = q.querySelectorAll('.opt');
+    opts.forEach(function(b,j){
+      b.addEventListener('click', function(){
+        if (answered[i]!==null) return;
+        answered[i] = (j===ok);
+        opts.forEach(function(x,m){ x.disabled = true; if (m===ok) x.classList.add('correct'); });
+        if (j!==ok) b.classList.add('wrong');
+        var fb = q.querySelector('.feedback');
+        fb.querySelector('.verdict').innerHTML = (j===ok) ? '<strong style="color:var(--ok)">✓ Σωστά!</strong>' :
+          '<strong style="color:var(--bad)">✗ Όχι ακριβώς.</strong> Η σωστή απάντηση είναι η (' + 'αβγδ'[ok] + ').';
+        fb.classList.add('show');
+        next.disabled = false;
+        bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+      });
+    });
+  });
+  prev.addEventListener('click', function(){ if (cur>0) show(cur-1); });
+  next.addEventListener('click', function(){
+    if (cur<N-1) { show(cur+1); return; }
+    var score = answered.filter(function(x){return x===true;}).length;
+    var wrong = []; answered.forEach(function(x,i){ if (x!==true) wrong.push(i+1); });
+    var msg = score===N ? 'Εξαιρετικά! Είστε έτοιμοι για το επόμενο κεφάλαιο.' :
+              score>=Math.ceil(0.7*N) ? 'Πολύ καλά. Ξαναδείτε τις ερωτήσεις που χάσατε.' :
+              'Χρειάζεται επανάληψη: ξαναδιαβάστε τις ενότητες των ερωτήσεων που χάσατε.';
+    res.innerHTML = '<div class="score">Σκορ: ' + score + ' / ' + N + '</div><p>' + msg + '</p>' +
+      (wrong.length ? '<p class="small muted">Ερωτήσεις για επανάληψη: ' + wrong.join(', ') + '. Πατήστε «Προηγούμενη» για να τις δείτε μαζί με την αιτιολόγηση.</p>' : '') +
+      '<p><button class="btn primary" type="button" onclick="location.reload()">↺ Ξανά από την αρχή</button></p>';
+    res.style.display = 'block'; res.scrollIntoView({behavior: 'smooth'});
+  });
+  show(0);
+})();
+</script>
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

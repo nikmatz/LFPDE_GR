@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Αυτοαξιολόγηση — Επίλυση Π.Α.Τ. με τον Μετασχηματισμό Laplace · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Αυτοαξιολόγηση — Επίλυση Π.Α.Τ. με τον Μετασχηματισμό Laplace">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../assets/style.css">
+<script src="../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../index.html">Αρχική</a> › <a href="../../index.html#ch04">Κεφάλαιο 4</a> › Κουίζ</nav>
+<p><span class="badge quiz">? Quiz</span></p>
+<h1>Αυτοαξιολόγηση — Επίλυση Π.Α.Τ. με τον Μετασχηματισμό Laplace</h1>
+<p class="subtitle">Κεφάλαιο 4 · 12 ερωτήσεις πολλαπλής επιλογής με άμεση ανατροφοδότηση</p>
+<div class="card" id="quiz">
+<div class="row" style="justify-content:space-between"><strong id="cnt"></strong><span class="small muted">Επιλέξτε μία απάντηση· η αιτιολόγηση εμφανίζεται αμέσως.</span></div>
+<div class="progress"><div id="bar"></div></div>
+<div class="quiz-q" data-a="2">
+<div class="stem">Αν $y(0)=2$ και $y'(0)=-1$, τότε $\Lap\{y''\}=$</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$s^2Y+2s-1$</button><button class="opt" type="button"><span class="l">(β)</span>$s^2Y-2s-1$</button><button class="opt" type="button"><span class="l">(γ)</span>$s^2Y-2s+1$</button><button class="opt" type="button"><span class="l">(δ)</span>$s^2Y-2$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$\Lap\{y''\}=s^2Y-s\,y(0)-y'(0)=s^2Y-2s+1$ (Πρόταση 1.7): οι αρχικές συνθήκες μπαίνουν αυτόματα στο πρώτο βήμα.</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Στο σύστημα $x'=y$, $y'=-4x$, οι πόλοι των $X(s)$ και $Y(s)$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$0$ και $-4$</button><button class="opt" type="button"><span class="l">(β)</span>$\pm2$</button><button class="opt" type="button"><span class="l">(γ)</span>$\pm4i$</button><button class="opt" type="button"><span class="l">(δ)</span>$\pm2i$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Η χαρακτηριστική ορίζουσα του αλγεβρικού συστήματος $sX-Y=x(0)$, $4X+sY=y(0)$ είναι $\Delta(s)=s^2+4$ (Ορισμός 4.6): οι λύσεις ταλαντώνονται με συχνότητα $2$.</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Η λύση του $y'+2y=u(t-3)$, $y(0)=0$, είναι $0$ για $0\le t&lt;3$ και για $t\ge3$ ισούται με:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\frac12\bigl(1-e^{-2t}\bigr)$</button><button class="opt" type="button"><span class="l">(β)</span>$\frac12\bigl(1-e^{-2(t-3)}\bigr)$</button><button class="opt" type="button"><span class="l">(γ)</span>$1-e^{-2(t-3)}$</button><button class="opt" type="button"><span class="l">(δ)</span>$\frac12\,e^{-2(t-3)}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Η απόκριση στη $u(t)$ είναι $\frac12(1-e^{-2t})$· λόγω χρονικής αναλλοιότητας, η απόκριση στη $u(t-3)$ είναι η ίδια καθυστερημένη κατά $3$ (Πρόταση 4.1).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Για την $y''+y=\delta(t-1)$ με μηδενικές αρχικές συνθήκες, τη στιγμή $t=1$:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>η $y$ έχει άλμα $1$</button><button class="opt" type="button"><span class="l">(β)</span>η $y'$ έχει άλμα $1$ και η $y$ είναι συνεχής</button><button class="opt" type="button"><span class="l">(γ)</span>η $y''$ είναι συνεχής</button><button class="opt" type="button"><span class="l">(δ)</span>καμία από τις $y,y'$ δεν παρουσιάζει άλμα</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Σε εξίσωση δεύτερης τάξης η κρούση $P\,\delta(t-t_0)$ προκαλεί άλμα $P/a$ στην $y'$, ενώ η $y$ μένει συνεχής (Πρόταση 4.2).</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Η συνάρτηση μεταφοράς του συστήματος $y''+3y'+2y=f'+3f$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\dfrac{s^2+3s+2}{s+3}$</button><button class="opt" type="button"><span class="l">(β)</span>$\dfrac{1}{s^2+3s+2}$</button><button class="opt" type="button"><span class="l">(γ)</span>$\dfrac{s+3}{s^2+3s+2}$</button><button class="opt" type="button"><span class="l">(δ)</span>$\dfrac{3}{s^2+3s+2}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Με μηδενικές αρχικές συνθήκες $(s^2+3s+2)Y=(s+3)F$, άρα $H=Y/F=\frac{s+3}{(s+1)(s+2)}$, με πόλους $-1,-2$ και μηδενικό $-3$ (Παράδειγμα 4.13).</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Αν $H(s)=\dfrac{1}{s+5}$, η κρουστική απόκριση είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\delta(t)-5e^{-5t}$</button><button class="opt" type="button"><span class="l">(β)</span>$e^{5t}$</button><button class="opt" type="button"><span class="l">(γ)</span>$\frac15\bigl(1-e^{-5t}\bigr)$</button><button class="opt" type="button"><span class="l">(δ)</span>$e^{-5t}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$h=\Lapinv\{H\}$ (Ορισμός 4.2). Η $\frac15(1-e^{-5t})$ είναι η βηματική απόκριση, δηλαδή το ολοκλήρωμα της $h$.</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Για $H(s)=\dfrac{10}{s^2+3s+5}$, η βηματική απόκριση τείνει, καθώς $t\to\infty$, στο:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$2$</button><button class="opt" type="button"><span class="l">(β)</span>$10$</button><button class="opt" type="button"><span class="l">(γ)</span>$0$</button><button class="opt" type="button"><span class="l">(δ)</span>$5$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Οι πόλοι έχουν αρνητικό πραγματικό μέρος, οπότε η βηματική απόκριση τείνει στο στατικό κέρδος $H(0)=10/5=2$ (Πρόταση 4.3).</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Ποιο από τα παρακάτω συστήματα είναι ευσταθές κατά BIBO;</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$y''+4y=f$</button><button class="opt" type="button"><span class="l">(β)</span>$y''-y=f$</button><button class="opt" type="button"><span class="l">(γ)</span>$y''+2y'+5y=f$</button><button class="opt" type="button"><span class="l">(δ)</span>$y'''+y'=f$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Οι πόλοι $-1\pm2i$ έχουν αρνητικό πραγματικό μέρος. Τα $\pm2i$ και $0,\pm i$ δίνουν οριακή ευστάθεια, ενώ ο πόλος $+1$ αστάθεια (Θεώρημα 4.3).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Για το $y''+4y'+16y=16f$, η ιδιοσυχνότητα $\omega_n$ και ο λόγος απόσβεσης $\zeta$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\omega_n=4$, $\zeta=0{,}5$</button><button class="opt" type="button"><span class="l">(β)</span>$\omega_n=16$, $\zeta=0{,}25$</button><button class="opt" type="button"><span class="l">(γ)</span>$\omega_n=4$, $\zeta=1$</button><button class="opt" type="button"><span class="l">(δ)</span>$\omega_n=2$, $\zeta=1$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Από την τυπική μορφή $s^2+2\zeta\omega_ns+\omega_n^2$: $\omega_n^2=16$ και $2\zeta\omega_n=4$ (Ορισμός 4.5).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Όταν ο λόγος απόσβεσης $\zeta$ αυξάνεται (με $0&lt;\zeta&lt;1$), η υπερύψωση της βηματικής απόκρισης:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>αυξάνεται</button><button class="opt" type="button"><span class="l">(β)</span>μειώνεται</button><button class="opt" type="button"><span class="l">(γ)</span>μένει σταθερή</button><button class="opt" type="button"><span class="l">(δ)</span>γίνεται αρνητική</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$M_p=e^{-\zeta\pi/\sqrt{1-\zeta^2}}$, φθίνουσα συνάρτηση του $\zeta$, που μηδενίζεται στην κρίσιμη απόσβεση $\zeta=1$ (Πρόταση 4.4).</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Η λύση του $y''+9y=\cos3t$, $y(0)=y'(0)=0$, είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\frac{t}{3}\sin3t$</button><button class="opt" type="button"><span class="l">(β)</span>$\frac16\sin3t$</button><button class="opt" type="button"><span class="l">(γ)</span>$t\cos3t$</button><button class="opt" type="button"><span class="l">(δ)</span>$\frac{t}{6}\sin3t$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Συντονισμός: $Y=\frac{s}{(s^2+9)^2}$, άρα $y=\frac{F_0}{2\omega_0}\,t\sin\omega_0t=\frac t6\sin3t$, με πλάτος που αυξάνεται γραμμικά (Πρόταση 4.5).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Η ολοκληροδιαφορική εξίσωση $L\,i'+R\,i+\frac1C\int_0^ti\,d\tau=E(t)$ μετασχηματίζεται σε:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\Bigl(Ls+R+\dfrac{1}{Cs}\Bigr)I(s)=E(s)+L\,i(0)$</button><button class="opt" type="button"><span class="l">(β)</span>$(Ls+R+Cs)\,I(s)=E(s)$</button><button class="opt" type="button"><span class="l">(γ)</span>$\Bigl(Ls^2+Rs+\dfrac1C\Bigr)I(s)=E(s)$</button><button class="opt" type="button"><span class="l">(δ)</span>$\Bigl(L+R+\dfrac1C\Bigr)I(s)=\dfrac{E(s)}{s}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Η παράγωγος δίνει $sI-i(0)$ και το ολοκλήρωμα $I/s$ (Θεωρήματα 1.5 και 1.6): η εμπέδηση $Z(s)=Ls+R+\frac{1}{Cs}$ (Ενότητα 4.5).</div></div>
+</div>
+<div class="qnav"><button class="btn" id="prev" type="button">‹ Προηγούμενη</button><button class="btn primary" id="next" type="button">Επόμενη ›</button></div>
+</div>
+<div class="card" id="result" style="display:none"></div>
+<p class="small muted">Οι παραπομπές (Θεώρημα, Πρόταση, Ενότητα) αφορούν το βιβλίο.</p>
+
+<script>
+(function(){
+  var qs = Array.prototype.slice.call(document.querySelectorAll('.quiz-q'));
+  var N = qs.length, cur = 0, answered = new Array(N).fill(null);
+  var bar = document.getElementById('bar'), cnt = document.getElementById('cnt');
+  var prev = document.getElementById('prev'), next = document.getElementById('next');
+  var res = document.getElementById('result');
+  function show(k){
+    qs.forEach(function(q,i){ q.classList.toggle('active', i===k); });
+    cur = k; cnt.textContent = 'Ερώτηση ' + (k+1) + ' / ' + N;
+    bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+    prev.disabled = (k===0);
+    next.textContent = (k===N-1) ? 'Αποτελέσματα ›' : 'Επόμενη ›';
+    next.disabled = (answered[k]===null);
+    window.scrollTo({top: document.getElementById('quiz').offsetTop - 10, behavior: 'smooth'});
+  }
+  qs.forEach(function(q,i){
+    var ok = parseInt(q.getAttribute('data-a'),10);
+    var opts = q.querySelectorAll('.opt');
+    opts.forEach(function(b,j){
+      b.addEventListener('click', function(){
+        if (answered[i]!==null) return;
+        answered[i] = (j===ok);
+        opts.forEach(function(x,m){ x.disabled = true; if (m===ok) x.classList.add('correct'); });
+        if (j!==ok) b.classList.add('wrong');
+        var fb = q.querySelector('.feedback');
+        fb.querySelector('.verdict').innerHTML = (j===ok) ? '<strong style="color:var(--ok)">✓ Σωστά!</strong>' :
+          '<strong style="color:var(--bad)">✗ Όχι ακριβώς.</strong> Η σωστή απάντηση είναι η (' + 'αβγδ'[ok] + ').';
+        fb.classList.add('show');
+        next.disabled = false;
+        bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+      });
+    });
+  });
+  prev.addEventListener('click', function(){ if (cur>0) show(cur-1); });
+  next.addEventListener('click', function(){
+    if (cur<N-1) { show(cur+1); return; }
+    var score = answered.filter(function(x){return x===true;}).length;
+    var wrong = []; answered.forEach(function(x,i){ if (x!==true) wrong.push(i+1); });
+    var msg = score===N ? 'Εξαιρετικά! Είστε έτοιμοι για το επόμενο κεφάλαιο.' :
+              score>=Math.ceil(0.7*N) ? 'Πολύ καλά. Ξαναδείτε τις ερωτήσεις που χάσατε.' :
+              'Χρειάζεται επανάληψη: ξαναδιαβάστε τις ενότητες των ερωτήσεων που χάσατε.';
+    res.innerHTML = '<div class="score">Σκορ: ' + score + ' / ' + N + '</div><p>' + msg + '</p>' +
+      (wrong.length ? '<p class="small muted">Ερωτήσεις για επανάληψη: ' + wrong.join(', ') + '. Πατήστε «Προηγούμενη» για να τις δείτε μαζί με την αιτιολόγηση.</p>' : '') +
+      '<p><button class="btn primary" type="button" onclick="location.reload()">↺ Ξανά από την αρχή</button></p>';
+    res.style.display = 'block'; res.scrollIntoView({behavior: 'smooth'});
+  });
+  show(0);
+})();
+</script>
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

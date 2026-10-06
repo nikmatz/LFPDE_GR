@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Αυτοαξιολόγηση — Επίλυση Μερικών Διαφορικών Εξισώσεων με Μετασχηματισμούς · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Αυτοαξιολόγηση — Επίλυση Μερικών Διαφορικών Εξισώσεων με Μετασχηματισμούς">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../assets/style.css">
+<script src="../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../index.html">Αρχική</a> › <a href="../../index.html#ch10">Κεφάλαιο 10</a> › Κουίζ</nav>
+<p><span class="badge quiz">? Quiz</span></p>
+<h1>Αυτοαξιολόγηση — Επίλυση Μερικών Διαφορικών Εξισώσεων με Μετασχηματισμούς</h1>
+<p class="subtitle">Κεφάλαιο 10 · 12 ερωτήσεις πολλαπλής επιλογής με άμεση ανατροφοδότηση</p>
+<div class="card" id="quiz">
+<div class="row" style="justify-content:space-between"><strong id="cnt"></strong><span class="small muted">Επιλέξτε μία απάντηση· η αιτιολόγηση εμφανίζεται αμέσως.</span></div>
+<div class="progress"><div id="bar"></div></div>
+<div class="quiz-q" data-a="3">
+<div class="stem">Μετασχηματίζοντας την $u_t=k\,u_{xx}$ ($x\in\R$) με Fourier ως προς $x$ προκύπτει η ΣΔΕ:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$U_{tt}=-k\omega^2U$</button><button class="opt" type="button"><span class="l">(β)</span>$U_t=k\omega^2U$</button><button class="opt" type="button"><span class="l">(γ)</span>$U_t=ik\omega U$</button><button class="opt" type="button"><span class="l">(δ)</span>$U_t=-k\omega^2U$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Πρόταση 10.1: $\Fou\{u_{xx}\}=(i\omega)^2U=-\omega^2U$, ενώ η $\partial_t$ περνά μέσα από το ολοκλήρωμα. Άρα $U=F(\omega)\,e^{-k\omega^2t}$.</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Για ποιο από τα παρακάτω προβλήματα είναι κατάλληλος ο ημιτονικός μετασχηματισμός Fourier ως προς $x$;</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>ράβδος σε όλη την ευθεία $x\in\R$</button><button class="opt" type="button"><span class="l">(β)</span>ημιευθεία $x&gt;0$ με δεδομένη θερμοκρασία $u(0,t)$</button><button class="opt" type="button"><span class="l">(γ)</span>ημιευθεία $x&gt;0$ με δεδομένη ροή $u_x(0,t)$</button><button class="opt" type="button"><span class="l">(δ)</span>ράβδος $0&lt;x&lt;L$ με μονωμένα άκρα</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Πρόταση 10.6: ο $\Fs\{u_{xx}\}=-\omega^2U_s+\omega\,u(0,t)$ χρειάζεται την τιμή της $u$ στο άκρο (συνθήκη Dirichlet). Για δεδομένη ροή (Neumann) κατάλληλος είναι ο συνημιτονικός (Πίνακας 10.1).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Το εμβαδόν $\int_{-\infty}^{\infty}G(x,t)\,dx$ του θερμικού πυρήνα $G=\frac{1}{\sqrt{4\pi kt}}e^{-x^2/(4kt)}$ είναι, για κάθε $t&gt;0$:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$1$</button><button class="opt" type="button"><span class="l">(β)</span>$\sqrt{4\pi kt}$</button><button class="opt" type="button"><span class="l">(γ)</span>$1/\sqrt t$</button><button class="opt" type="button"><span class="l">(δ)</span>$2$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Από το ολοκλήρωμα Gauss, $\int G\,dx=1$ (Ορισμός 10.2): η θερμότητα δεν χάνεται, απλώς απλώνεται σε όλο και μεγαλύτερο τμήμα της ράβδου.</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Για τη λύση με $u(x,0)=e^{-x^2}$, η μέγιστη θερμοκρασία για μεγάλα $t$ μειώνεται σαν:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$1/t$</button><button class="opt" type="button"><span class="l">(β)</span>$e^{-kt}$</button><button class="opt" type="button"><span class="l">(γ)</span>$1/\sqrt t$</button><button class="opt" type="button"><span class="l">(δ)</span>$1/t^2$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$u(0,t)=1/\sqrt{1+4kt}$ (Παράδειγμα 10.2): το προφίλ χαμηλώνει σαν $1/\sqrt t$ και φαρδαίνει σαν $\sqrt t$, ώστε το εμβαδόν να μένει $\sqrt\pi$.</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Η «άπειρη ταχύτητα διάδοσης» της εξίσωσης θερμότητας στην ευθεία σημαίνει ότι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>η θερμότητα ταξιδεύει με την ταχύτητα του φωτός</button><button class="opt" type="button"><span class="l">(β)</span>η θερμοκρασία γίνεται άπειρη</button><button class="opt" type="button"><span class="l">(γ)</span>αν $f\ge0$ και $f&gt;0$ σε κάποιο διάστημα, τότε $u(x,t)&gt;0$ για κάθε $x$ και κάθε $t&gt;0$</button><button class="opt" type="button"><span class="l">(δ)</span>η λύση δεν εξαρτάται από το $k$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Πρόταση 10.2(δ): ο θερμικός πυρήνας είναι θετικός παντού, άρα η αρχική θερμοκρασία επηρεάζει αμέσως κάθε σημείο, αν και πολύ λίγο μακριά από την πηγή (Σχόλιο 10.4).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Η λύση της $u_t=k\,u_{xx}$ με βηματική αρχική θερμοκρασία $u(x,0)=H(x)$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\frac12\bigl[1+\erf\frac{x}{2\sqrt{kt}}\bigr]$</button><button class="opt" type="button"><span class="l">(β)</span>$\frac12\erfc\frac{x}{2\sqrt{kt}}$</button><button class="opt" type="button"><span class="l">(γ)</span>$\erf\frac{x}{2\sqrt{kt}}$</button><button class="opt" type="button"><span class="l">(δ)</span>$H(x)\,e^{-kt}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Παράδειγμα 10.3: $u=\int_0^\infty G(x-\xi,t)\,d\xi=\frac12\bigl[1+\erf\frac{x}{2\sqrt{kt}}\bigr]$. Στο σημείο επαφής $x=0$ η θερμοκρασία είναι $\frac12$ για κάθε $t&gt;0$. Η $\frac12\erfc\frac{x}{2\sqrt{kt}}$ αντιστοιχεί στην $H(-x)$.</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Η φραγμένη αρμονική συνάρτηση στο $y&gt;0$ με $u(x,0)=f(x)$ είναι η συνέλιξη της $f$ με τον πυρήνα Poisson:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\frac{1}{\sqrt{4\pi y}}e^{-x^2/(4y)}$</button><button class="opt" type="button"><span class="l">(β)</span>$\frac{1}{\pi(x^2+y^2)}$</button><button class="opt" type="button"><span class="l">(γ)</span>$\frac{x}{\pi(x^2+y^2)}$</button><button class="opt" type="button"><span class="l">(δ)</span>$\frac{y}{\pi(x^2+y^2)}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Θεώρημα 10.2: $P(x,y)=\frac{y}{\pi(x^2+y^2)}$, με $\int P\,dx=1$ για κάθε $y&gt;0$. Προκύπτει από το ζεύγος $e^{-|\omega|y}\leftrightarrow\frac{y}{\pi(x^2+y^2)}$.</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Στο Παράδειγμα 10.7 (θερμή λωρίδα $-1&lt;x&lt;1$ στο σύνορο) η θερμοκρασία $u(x,y)$ ισούται με:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\theta/(2\pi)$</button><button class="opt" type="button"><span class="l">(β)</span>$\theta/\pi$, όπου $\theta$ η γωνία υπό την οποία «φαίνεται» η λωρίδα από το σημείο</button><button class="opt" type="button"><span class="l">(γ)</span>την αντίστροφη απόσταση από τη λωρίδα</button><button class="opt" type="button"><span class="l">(δ)</span>$e^{-y}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$u=\frac1\pi\bigl[\arctan\frac{x+1}{y}-\arctan\frac{x-1}{y}\bigr]=\frac{\theta}{\pi}$ (Σχήμα 10.4): οι ισόθερμες είναι τόξα κύκλων που περνούν από τα άκρα $(\pm1,0)$.</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Με τη μέθοδο των ειδώλων, για την ημιευθεία $x&gt;0$ με άκρο σε θερμοκρασία $u(0,t)=0$, η αρχική θερμοκρασία επεκτείνεται στο $x&lt;0$:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>περιττά</button><button class="opt" type="button"><span class="l">(β)</span>άρτια</button><button class="opt" type="button"><span class="l">(γ)</span>περιοδικά</button><button class="opt" type="button"><span class="l">(δ)</span>με μηδέν</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Θεώρημα 10.3(α): η περιττή επέκταση δίνει λύση περιττή ως προς $x$, άρα μηδενική στο $x=0$. Για μονωμένο άκρο ($u_x(0,t)=0$) χρειάζεται η άρτια επέκταση.</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Ο μετασχηματισμός Laplace ως προς $t$ της $u_t=k\,u_{xx}$, $x&gt;0$, με $u(x,0)=0$ δίνει $sU=kU_{xx}$. Η φραγμένη λύση της είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$U=A(s)\,e^{-sx/k}$</button><button class="opt" type="button"><span class="l">(β)</span>$U=A(s)\,e^{x\sqrt{s/k}}$</button><button class="opt" type="button"><span class="l">(γ)</span>$U=A(s)\cos\bigl(x\sqrt{s/k}\bigr)$</button><button class="opt" type="button"><span class="l">(δ)</span>$U=A(s)\,e^{-x\sqrt{s/k}}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Οι λύσεις είναι $e^{\pm x\sqrt{s/k}}$ και η $e^{+x\sqrt{s/k}}$ απειρίζεται καθώς $x\to\infty$ (Παράδειγμα 10.10). Η αντιστροφή της $e^{-x\sqrt{s/k}}/s$ δίνει τη συνάρτηση $\erfc$ (Πρόταση 10.8).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Για τη ράβδο $0&lt;x&lt;L$ με άκρα σε θερμοκρασία $0$, ο $n$-οστός όρος της λύσης φθίνει σαν:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$e^{-knt/L}$</button><button class="opt" type="button"><span class="l">(β)</span>$e^{-k(n\pi/L)^2t}$</button><button class="opt" type="button"><span class="l">(γ)</span>$\cos\frac{n\pi\sqrt k\,t}{L}$</button><button class="opt" type="button"><span class="l">(δ)</span>$e^{-kn^2t}$, ανεξάρτητα από το $L$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Θεώρημα 10.5(α): $u=\sum b_ne^{-k(n\pi/L)^2t}\sin\frac{n\pi x}{L}$. Η χρονική σταθερά του $n$-οστού όρου είναι $\tau_n=\frac{L^2}{kn^2\pi^2}$, οπότε για μεγάλους χρόνους επικρατεί ο πρώτος.</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Αν διπλασιάσουμε το πάχος μιας πλάκας, ο χρόνος που χρειάζεται για να ψυχθεί στην ίδια ποσοστιαία θερμοκρασία γίνεται:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\sqrt2$ φορές μεγαλύτερος</button><button class="opt" type="button"><span class="l">(β)</span>διπλάσιος</button><button class="opt" type="button"><span class="l">(γ)</span>τετραπλάσιος</button><button class="opt" type="button"><span class="l">(δ)</span>ίδιος</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Οι χρόνοι διάχυσης κλιμακώνονται με το $L^2/k$ (Θεώρημα 10.5, Εφαρμογή 10.3): διπλάσιο πάχος σημαίνει τετραπλάσιο χρόνο.</div></div>
+</div>
+<div class="qnav"><button class="btn" id="prev" type="button">‹ Προηγούμενη</button><button class="btn primary" id="next" type="button">Επόμενη ›</button></div>
+</div>
+<div class="card" id="result" style="display:none"></div>
+<p class="small muted">Οι παραπομπές (Θεώρημα, Πρόταση, Ενότητα) αφορούν το βιβλίο.</p>
+
+<script>
+(function(){
+  var qs = Array.prototype.slice.call(document.querySelectorAll('.quiz-q'));
+  var N = qs.length, cur = 0, answered = new Array(N).fill(null);
+  var bar = document.getElementById('bar'), cnt = document.getElementById('cnt');
+  var prev = document.getElementById('prev'), next = document.getElementById('next');
+  var res = document.getElementById('result');
+  function show(k){
+    qs.forEach(function(q,i){ q.classList.toggle('active', i===k); });
+    cur = k; cnt.textContent = 'Ερώτηση ' + (k+1) + ' / ' + N;
+    bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+    prev.disabled = (k===0);
+    next.textContent = (k===N-1) ? 'Αποτελέσματα ›' : 'Επόμενη ›';
+    next.disabled = (answered[k]===null);
+    window.scrollTo({top: document.getElementById('quiz').offsetTop - 10, behavior: 'smooth'});
+  }
+  qs.forEach(function(q,i){
+    var ok = parseInt(q.getAttribute('data-a'),10);
+    var opts = q.querySelectorAll('.opt');
+    opts.forEach(function(b,j){
+      b.addEventListener('click', function(){
+        if (answered[i]!==null) return;
+        answered[i] = (j===ok);
+        opts.forEach(function(x,m){ x.disabled = true; if (m===ok) x.classList.add('correct'); });
+        if (j!==ok) b.classList.add('wrong');
+        var fb = q.querySelector('.feedback');
+        fb.querySelector('.verdict').innerHTML = (j===ok) ? '<strong style="color:var(--ok)">✓ Σωστά!</strong>' :
+          '<strong style="color:var(--bad)">✗ Όχι ακριβώς.</strong> Η σωστή απάντηση είναι η (' + 'αβγδ'[ok] + ').';
+        fb.classList.add('show');
+        next.disabled = false;
+        bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+      });
+    });
+  });
+  prev.addEventListener('click', function(){ if (cur>0) show(cur-1); });
+  next.addEventListener('click', function(){
+    if (cur<N-1) { show(cur+1); return; }
+    var score = answered.filter(function(x){return x===true;}).length;
+    var wrong = []; answered.forEach(function(x,i){ if (x!==true) wrong.push(i+1); });
+    var msg = score===N ? 'Εξαιρετικά! Είστε έτοιμοι για το επόμενο κεφάλαιο.' :
+              score>=Math.ceil(0.7*N) ? 'Πολύ καλά. Ξαναδείτε τις ερωτήσεις που χάσατε.' :
+              'Χρειάζεται επανάληψη: ξαναδιαβάστε τις ενότητες των ερωτήσεων που χάσατε.';
+    res.innerHTML = '<div class="score">Σκορ: ' + score + ' / ' + N + '</div><p>' + msg + '</p>' +
+      (wrong.length ? '<p class="small muted">Ερωτήσεις για επανάληψη: ' + wrong.join(', ') + '. Πατήστε «Προηγούμενη» για να τις δείτε μαζί με την αιτιολόγηση.</p>' : '') +
+      '<p><button class="btn primary" type="button" onclick="location.reload()">↺ Ξανά από την αρχή</button></p>';
+    res.style.display = 'block'; res.scrollIntoView({behavior: 'smooth'});
+  });
+  show(0);
+})();
+</script>
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Αυτοαξιολόγηση — Ο Αντίστροφος Μετασχηματισμός Laplace · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Αυτοαξιολόγηση — Ο Αντίστροφος Μετασχηματισμός Laplace">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../assets/style.css">
+<script src="../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../index.html">Αρχική</a> › <a href="../../index.html#ch03">Κεφάλαιο 3</a> › Κουίζ</nav>
+<p><span class="badge quiz">? Quiz</span></p>
+<h1>Αυτοαξιολόγηση — Ο Αντίστροφος Μετασχηματισμός Laplace</h1>
+<p class="subtitle">Κεφάλαιο 3 · 12 ερωτήσεις πολλαπλής επιλογής με άμεση ανατροφοδότηση</p>
+<div class="card" id="quiz">
+<div class="row" style="justify-content:space-between"><strong id="cnt"></strong><span class="small muted">Επιλέξτε μία απάντηση· η αιτιολόγηση εμφανίζεται αμέσως.</span></div>
+<div class="progress"><div id="bar"></div></div>
+<div class="quiz-q" data-a="1">
+<div class="stem">Αν $\Lap\{f\}=\Lap\{g\}$ για όλα τα $s&gt;c$ και οι $f,g$ είναι συνεχείς στο $[0,\infty)$, τότε:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$f=g$ μόνο για $t&gt;c$</button><button class="opt" type="button"><span class="l">(β)</span>$f(t)=g(t)$ για κάθε $t\ge0$</button><button class="opt" type="button"><span class="l">(γ)</span>οι $f,g$ διαφέρουν κατά σταθερά</button><button class="opt" type="button"><span class="l">(δ)</span>δεν προκύπτει κάποιο συμπέρασμα</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Θεώρημα του Lerch (Θεώρημα 3.1): ο αντίστροφος μετασχηματισμός είναι μοναδικός στις συνεχείς συναρτήσεις· για τμηματικά συνεχείς οι $f,g$ μπορεί να διαφέρουν μόνο σε σημεία ασυνέχειας.</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Ο $\Lapinv\left\{\dfrac{5}{2s-3}\right\}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$5e^{3t}$</button><button class="opt" type="button"><span class="l">(β)</span>$\frac52\,e^{-3t/2}$</button><button class="opt" type="button"><span class="l">(γ)</span>$5e^{3t/2}$</button><button class="opt" type="button"><span class="l">(δ)</span>$\frac52\,e^{3t/2}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Ο συντελεστής του $s$ πρέπει να γίνει $1$: $\frac{5}{2s-3}=\frac52\cdot\frac{1}{s-3/2}$ (Παράδειγμα 3.2).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Ο $\Lapinv\left\{\dfrac{1}{9s^2+4}\right\}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\frac16\sin\frac{2t}{3}$</button><button class="opt" type="button"><span class="l">(β)</span>$\frac12\sin\frac{2t}{3}$</button><button class="opt" type="button"><span class="l">(γ)</span>$\frac19\sin\frac{2t}{3}$</button><button class="opt" type="button"><span class="l">(δ)</span>$\frac14\sin2t$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$\frac{1}{9s^2+4}=\frac19\cdot\frac{1}{s^2+(2/3)^2}=\frac19\cdot\frac32\cdot\frac{2/3}{s^2+(2/3)^2}$ (Παράδειγμα 3.2(δ)).</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Ο $\Lapinv\left\{\dfrac{s+3}{(s+3)^2+4}\right\}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$e^{3t}\cos2t$</button><button class="opt" type="button"><span class="l">(β)</span>$e^{-3t}\cos4t$</button><button class="opt" type="button"><span class="l">(γ)</span>$e^{-3t}\cos2t$</button><button class="opt" type="button"><span class="l">(δ)</span>$\cos2(t-3)$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Η $F$ είναι η $\frac{s}{s^2+4}$ μετατοπισμένη κατά $a=-3$ στο πεδίο του $s$, οπότε πολλαπλασιάζουμε την $\cos2t$ με $e^{-3t}$ (Θεώρημα 3.2(α)).</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Αν $f=\Lapinv\{F\}$, ο $\Lapinv\{e^{-2s}F(s)\}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$e^{-2t}f(t)$</button><button class="opt" type="button"><span class="l">(β)</span>$f(t-2)$ για κάθε $t\ge0$</button><button class="opt" type="button"><span class="l">(γ)</span>$u(t-2)\,f(t-2)$</button><button class="opt" type="button"><span class="l">(δ)</span>$u(t-2)\,f(t)$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Ο εκθετικός παράγοντας στο $s$ σημαίνει καθυστέρηση: αντικαθιστούμε το $t$ με $t-2$ <em>παντού</em> και πολλαπλασιάζουμε με $u(t-2)$ (Θεώρημα 3.2(β)).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Αν $f=\Lapinv\{F\}$, ο $\Lapinv\left\{\dfrac{F(s)}{s}\right\}$ ισούται με:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\dfrac{f(t)}{t}$</button><button class="opt" type="button"><span class="l">(β)</span>$\displaystyle\int_0^tf(\tau)\,d\tau$</button><button class="opt" type="button"><span class="l">(γ)</span>$f'(t)$</button><button class="opt" type="button"><span class="l">(δ)</span>$t\,f(t)$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Η διαίρεση με $s$ αντιστοιχεί σε ολοκλήρωση από $0$ έως $t$ (Πρόταση 3.2).</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Αφού $\dfrac{d}{ds}\ln\dfrac{s+1}{s}=\dfrac{1}{s+1}-\dfrac1s$, ο $\Lapinv\left\{\ln\dfrac{s+1}{s}\right\}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$t\,(1-e^{-t})$</button><button class="opt" type="button"><span class="l">(β)</span>$\dfrac{e^{-t}-1}{t}$</button><button class="opt" type="button"><span class="l">(γ)</span>$1-e^{-t}$</button><button class="opt" type="button"><span class="l">(δ)</span>$\dfrac{1-e^{-t}}{t}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$\Lapinv\{F'\}=e^{-t}-1$ και $f(t)=-\frac1t\Lapinv\{F'\}=\frac{1-e^{-t}}{t}$ (Πρόταση 3.1).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Η σωστή μορφή ανάλυσης της $\dfrac{1}{(s-1)^2(s^2+4)}$ σε απλά κλάσματα είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\dfrac{A}{s-1}+\dfrac{B}{(s-1)^2}+\dfrac{Cs+D}{s^2+4}$</button><button class="opt" type="button"><span class="l">(β)</span>$\dfrac{A}{(s-1)^2}+\dfrac{B}{s^2+4}$</button><button class="opt" type="button"><span class="l">(γ)</span>$\dfrac{A}{s-1}+\dfrac{B}{(s-1)^2}+\dfrac{C}{s^2+4}$</button><button class="opt" type="button"><span class="l">(δ)</span>$\dfrac{As+B}{(s-1)^2}+\dfrac{C}{s^2+4}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Ο διπλός πόλος $1$ δίνει δύο όρους και ο μη αναγώγιμος παράγοντας $s^2+4$ έναν όρο με αριθμητή πρώτου βαθμού: συνολικά $4$ σταθερές, όσες ο βαθμός του παρονομαστή (Ενότητα 3.3).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Αν οι πόλοι της $F$ είναι οι απλοί $-2$ και $\pm3i$, τότε για μεγάλα $t$ η $f(t)$:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>τείνει στο $0$</button><button class="opt" type="button"><span class="l">(β)</span>ταλαντώνεται με περίπου σταθερό πλάτος</button><button class="opt" type="button"><span class="l">(γ)</span>αυξάνεται εκθετικά</button><button class="opt" type="button"><span class="l">(δ)</span>αυξάνεται γραμμικά</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Ο πόλος $-2$ δίνει όρο $e^{-2t}$ που σβήνει, ενώ οι απλοί πόλοι $\pm3i$ δίνουν ταλάντωση $\cos3t$, $\sin3t$ σταθερού πλάτους (Σχόλιο 3.4).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Με το θεώρημα ανάπτυξης του Heaviside, ο συντελεστής του $e^{2t}$ στον $\Lapinv\left\{\dfrac{s+4}{s^2-s-2}\right\}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$2$</button><button class="opt" type="button"><span class="l">(β)</span>$6$</button><button class="opt" type="button"><span class="l">(γ)</span>$-1$</button><button class="opt" type="button"><span class="l">(δ)</span>$3$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$Q(s)=s^2-s-2=(s-2)(s+1)$, $Q'(s)=2s-1$, άρα $\frac{P(2)}{Q'(2)}=\frac{6}{3}=2$ (Θεώρημα 3.3). Ο συντελεστής του $e^{-t}$ είναι $\frac{P(-1)}{Q'(-1)}=-1$.</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Η συνέλιξη $1*1$ ισούται με:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$1$</button><button class="opt" type="button"><span class="l">(β)</span>$0$</button><button class="opt" type="button"><span class="l">(γ)</span>$\dfrac{t^2}{2}$</button><button class="opt" type="button"><span class="l">(δ)</span>$t$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$(1*1)(t)=\int_0^t1\cdot1\,d\tau=t$: η συνέλιξη δεν είναι το συνηθισμένο γινόμενο και το $1$ δεν είναι ουδέτερο στοιχείο της (Παράδειγμα 3.13).</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Με το θεώρημα συνέλιξης, ο $\Lapinv\left\{\dfrac{1}{s(s^2+1)}\right\}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\sin t$</button><button class="opt" type="button"><span class="l">(β)</span>$t-\sin t$</button><button class="opt" type="button"><span class="l">(γ)</span>$1-\cos t$</button><button class="opt" type="button"><span class="l">(δ)</span>$\cos t-1$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$\frac1s\cdot\frac{1}{s^2+1}\leftrightarrow1*\sin t=\int_0^t\sin\tau\,d\tau=1-\cos t$ (Θεώρημα 3.5).</div></div>
+</div>
+<div class="qnav"><button class="btn" id="prev" type="button">‹ Προηγούμενη</button><button class="btn primary" id="next" type="button">Επόμενη ›</button></div>
+</div>
+<div class="card" id="result" style="display:none"></div>
+<p class="small muted">Οι παραπομπές (Θεώρημα, Πρόταση, Ενότητα) αφορούν το βιβλίο.</p>
+
+<script>
+(function(){
+  var qs = Array.prototype.slice.call(document.querySelectorAll('.quiz-q'));
+  var N = qs.length, cur = 0, answered = new Array(N).fill(null);
+  var bar = document.getElementById('bar'), cnt = document.getElementById('cnt');
+  var prev = document.getElementById('prev'), next = document.getElementById('next');
+  var res = document.getElementById('result');
+  function show(k){
+    qs.forEach(function(q,i){ q.classList.toggle('active', i===k); });
+    cur = k; cnt.textContent = 'Ερώτηση ' + (k+1) + ' / ' + N;
+    bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+    prev.disabled = (k===0);
+    next.textContent = (k===N-1) ? 'Αποτελέσματα ›' : 'Επόμενη ›';
+    next.disabled = (answered[k]===null);
+    window.scrollTo({top: document.getElementById('quiz').offsetTop - 10, behavior: 'smooth'});
+  }
+  qs.forEach(function(q,i){
+    var ok = parseInt(q.getAttribute('data-a'),10);
+    var opts = q.querySelectorAll('.opt');
+    opts.forEach(function(b,j){
+      b.addEventListener('click', function(){
+        if (answered[i]!==null) return;
+        answered[i] = (j===ok);
+        opts.forEach(function(x,m){ x.disabled = true; if (m===ok) x.classList.add('correct'); });
+        if (j!==ok) b.classList.add('wrong');
+        var fb = q.querySelector('.feedback');
+        fb.querySelector('.verdict').innerHTML = (j===ok) ? '<strong style="color:var(--ok)">✓ Σωστά!</strong>' :
+          '<strong style="color:var(--bad)">✗ Όχι ακριβώς.</strong> Η σωστή απάντηση είναι η (' + 'αβγδ'[ok] + ').';
+        fb.classList.add('show');
+        next.disabled = false;
+        bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+      });
+    });
+  });
+  prev.addEventListener('click', function(){ if (cur>0) show(cur-1); });
+  next.addEventListener('click', function(){
+    if (cur<N-1) { show(cur+1); return; }
+    var score = answered.filter(function(x){return x===true;}).length;
+    var wrong = []; answered.forEach(function(x,i){ if (x!==true) wrong.push(i+1); });
+    var msg = score===N ? 'Εξαιρετικά! Είστε έτοιμοι για το επόμενο κεφάλαιο.' :
+              score>=Math.ceil(0.7*N) ? 'Πολύ καλά. Ξαναδείτε τις ερωτήσεις που χάσατε.' :
+              'Χρειάζεται επανάληψη: ξαναδιαβάστε τις ενότητες των ερωτήσεων που χάσατε.';
+    res.innerHTML = '<div class="score">Σκορ: ' + score + ' / ' + N + '</div><p>' + msg + '</p>' +
+      (wrong.length ? '<p class="small muted">Ερωτήσεις για επανάληψη: ' + wrong.join(', ') + '. Πατήστε «Προηγούμενη» για να τις δείτε μαζί με την αιτιολόγηση.</p>' : '') +
+      '<p><button class="btn primary" type="button" onclick="location.reload()">↺ Ξανά από την αρχή</button></p>';
+    res.style.display = 'block'; res.scrollIntoView({behavior: 'smooth'});
+  });
+  show(0);
+})();
+</script>
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Αυτοαξιολόγηση — Μερικές Διαφορικές Εξισώσεις: Βασικές Έννοιες και Ταξινόμηση · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Αυτοαξιολόγηση — Μερικές Διαφορικές Εξισώσεις: Βασικές Έννοιες και Ταξινόμηση">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../assets/style.css">
+<script src="../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../index.html">Αρχική</a> › <a href="../../index.html#ch08">Κεφάλαιο 8</a> › Κουίζ</nav>
+<p><span class="badge quiz">? Quiz</span></p>
+<h1>Αυτοαξιολόγηση — Μερικές Διαφορικές Εξισώσεις: Βασικές Έννοιες και Ταξινόμηση</h1>
+<p class="subtitle">Κεφάλαιο 8 · 12 ερωτήσεις πολλαπλής επιλογής με άμεση ανατροφοδότηση</p>
+<div class="card" id="quiz">
+<div class="row" style="justify-content:space-between"><strong id="cnt"></strong><span class="small muted">Επιλέξτε μία απάντηση· η αιτιολόγηση εμφανίζεται αμέσως.</span></div>
+<div class="progress"><div id="bar"></div></div>
+<div class="quiz-q" data-a="1">
+<div class="stem">Η ΜΔΕ $u_t+u\,u_x=0$ (εξίσωση Burgers χωρίς ιξώδες) είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>γραμμική πρώτης τάξης</button><button class="opt" type="button"><span class="l">(β)</span>ημιγραμμική πρώτης τάξης</button><button class="opt" type="button"><span class="l">(γ)</span>γραμμική δεύτερης τάξης</button><button class="opt" type="button"><span class="l">(δ)</span>μη γραμμική δεύτερης τάξης</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Η παράγωγος μέγιστης τάξης είναι πρώτης τάξης και εμφανίζεται γραμμικά, αλλά ο συντελεστής της $u_x$ είναι η ίδια η $u$: ημιγραμμική (Ορισμός 8.2(β)). Γραμμική θα ήταν μόνο αν οι συντελεστές εξαρτώνταν μόνο από τα $x$, $t$.</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Αν οι $u_1$, $u_2$ λύνουν την $u_t-u_{xx}=\sin x$, τότε η διαφορά $u_1-u_2$:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>δεν λύνει καμία από αυτές</button><button class="opt" type="button"><span class="l">(β)</span>λύνει την ίδια εξίσωση</button><button class="opt" type="button"><span class="l">(γ)</span>λύνει την $u_t-u_{xx}=2\sin x$</button><button class="opt" type="button"><span class="l">(δ)</span>λύνει την ομογενή $u_t-u_{xx}=0$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Από τη γραμμικότητα, $L[u_1-u_2]=\sin x-\sin x=0$ (Θεώρημα 8.1(γ)): δύο λύσεις της μη ομογενούς διαφέρουν κατά μια λύση της ομογενούς.</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Η συνθήκη $u_x(L,t)+2u(L,t)=0$ στο άκρο μιας ράβδου είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>συνθήκη Neumann</button><button class="opt" type="button"><span class="l">(β)</span>συνθήκη Dirichlet</button><button class="opt" type="button"><span class="l">(γ)</span>συνθήκη Robin</button><button class="opt" type="button"><span class="l">(δ)</span>αρχική συνθήκη</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Ορίζει έναν γραμμικό συνδυασμό της τιμής και της παραγώγου της $u$ στο άκρο, άρα είναι συνθήκη Robin (Ορισμός 8.4(γ)), ομογενής αφού το δεξί μέλος είναι μηδέν.</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Το πρόβλημα Cauchy για την εξίσωση Laplace του Παραδείγματος 8.5 (Hadamard) είναι κακώς τοποθετημένο γιατί:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>η λύση δεν εξαρτάται συνεχώς από τα δεδομένα</button><button class="opt" type="button"><span class="l">(β)</span>δεν έχει λύση</button><button class="opt" type="button"><span class="l">(γ)</span>έχει άπειρες λύσεις</button><button class="opt" type="button"><span class="l">(δ)</span>η εξίσωση δεν είναι γραμμική</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Για δεδομένα $u_y(x,0)=\frac{\sin nx}{n}\to0$ η λύση στην ευθεία $y=1$ έχει μέγιστο $\frac{\sinh n}{n^2}\to\infty$: παραβιάζεται η τρίτη απαίτηση του Ορισμού 8.5, η ευστάθεια.</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Η λύση του προβλήματος $u_t+3u_x=0$, $u(x,0)=e^{-x^2}$, είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$e^{-x^2-3t}$</button><button class="opt" type="button"><span class="l">(β)</span>$e^{-(x+3t)^2}$</button><button class="opt" type="button"><span class="l">(γ)</span>$e^{-(x-3t)^2}$</button><button class="opt" type="button"><span class="l">(δ)</span>$e^{-(3x-t)^2}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Πρόταση 8.1 με $c=3$: $u=f(x-ct)$, ένα κύμα που μετακινείται αναλλοίωτο προς τα δεξιά με ταχύτητα $3$.</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Η γενική λύση της $2u_x-u_y=0$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$F(2x-y)$</button><button class="opt" type="button"><span class="l">(β)</span>$F(x+2y)$</button><button class="opt" type="button"><span class="l">(γ)</span>$F(x-2y)$</button><button class="opt" type="button"><span class="l">(δ)</span>$F(2x+y)$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Θεώρημα 8.2 με $a=2$, $b=-1$: $u=F(bx-ay)=F(-x-2y)$, δηλαδή συνάρτηση του $x+2y$. Έλεγχος: για $u=F(x+2y)$ είναι $2u_x-u_y=2F'-2F'=0$.</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Η εξίσωση $u_{xx}+6u_{xy}+9u_{yy}+u_x=0$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>παραβολική</button><button class="opt" type="button"><span class="l">(β)</span>υπερβολική</button><button class="opt" type="button"><span class="l">(γ)</span>ελλειπτική</button><button class="opt" type="button"><span class="l">(δ)</span>υπερβολική για $x&gt;0$ και ελλειπτική για $x&lt;0$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$a=1$, $b=3$ (το μισό του $6$), $c=9$: $\Delta=b^2-ac=9-9=0$ (Ορισμός 8.6). Ο όρος $u_x$ δεν επηρεάζει τον τύπο.</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Για την εξίσωση $u_{xx}+3u_{xy}+3u_{yy}=0$ ισχύει:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\Delta=-3$, ελλειπτική</button><button class="opt" type="button"><span class="l">(β)</span>$\Delta=6$, υπερβολική</button><button class="opt" type="button"><span class="l">(γ)</span>$\Delta=0$, παραβολική</button><button class="opt" type="button"><span class="l">(δ)</span>$\Delta=-\frac34$, ελλειπτική</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Προσοχή: $b=\frac32$, το μισό του συντελεστή της $u_{xy}$, οπότε $\Delta=\frac94-3=-\frac34&lt;0$. Η τιμή $\Delta=6$ προκύπτει από το συνηθισμένο λάθος $b=3$ (Σχόλιο 8.4).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Η εξίσωση Tricomi $y\,u_{xx}+u_{yy}=0$ είναι ελλειπτική:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>παντού</button><button class="opt" type="button"><span class="l">(β)</span>στο άνω ημιεπίπεδο $y&gt;0$</button><button class="opt" type="button"><span class="l">(γ)</span>στο κάτω ημιεπίπεδο $y&lt;0$</button><button class="opt" type="button"><span class="l">(δ)</span>μόνο πάνω στον άξονα $y=0$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$a=y$, $b=0$, $c=1$, άρα $\Delta=-y$: ελλειπτική για $y&gt;0$, παραβολική στον άξονα $y=0$ και υπερβολική για $y&lt;0$ (Σχήμα 8.6).</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Οι χαρακτηριστικές καμπύλες της $u_{xx}-u_{xy}-2u_{yy}=0$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>μόνο η οικογένεια $y-x=C$</button><button class="opt" type="button"><span class="l">(β)</span>$y+x=C_1$ και $y-2x=C_2$</button><button class="opt" type="button"><span class="l">(γ)</span>$y-x=C_1$ και $y+2x=C_2$</button><button class="opt" type="button"><span class="l">(δ)</span>δεν υπάρχουν πραγματικές χαρακτηριστικές</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$a=1$, $b=-\frac12$, $c=-2$, $\Delta=\frac94$, οπότε $\frac{dy}{dx}=\frac{b\pm\sqrt\Delta}{a}=1$ ή $-2$ (Ορισμός 8.7). Ολοκληρώνοντας: $y=x+C_1$ και $y=-2x+C_2$.</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Οι χαρακτηριστικές της εξίσωσης θερμότητας $k\,u_{xx}-u_t=0$, στο επίπεδο $(x,t)$, είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>δεν υπάρχουν πραγματικές χαρακτηριστικές</button><button class="opt" type="button"><span class="l">(β)</span>οι ευθείες $x\pm\sqrt k\,t=C$</button><button class="opt" type="button"><span class="l">(γ)</span>οι ευθείες $x=C$</button><button class="opt" type="button"><span class="l">(δ)</span>οι ευθείες $t=C$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Με $y=t$ είναι $a=k$, $b=c=0$ και η χαρακτηριστική εξίσωση γίνεται $k\,(dt)^2=0$: μία οικογένεια, οι ευθείες $t=C$ (Σχόλιο 8.5). Η απάντηση $x\pm\sqrt k\,t=C$ είναι αναλογία με την κυματική που δεν ισχύει.</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Η κανονική μορφή μιας ελλειπτικής εξίσωσης είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$w_{\alpha\alpha}+w_{\beta\beta}=\Phi$</button><button class="opt" type="button"><span class="l">(β)</span>$w_{\xi\eta}=\Phi$</button><button class="opt" type="button"><span class="l">(γ)</span>$w_{\eta\eta}=\Phi$</button><button class="opt" type="button"><span class="l">(δ)</span>$w_{\alpha\alpha}-w_{\beta\beta}=\Phi$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Θεώρημα 8.4(γ): με $\alpha$, $\beta$ το πραγματικό και το φανταστικό μέρος της μιγαδικής χαρακτηριστικής προκύπτει η Λαπλασιανή $w_{\alpha\alpha}+w_{\beta\beta}$. Οι $w_{\xi\eta}$ και $w_{\alpha\alpha}-w_{\beta\beta}$ είναι υπερβολικές μορφές, η $w_{\eta\eta}$ παραβολική.</div></div>
+</div>
+<div class="qnav"><button class="btn" id="prev" type="button">‹ Προηγούμενη</button><button class="btn primary" id="next" type="button">Επόμενη ›</button></div>
+</div>
+<div class="card" id="result" style="display:none"></div>
+<p class="small muted">Οι παραπομπές (Θεώρημα, Πρόταση, Ενότητα) αφορούν το βιβλίο.</p>
+
+<script>
+(function(){
+  var qs = Array.prototype.slice.call(document.querySelectorAll('.quiz-q'));
+  var N = qs.length, cur = 0, answered = new Array(N).fill(null);
+  var bar = document.getElementById('bar'), cnt = document.getElementById('cnt');
+  var prev = document.getElementById('prev'), next = document.getElementById('next');
+  var res = document.getElementById('result');
+  function show(k){
+    qs.forEach(function(q,i){ q.classList.toggle('active', i===k); });
+    cur = k; cnt.textContent = 'Ερώτηση ' + (k+1) + ' / ' + N;
+    bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+    prev.disabled = (k===0);
+    next.textContent = (k===N-1) ? 'Αποτελέσματα ›' : 'Επόμενη ›';
+    next.disabled = (answered[k]===null);
+    window.scrollTo({top: document.getElementById('quiz').offsetTop - 10, behavior: 'smooth'});
+  }
+  qs.forEach(function(q,i){
+    var ok = parseInt(q.getAttribute('data-a'),10);
+    var opts = q.querySelectorAll('.opt');
+    opts.forEach(function(b,j){
+      b.addEventListener('click', function(){
+        if (answered[i]!==null) return;
+        answered[i] = (j===ok);
+        opts.forEach(function(x,m){ x.disabled = true; if (m===ok) x.classList.add('correct'); });
+        if (j!==ok) b.classList.add('wrong');
+        var fb = q.querySelector('.feedback');
+        fb.querySelector('.verdict').innerHTML = (j===ok) ? '<strong style="color:var(--ok)">✓ Σωστά!</strong>' :
+          '<strong style="color:var(--bad)">✗ Όχι ακριβώς.</strong> Η σωστή απάντηση είναι η (' + 'αβγδ'[ok] + ').';
+        fb.classList.add('show');
+        next.disabled = false;
+        bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+      });
+    });
+  });
+  prev.addEventListener('click', function(){ if (cur>0) show(cur-1); });
+  next.addEventListener('click', function(){
+    if (cur<N-1) { show(cur+1); return; }
+    var score = answered.filter(function(x){return x===true;}).length;
+    var wrong = []; answered.forEach(function(x,i){ if (x!==true) wrong.push(i+1); });
+    var msg = score===N ? 'Εξαιρετικά! Είστε έτοιμοι για το επόμενο κεφάλαιο.' :
+              score>=Math.ceil(0.7*N) ? 'Πολύ καλά. Ξαναδείτε τις ερωτήσεις που χάσατε.' :
+              'Χρειάζεται επανάληψη: ξαναδιαβάστε τις ενότητες των ερωτήσεων που χάσατε.';
+    res.innerHTML = '<div class="score">Σκορ: ' + score + ' / ' + N + '</div><p>' + msg + '</p>' +
+      (wrong.length ? '<p class="small muted">Ερωτήσεις για επανάληψη: ' + wrong.join(', ') + '. Πατήστε «Προηγούμενη» για να τις δείτε μαζί με την αιτιολόγηση.</p>' : '') +
+      '<p><button class="btn primary" type="button" onclick="location.reload()">↺ Ξανά από την αρχή</button></p>';
+    res.style.display = 'block'; res.scrollIntoView({behavior: 'smooth'});
+  });
+  show(0);
+})();
+</script>
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

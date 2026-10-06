@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Αυτοαξιολόγηση — Ο Μετασχηματισμός Fourier · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Αυτοαξιολόγηση — Ο Μετασχηματισμός Fourier">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../assets/style.css">
+<script src="../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../index.html">Αρχική</a> › <a href="../../index.html#ch07">Κεφάλαιο 7</a> › Κουίζ</nav>
+<p><span class="badge quiz">? Quiz</span></p>
+<h1>Αυτοαξιολόγηση — Ο Μετασχηματισμός Fourier</h1>
+<p class="subtitle">Κεφάλαιο 7 · 12 ερωτήσεις πολλαπλής επιλογής με άμεση ανατροφοδότηση</p>
+<div class="card" id="quiz">
+<div class="row" style="justify-content:space-between"><strong id="cnt"></strong><span class="small muted">Επιλέξτε μία απάντηση· η αιτιολόγηση εμφανίζεται αμέσως.</span></div>
+<div class="progress"><div id="bar"></div></div>
+<div class="quiz-q" data-a="2">
+<div class="stem">Ποια από τις παρακάτω συναρτήσεις είναι απολύτως ολοκληρώσιμη, άρα έχει μετασχηματισμό Fourier με τη συνήθη έννοια;</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$1$</button><button class="opt" type="button"><span class="l">(β)</span>$\sin t$</button><button class="opt" type="button"><span class="l">(γ)</span>$e^{-|t|}$</button><button class="opt" type="button"><span class="l">(δ)</span>$u(t)$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$\int e^{-|t|}\,dt=2&lt;\infty$. Οι άλλες δεν φθίνουν, το $\int|f|\,dt$ τους αποκλίνει (Ορισμός 7.1), και έχουν μόνο γενικευμένους μετασχηματισμούς (Ενότητα 7.6).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Για τον ορθογώνιο παλμό $p_3$ (ύψος $1$ στο $|t|&lt;3$), η τιμή $F(0)$ του μετασχηματισμού του είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$3$</button><button class="opt" type="button"><span class="l">(β)</span>$6$</button><button class="opt" type="button"><span class="l">(γ)</span>$2/3$</button><button class="opt" type="button"><span class="l">(δ)</span>$0$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$F(0)=\int f\,dt$, το εμβαδόν $2\cdot3=6$· και ο τύπος $\frac{2\sin3\omega}{\omega}$ τείνει στο $6$ καθώς $\omega\to0$ (Παράδειγμα 7.4).</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Για κάθε απολύτως ολοκληρώσιμη $f$, καθώς $|\omega|\to\infty$:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>ο $F(\omega)$ μπορεί να απειρίζεται</button><button class="opt" type="button"><span class="l">(β)</span>ο $F(\omega)$ φθίνει πάντα σαν $1/\omega^2$</button><button class="opt" type="button"><span class="l">(γ)</span>$F(\omega)\to F(0)$</button><button class="opt" type="button"><span class="l">(δ)</span>$F(\omega)\to0$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Λήμμα Riemann–Lebesgue (Θεώρημα 7.2). Ο ρυθμός εξαρτάται από την ομαλότητα της $f$: σαν $1/\omega$ όταν έχει άλματα, σαν $1/\omega^2$ όταν έχει μόνο γωνίες.</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Για την $f(t)=u(t)e^{-t}$, το όριο $\frac1{2\pi}\lim_{\Omega\to\infty}\int_{-\Omega}^{\Omega}F(\omega)e^{i\omega t}\,d\omega$ στο $t=0$ ισούται με:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\frac12$</button><button class="opt" type="button"><span class="l">(β)</span>$0$</button><button class="opt" type="button"><span class="l">(γ)</span>$1$</button><button class="opt" type="button"><span class="l">(δ)</span>δεν υπάρχει</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Θεώρημα 7.3: σε σημείο άλματος ο τύπος αντιστροφής δίνει τη μέση τιμή $\frac{f(0^+)+f(0^-)}{2}=\frac{1+0}{2}$.</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Ο μετασχηματισμός Fourier της $e^{-|t-2|}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\dfrac{2e^{2i\omega}}{1+\omega^2}$</button><button class="opt" type="button"><span class="l">(β)</span>$\dfrac{2e^{-2i\omega}}{1+\omega^2}$</button><button class="opt" type="button"><span class="l">(γ)</span>$\dfrac{2}{1+(\omega-2)^2}$</button><button class="opt" type="button"><span class="l">(δ)</span>$\dfrac{e^{-2i\omega}}{1+\omega^2}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Από το $e^{-|t|}\leftrightarrow\frac{2}{1+\omega^2}$ και τη μετατόπιση στον χρόνο $f(t-t_0)\leftrightarrow e^{-i\omega t_0}F(\omega)$ με $t_0=2$ (Θεώρημα 7.4(α)).</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Αν $f(t)\leftrightarrow F(\omega)$, τότε η $f(3t)$ έχει μετασχηματισμό:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$3F(3\omega)$</button><button class="opt" type="button"><span class="l">(β)</span>$\frac13F(3\omega)$</button><button class="opt" type="button"><span class="l">(γ)</span>$F(\omega/3)$</button><button class="opt" type="button"><span class="l">(δ)</span>$\frac13F(\omega/3)$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Πρόταση 7.3 με $a=3$: η συμπίεση στον χρόνο απλώνει το φάσμα στη συχνότητα κατά τον ίδιο παράγοντα.</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Αν η $f$ είναι πραγματική και περιττή (και απολύτως ολοκληρώσιμη), ο $F(\omega)$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>πραγματικός και άρτιος</button><button class="opt" type="button"><span class="l">(β)</span>πραγματικός και περιττός</button><button class="opt" type="button"><span class="l">(γ)</span>καθαρά φανταστικός και περιττός</button><button class="opt" type="button"><span class="l">(δ)</span>καθαρά φανταστικός και άρτιος</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Πρόταση 7.4(β): $F(\omega)=-i\int f(t)\sin\omega t\,dt$, που είναι περιττή συνάρτηση του $\omega$.</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Από το ζεύγος $e^{-|t|}\leftrightarrow\frac{2}{1+\omega^2}$ και τη δυϊκότητα προκύπτει ότι ο $\Fou\bigl\{\frac{1}{1+t^2}\bigr\}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\pi e^{-|\omega|}$</button><button class="opt" type="button"><span class="l">(β)</span>$2\pi e^{-|\omega|}$</button><button class="opt" type="button"><span class="l">(γ)</span>$\frac{\pi}{2}e^{-|\omega|}$</button><button class="opt" type="button"><span class="l">(δ)</span>$e^{-|\omega|}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Θεώρημα 7.5: $\frac{2}{1+t^2}\leftrightarrow2\pi e^{-|\omega|}$ και διαιρούμε με $2$ (Παράδειγμα 7.8).</div></div>
+</div><div class="quiz-q" data-a="0">
+<div class="stem">Αν οι υποθέσεις του Θεωρήματος 7.6 ισχύουν για $n=2$, τότε ο $\Fou\{f''(t)\}$ ισούται με:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$-\omega^2F(\omega)$</button><button class="opt" type="button"><span class="l">(β)</span>$\omega^2F(\omega)$</button><button class="opt" type="button"><span class="l">(γ)</span>$i\omega F(\omega)-f(0)$</button><button class="opt" type="button"><span class="l">(δ)</span>$-\omega^2F(\omega)-i\omega f(0)-f'(0)$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$(i\omega)^2F=-\omega^2F$. Σε αντίθεση με τον Laplace δεν εμφανίζονται αρχικές τιμές, γιατί η ευθεία δεν έχει «αρχή» (Θεώρημα 7.6).</div></div>
+</div><div class="quiz-q" data-a="2">
+<div class="stem">Ο αντίστροφος μετασχηματισμός Fourier του $\dfrac{1}{2-i\omega}$ είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$u(t)e^{-2t}$</button><button class="opt" type="button"><span class="l">(β)</span>$u(t)e^{2t}$</button><button class="opt" type="button"><span class="l">(γ)</span>$u(-t)e^{2t}$</button><button class="opt" type="button"><span class="l">(δ)</span>$e^{-2|t|}$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Πίνακας 7.1: $u(-t)e^{at}\leftrightarrow\frac{1}{a-i\omega}$ για $\Re a&gt;0$. Η απάντηση $u(t)e^{2t}$ είναι κλασικό λάθος· αυτή η συνάρτηση δεν έχει καν μετασχηματισμό Fourier (Σχόλιο 7.5).</div></div>
+</div><div class="quiz-q" data-a="1">
+<div class="stem">Η συνέλιξη $p_1*p_1$ δύο ορθογώνιων παλμών είναι:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>ο παλμός $p_2$</button><button class="opt" type="button"><span class="l">(β)</span>ο τριγωνικός παλμός $2q_2$</button><button class="opt" type="button"><span class="l">(γ)</span>η συνάρτηση $\frac{2\sin t}{t}$</button><button class="opt" type="button"><span class="l">(δ)</span>ο παλμός $p_1$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">Παράδειγμα 7.13: $(p_1*p_1)(t)=2-|t|$ για $|t|\le2$ και $0$ αλλού, με μετασχηματισμό $\bigl(\frac{2\sin\omega}{\omega}\bigr)^2$ (Θεώρημα 7.7).</div></div>
+</div><div class="quiz-q" data-a="3">
+<div class="stem">Με το θεώρημα Parseval–Plancherel, το $\displaystyle\int_{-\infty}^{\infty}\frac{\sin^2\omega}{\omega^2}\,d\omega$ ισούται με:</div>
+<div class="opts"><button class="opt" type="button"><span class="l">(α)</span>$\pi/2$</button><button class="opt" type="button"><span class="l">(β)</span>$1$</button><button class="opt" type="button"><span class="l">(γ)</span>$2\pi$</button><button class="opt" type="button"><span class="l">(δ)</span>$\pi$</button></div>
+<div class="feedback"><div class="verdict"></div><div class="small" style="margin-top:6px">$\frac{\sin^2\omega}{\omega^2}=\frac14|\Fou\{p_1\}|^2$ και $\int p_1^2\,dt=2$, άρα το ολοκλήρωμα είναι $\frac14\cdot2\pi\cdot2=\pi$ (Παράδειγμα 7.15).</div></div>
+</div>
+<div class="qnav"><button class="btn" id="prev" type="button">‹ Προηγούμενη</button><button class="btn primary" id="next" type="button">Επόμενη ›</button></div>
+</div>
+<div class="card" id="result" style="display:none"></div>
+<p class="small muted">Οι παραπομπές (Θεώρημα, Πρόταση, Ενότητα) αφορούν το βιβλίο.</p>
+
+<script>
+(function(){
+  var qs = Array.prototype.slice.call(document.querySelectorAll('.quiz-q'));
+  var N = qs.length, cur = 0, answered = new Array(N).fill(null);
+  var bar = document.getElementById('bar'), cnt = document.getElementById('cnt');
+  var prev = document.getElementById('prev'), next = document.getElementById('next');
+  var res = document.getElementById('result');
+  function show(k){
+    qs.forEach(function(q,i){ q.classList.toggle('active', i===k); });
+    cur = k; cnt.textContent = 'Ερώτηση ' + (k+1) + ' / ' + N;
+    bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+    prev.disabled = (k===0);
+    next.textContent = (k===N-1) ? 'Αποτελέσματα ›' : 'Επόμενη ›';
+    next.disabled = (answered[k]===null);
+    window.scrollTo({top: document.getElementById('quiz').offsetTop - 10, behavior: 'smooth'});
+  }
+  qs.forEach(function(q,i){
+    var ok = parseInt(q.getAttribute('data-a'),10);
+    var opts = q.querySelectorAll('.opt');
+    opts.forEach(function(b,j){
+      b.addEventListener('click', function(){
+        if (answered[i]!==null) return;
+        answered[i] = (j===ok);
+        opts.forEach(function(x,m){ x.disabled = true; if (m===ok) x.classList.add('correct'); });
+        if (j!==ok) b.classList.add('wrong');
+        var fb = q.querySelector('.feedback');
+        fb.querySelector('.verdict').innerHTML = (j===ok) ? '<strong style="color:var(--ok)">✓ Σωστά!</strong>' :
+          '<strong style="color:var(--bad)">✗ Όχι ακριβώς.</strong> Η σωστή απάντηση είναι η (' + 'αβγδ'[ok] + ').';
+        fb.classList.add('show');
+        next.disabled = false;
+        bar.style.width = (100*answered.filter(function(x){return x!==null;}).length/N) + '%';
+      });
+    });
+  });
+  prev.addEventListener('click', function(){ if (cur>0) show(cur-1); });
+  next.addEventListener('click', function(){
+    if (cur<N-1) { show(cur+1); return; }
+    var score = answered.filter(function(x){return x===true;}).length;
+    var wrong = []; answered.forEach(function(x,i){ if (x!==true) wrong.push(i+1); });
+    var msg = score===N ? 'Εξαιρετικά! Είστε έτοιμοι για το επόμενο κεφάλαιο.' :
+              score>=Math.ceil(0.7*N) ? 'Πολύ καλά. Ξαναδείτε τις ερωτήσεις που χάσατε.' :
+              'Χρειάζεται επανάληψη: ξαναδιαβάστε τις ενότητες των ερωτήσεων που χάσατε.';
+    res.innerHTML = '<div class="score">Σκορ: ' + score + ' / ' + N + '</div><p>' + msg + '</p>' +
+      (wrong.length ? '<p class="small muted">Ερωτήσεις για επανάληψη: ' + wrong.join(', ') + '. Πατήστε «Προηγούμενη» για να τις δείτε μαζί με την αιτιολόγηση.</p>' : '') +
+      '<p><button class="btn primary" type="button" onclick="location.reload()">↺ Ξανά από την αρχή</button></p>';
+    res.style.display = 'block'; res.scrollIntoView({behavior: 'smooth'});
+  });
+  show(0);
+})();
+</script>
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>
