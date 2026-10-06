@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Το πρώτο θεώρημα μετατόπισης · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Το πρώτο θεώρημα μετατόπισης">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script src="../../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../../index.html">Αρχική</a> › <a href="../../../index.html#ch01">Κεφάλαιο 1</a> › Animation</nav>
+<p><span class="badge anim">▶ Animation</span></p>
+<!--TITLE:Το πρώτο θεώρημα μετατόπισης-->
+<h1>Το πρώτο θεώρημα μετατόπισης</h1>
+<p class="subtitle">Κεφάλαιο 1 · Πολλαπλασιασμός με $e^{at}$ στον χρόνο = μετατόπιση $s\to s-a$ στο πεδίο του $s$</p>
+
+<div class="card">
+<p>Για $f(t)=e^{at}\sin\omega t$ το Θεώρημα 1.3 δίνει
+\[ \Lap\{e^{at}\sin\omega t\}=\frac{\omega}{(s-a)^2+\omega^2},\qquad s>a , \]
+δηλαδή ο μετασχηματισμός του $\sin\omega t$ <em>μετατοπίζεται</em> κατά $a$. Οι <strong>πόλοι</strong> μετακινούνται από τα $\pm i\omega$ στα $s=a\pm i\omega$. Μεταβάλετε τα $a$ και $\omega$ και παρατηρήστε τη σύνδεση της θέσης των πόλων με τη συμπεριφορά της $f(t)$.</p>
+<div class="ctrl"><label for="aa"><strong>a</strong></label><input type="range" id="aa" min="-1.5" max="1" step="0.01" value="-0.3"><output id="aOut">−0,30</output></div>
+<div class="ctrl"><label for="ww"><strong>ω</strong></label><input type="range" id="ww" min="0.5" max="4" step="0.1" value="2"><output id="wOut">2,0</output></div>
+<div class="row"><button class="btn primary" type="button" id="play">▶ Αναπαραγωγή</button><button class="btn" type="button" id="reset">↺ Επαναφορά</button></div>
+</div>
+
+<div class="anim-grid">
+  <div><canvas id="cTime" width="440" height="360" aria-label="Γράφημα της f(t)"></canvas>
+  <p class="legend">Πεδίο του χρόνου: $f(t)=e^{at}\sin\omega t$ (μπλε) και περιβάλλουσα $\pm e^{at}$ (πορτοκαλί).</p></div>
+  <div><canvas id="cPlane" width="440" height="360" aria-label="Το μιγαδικό επίπεδο του s"></canvas>
+  <p class="legend">Πεδίο του $s$: πόλοι $a\pm i\omega$ (×), πόλοι του $\sin\omega t$ (○) και περιοχή ύπαρξης $\Re s>a$ (σκιασμένη).</p></div>
+</div>
+
+<div class="readout">
+  <div><strong>Μετασχηματισμός:</strong><br><span id="Fs"></span></div>
+  <div><strong>Πόλοι:</strong><br><span id="poles"></span></div>
+  <div><strong>Υπάρχει για:</strong><br><span id="roc"></span></div>
+  <div><strong>Συμπεριφορά της f(t):</strong><br><span id="beh"></span></div>
+</div>
+
+<h2>Θεωρία &amp; αιτιολόγηση</h2>
+<div class="card">
+<ul>
+<li>Από τον ορισμό, $\Lap\{e^{at}f(t)\}=\int_0^\infty e^{-st}e^{at}f(t)\,dt=\int_0^\infty e^{-(s-a)t}f(t)\,dt=F(s-a)$: ο παράγοντας $e^{at}$ απλώς «μετακινεί» τη μεταβλητή $s$.</li>
+<li>Το <strong>πραγματικό μέρος</strong> $a$ των πόλων καθορίζει την περιβάλλουσα $e^{at}$: για $a<0$ (αριστερό ημιεπίπεδο) η ταλάντωση σβήνει, για $a=0$ (φανταστικός άξονας) έχει σταθερό πλάτος, για $a>0$ (δεξί ημιεπίπεδο) μεγαλώνει εκθετικά.</li>
+<li>Το <strong>φανταστικό μέρος</strong> $\pm\omega$ των πόλων είναι η κυκλική συχνότητα της ταλάντωσης.</li>
+<li>Ο μετασχηματισμός υπάρχει μόνο δεξιά από τους πόλους, για $s>a$: εκεί ο πυρήνας $e^{-st}$ «νικά» την αύξηση $e^{at}$.</li>
+</ul>
+<p><strong>Σύνδεση με το βιβλίο:</strong> Θεώρημα 1.3, Παράδειγμα 1.12 και Σχήμα 1.5. Στο Κεφάλαιο 3 θα χρησιμοποιήσουμε το θεώρημα «ανάποδα», για να αντιστρέφουμε όρους της μορφής $\frac{\omega}{(s-a)^2+\omega^2}$ μετά από συμπλήρωση τετραγώνου.</p>
+</div>
+
+<script>
+(function(){
+  function fmt(x, d){ var s = Math.abs(x).toFixed(d===undefined?2:d).replace('.', ','); return (x < -1e-12 ? '−' : '') + s; }
+  function setup(c){
+    var dpr = window.devicePixelRatio || 1, w = c.width, h = c.height;
+    if (!c._w){ c._w = w; c._h = h; c.width = w*dpr; c.height = h*dpr; }
+    var g = c.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,c._w,c._h); return g;
+  }
+  function mapper(c, x0, x1, y0, y1, pad){
+    pad = pad || 34; var W = c._w, H = c._h;
+    return { X: function(x){ return pad + (x-x0)/(x1-x0)*(W-2*pad); }, Y: function(y){ return H-pad - (y-y0)/(y1-y0)*(H-2*pad); }, x0:x0,x1:x1,y0:y0,y1:y1,W:W,H:H };
+  }
+  function axes(g, m, xl, yl, xt, yt, yd, ylRight){
+    g.strokeStyle = '#9aa4b2'; g.lineWidth = 1; g.fillStyle = '#5b6575'; g.font = '12px "Noto Sans", sans-serif';
+    g.beginPath(); g.moveTo(m.X(m.x0), m.Y(0)); g.lineTo(m.X(m.x1), m.Y(0)); g.stroke();
+    g.beginPath(); g.moveTo(m.X(0), m.Y(m.y0)); g.lineTo(m.X(0), m.Y(m.y1)); g.stroke();
+    xt.forEach(function(v){ g.beginPath(); g.moveTo(m.X(v), m.Y(0)-3); g.lineTo(m.X(v), m.Y(0)+3); g.stroke(); g.fillText(fmt(v, v%1?1:0), m.X(v)-6, m.Y(0)+15); });
+    yt.forEach(function(v){ g.beginPath(); g.moveTo(m.X(0)-3, m.Y(v)); g.lineTo(m.X(0)+3, m.Y(v)); g.stroke(); g.fillText(fmt(v, yd||0), ylRight ? m.X(m.x0)-24 : m.X(0)-32, m.Y(v)+4); });
+    g.fillStyle = '#1d2430'; g.font = 'italic 14px "Noto Serif", serif';
+    g.fillText(xl, m.X(m.x1)-22, m.Y(0)-8); g.fillText(yl, m.X(0)+8, m.Y(m.y1)+12);
+  }
+  var cT = document.getElementById('cTime'), cP = document.getElementById('cPlane');
+  var sa = document.getElementById('aa'), sw = document.getElementById('ww');
+  function draw(){
+    var a = parseFloat(sa.value), w = parseFloat(sw.value);
+    if (Math.abs(a) < 0.005) a = 0;
+    document.getElementById('aOut').textContent = fmt(a);
+    document.getElementById('wOut').textContent = fmt(w, 1);
+    // ---- πεδίο του χρόνου
+    var T = 8, Ymax = Math.max(1.2, Math.min(Math.exp(a*T), 30)*1.08);
+    var g = setup(cT), m = mapper(cT, 0, T, -Ymax, Ymax);
+    g.fillStyle = '#fff'; g.fillRect(0,0,m.W,m.H);
+    var yt = Ymax > 5 ? [-Math.floor(Ymax/5)*5, Math.floor(Ymax/5)*5] : [-1, 1];
+    axes(g, m, 't', 'f(t)', [2,4,6,8], yt);
+    g.save(); g.beginPath(); g.rect(m.X(0), m.Y(Ymax), m.X(T)-m.X(0), m.Y(-Ymax)-m.Y(Ymax)); g.clip();
+    g.setLineDash([5,4]); g.strokeStyle = '#c64800'; g.lineWidth = 1.5;
+    [1,-1].forEach(function(sg){ g.beginPath(); for (var i=0;i<=300;i++){ var t = T*i/300, v = sg*Math.exp(a*t); if(i) g.lineTo(m.X(t), m.Y(v)); else g.moveTo(m.X(t), m.Y(v)); } g.stroke(); });
+    g.setLineDash([]); g.strokeStyle = '#0082b4'; g.lineWidth = 2.4; g.beginPath();
+    for (var i=0;i<=1200;i++){ var t = T*i/1200, v = Math.exp(a*t)*Math.sin(w*t); if(i) g.lineTo(m.X(t), m.Y(v)); else g.moveTo(m.X(t), m.Y(v)); }
+    g.stroke(); g.restore();
+    // ---- πεδίο του s
+    var h = setup(cP), n = mapper(cP, -2, 1.6, -4.6, 4.6);
+    h.fillStyle = '#fff'; h.fillRect(0,0,n.W,n.H);
+    h.fillStyle = 'rgba(0,130,180,.10)'; h.fillRect(n.X(a), n.Y(n.y1), n.X(n.x1)-n.X(a), n.Y(n.y0)-n.Y(n.y1));
+    h.strokeStyle = 'rgba(0,130,180,.55)'; h.setLineDash([6,4]); h.beginPath(); h.moveTo(n.X(a), n.Y(n.y0)); h.lineTo(n.X(a), n.Y(n.y1)); h.stroke(); h.setLineDash([]);
+    axes(h, n, 'Re s', 'Im s', [-2,-1,1], [-4,-2,2,4], 0, true);
+    // πόλοι του sin ωt και βέλη μετατόπισης
+    [w,-w].forEach(function(im){
+      h.strokeStyle = '#9aa4b2'; h.lineWidth = 1.5; h.beginPath(); h.arc(n.X(0), n.Y(im), 6, 0, 2*Math.PI); h.stroke();
+      if (Math.abs(a) > 0.04){ h.strokeStyle = '#5b6575'; h.beginPath(); h.moveTo(n.X(0), n.Y(im)); h.lineTo(n.X(a), n.Y(im)); h.stroke();
+        var dx = a > 0 ? -6 : 6; h.beginPath(); h.moveTo(n.X(a)+dx, n.Y(im)-4); h.lineTo(n.X(a), n.Y(im)); h.lineTo(n.X(a)+dx, n.Y(im)+4); h.stroke(); }
+      var px = n.X(a), py = n.Y(im); h.strokeStyle = '#b3261e'; h.lineWidth = 2.5;
+      h.beginPath(); h.moveTo(px-7,py-7); h.lineTo(px+7,py+7); h.moveTo(px+7,py-7); h.lineTo(px-7,py+7); h.stroke();
+    });
+    h.fillStyle = '#0b5f86'; h.font = '12px "Noto Sans", sans-serif'; h.fillText('περιοχή ύπαρξης: Re s > ' + fmt(a), n.X(n.x1)-178, n.Y(n.y0)-8);
+    // ---- αναγνώσεις
+    var sh = a === 0 ? 's' : (a > 0 ? '(s − ' + fmt(a) + ')' : '(s + ' + fmt(-a) + ')');
+    document.getElementById('Fs').textContent = 'F(s) = ' + fmt(w,1) + ' / (' + (a===0 ? 's' : sh) + '² + ' + fmt(w*w,2) + ')';
+    document.getElementById('poles').textContent = 's = ' + fmt(a) + ' ± ' + fmt(w,1) + ' i';
+    document.getElementById('roc').textContent = 's > ' + fmt(a);
+    document.getElementById('beh').textContent = a < 0 ? 'φθίνει στο 0 (πόλοι στο αριστερό ημιεπίπεδο)' : (a === 0 ? 'σταθερό πλάτος (πόλοι στον φανταστικό άξονα)' : 'αυξάνεται εκθετικά (πόλοι στο δεξί ημιεπίπεδο)');
+  }
+  sa.addEventListener('input', draw); sw.addEventListener('input', draw);
+  var playing = null, dir = -1;
+  document.getElementById('play').addEventListener('click', function(){
+    var b = this;
+    if (playing){ cancelAnimationFrame(playing); playing = null; b.textContent = '▶ Αναπαραγωγή'; return; }
+    b.textContent = '❚❚ Παύση';
+    (function step(){ var a = parseFloat(sa.value) + dir*0.004; if (a <= -1.2){ a = -1.2; dir = 1; } if (a >= 0.6){ a = 0.6; dir = -1; } sa.value = a.toFixed(3); draw(); playing = requestAnimationFrame(step); })();
+  });
+  document.getElementById('reset').addEventListener('click', function(){ sa.value = -0.3; sw.value = 2; draw(); });
+  draw();
+})();
+</script>
+
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

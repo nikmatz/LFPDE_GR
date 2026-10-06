@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Συντελεστές με ρυθμιστές · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Συντελεστές με ρυθμιστές">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script src="../../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../../index.html">Αρχική</a> › <a href="../../../index.html#ch05">Κεφάλαιο 5</a> › Animation</nav>
+<p><span class="badge anim">▶ Animation</span></p>
+<!--TITLE:Συντελεστές με ρυθμιστές-->
+<h1>Συντελεστές με ρυθμιστές</h1>
+<p class="subtitle">Κεφάλαιο 5 · Η καλύτερη προσέγγιση με ένα τριγωνομετρικό πολυώνυμο πρώτου βαθμού: βρείτε τη με το χέρι</p>
+
+<div class="card">
+<p>Προσεγγίζουμε μια $2\pi$-περιοδική συνάρτηση $f$ με το τριγωνομετρικό πολυώνυμο
+\[ T_1(x)=\frac{\alpha_0}{2}+\alpha_1\cos x+\beta_1\sin x \]
+και μετράμε την ποιότητα της προσέγγισης με το τετραγωνικό σφάλμα $E=\|f-T_1\|^2=\int_{-\pi}^{\pi}\bigl(f-T_1\bigr)^2dx$. Επιλέξτε συνάρτηση και μετακινήστε τους ρυθμιστές ώστε το $E$ να γίνει όσο το δυνατόν μικρότερο.</p>
+<div class="row" id="funcs"><button class="btn sel" type="button" data-f="0">τετραγωνικός παλμός $q(x)$</button><button class="btn" type="button" data-f="1">πριονωτή $\sigma(x)=x$</button><button class="btn" type="button" data-f="2">τριγωνική $|x|$</button><button class="btn" type="button" data-f="3">$x(\pi-|x|)$</button></div>
+<div class="ctrl"><label for="sA0"><strong>α₀</strong></label><input type="range" id="sA0" min="-4" max="4" step="0.01" value="0"><output id="oA0">0,00</output></div>
+<div class="ctrl"><label for="sA1"><strong>α₁</strong></label><input type="range" id="sA1" min="-3" max="3" step="0.01" value="0"><output id="oA1">0,00</output></div>
+<div class="ctrl"><label for="sB1"><strong>β₁</strong></label><input type="range" id="sB1" min="-3" max="3" step="0.01" value="0"><output id="oB1">0,00</output></div>
+<div class="row"><button class="btn primary" type="button" id="best">★ Συντελεστές Fourier</button><button class="btn" type="button" id="zero">↺ Μηδενισμός</button><button class="btn ghost" type="button" id="rand">Τυχαίο σημείο</button><button class="btn ghost" type="button" id="play">▶ Αυτόματη αναζήτηση</button></div>
+</div>
+
+<div class="anim-grid">
+  <div><canvas id="cF" width="440" height="360" aria-label="Η συνάρτηση f και το πολυώνυμο T1"></canvas>
+  <p class="legend">Η $f$ (γκρι) και το $T_1$ (μπλε) σε μια περίοδο· η σκιασμένη περιοχή είναι η διαφορά $f-T_1$, της οποίας το «τετράγωνο» μετράει το $E$.</p></div>
+  <div><canvas id="cE" width="440" height="360" aria-label="Το σφάλμα ως συνάρτηση κάθε ρυθμιστή"></canvas>
+  <p class="legend">Το $E$ ως συνάρτηση κάθε ρυθμιστή, με τους άλλους δύο σταθερούς: τρεις παραβολές. Η κορυφή κάθε παραβολής (αστεράκι) είναι ο συντελεστής Fourier και <em>δεν μετακινείται</em> όταν αλλάζετε τους άλλους ρυθμιστές.</p></div>
+</div>
+
+<div class="readout">
+  <div><strong>Σφάλμα τώρα:</strong><br><span id="eNow"></span></div>
+  <div><strong>Ελάχιστο σφάλμα:</strong><br><span id="eMin"></span></div>
+  <div><strong>Συντελεστές Fourier:</strong><br><span id="coef"></span></div>
+  <div><strong>Σχόλιο:</strong><br><span id="note"></span></div>
+</div>
+
+<h2>Θεωρία &amp; αιτιολόγηση</h2>
+<div class="card">
+<ul>
+<li>Λόγω ορθογωνιότητας (Θεώρημα 5.1) το σφάλμα «σπάει» σε ανεξάρτητα τετράγωνα:
+\[ E=\|f-S_1\|^2+\pi\Bigl[\tfrac12(\alpha_0-a_0)^2+(\alpha_1-a_1)^2+(\beta_1-b_1)^2\Bigr], \]
+όπου $a_0,a_1,b_1$ οι συντελεστές Fourier της $f$ και $S_1$ η μερική σειρά πρώτου βαθμού. Κάθε όρος εξαρτάται από <em>έναν μόνο</em> ρυθμιστή: γι' αυτό η βέλτιστη τιμή του καθενός δεν εξαρτάται από τους άλλους.</li>
+<li>Το ελάχιστο $\|f-S_1\|^2=\|f\|^2-\pi\bigl(\tfrac{a_0^2}{2}+a_1^2+b_1^2\bigr)$ πιάνεται ακριβώς στους συντελεστές Fourier (Θεώρημα 5.2): γεωμετρικά, η $S_1$ είναι η ορθογώνια προβολή της $f$ στον χώρο των πολυωνύμων πρώτου βαθμού (Σχήμα 5.4).</li>
+<li>Για την $x(\pi-|x|)$ μία αρμονική αφήνει μόλις το $0{,}14\%$ του $\|f\|^2$ (Παράδειγμα 5.4), ενώ για τον τετραγωνικό παλμό το $19\%$: τα άλματα «κρύβουν» ενέργεια στις υψηλές αρμονικές.</li>
+</ul>
+<p><strong>Σύνδεση με το βιβλίο:</strong> Θεώρημα 5.2, Ανισότητα Bessel (Θεώρημα 5.3), Παράδειγμα 5.4 και Σχήμα 5.4.</p>
+<p class="small muted">Ερώτηση για σκέψη: για την τριγωνική $|x|$ ο ρυθμιστής $\beta_1$ δεν βελτιώνει ποτέ το σφάλμα. Γιατί; Ποιο ρόλο παίζει η συμμετρία της $f$;</p>
+</div>
+
+<script>
+(function(){
+  function fmt(x, d){ var s = Math.abs(x).toFixed(d===undefined?2:d).replace('.', ','); return (x < -1e-12 && parseFloat(s.replace(',', '.')) !== 0 ? '−' : '') + s; }
+  function setup(c){
+    var dpr = window.devicePixelRatio || 1, w = c.width, h = c.height;
+    if (!c._w){ c._w = w; c._h = h; c.width = w*dpr; c.height = h*dpr; }
+    var g = c.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,c._w,c._h); return g;
+  }
+  function mapper(c, x0, x1, y0, y1, pad, top, bot){
+    pad = pad || 36; top = (top === undefined) ? pad : top; bot = (bot === undefined) ? pad : bot;
+    return { X: function(x){ return pad + (x-x0)/(x1-x0)*(c._w-2*pad); }, Y: function(y){ return top + (y1-y)/(y1-y0)*(c._h-top-bot); }, x0:x0,x1:x1,y0:y0,y1:y1,W:c._w,H:c._h };
+  }
+  var PI = Math.PI;
+  // f, συντελεστές Fourier (a0, a1, b1) και ‖f‖² για κάθε συνάρτηση
+  var F = [
+    { f: function(x){ return x > 0 ? 1 : (x < 0 ? -1 : 0); }, a0: 0, a1: 0, b1: 4/PI, n2: 2*PI, ym: [-1.9, 1.9], name: 'q' },
+    { f: function(x){ return x; }, a0: 0, a1: 0, b1: 2, n2: 2*PI*PI*PI/3, ym: [-3.6, 3.6], name: 'σ' },
+    { f: function(x){ return Math.abs(x); }, a0: PI, a1: -4/PI, b1: 0, n2: 2*PI*PI*PI/3, ym: [-0.9, 3.6], name: '|x|' },
+    { f: function(x){ return x*(PI - Math.abs(x)); }, a0: 0, a1: 0, b1: 8/PI, n2: Math.pow(PI, 5)/15, ym: [-3.2, 3.2], name: 'x(π−|x|)' }
+  ];
+  var cur = 0, sA0 = document.getElementById('sA0'), sA1 = document.getElementById('sA1'), sB1 = document.getElementById('sB1');
+  function vals(){ return [parseFloat(sA0.value), parseFloat(sA1.value), parseFloat(sB1.value)]; }
+  function Emin(o){ return o.n2 - PI*(o.a0*o.a0/2 + o.a1*o.a1 + o.b1*o.b1); }
+  function Eof(o, v){ return Emin(o) + PI*(0.5*Math.pow(v[0]-o.a0, 2) + Math.pow(v[1]-o.a1, 2) + Math.pow(v[2]-o.b1, 2)); }
+  var cF = document.getElementById('cF'), cE = document.getElementById('cE');
+  function draw(){
+    var o = F[cur], v = vals(), E = Eof(o, v), Em = Emin(o);
+    document.getElementById('oA0').textContent = fmt(v[0]); document.getElementById('oA1').textContent = fmt(v[1]); document.getElementById('oB1').textContent = fmt(v[2]);
+    // ---- αριστερό παράθυρο: f και T1
+    var g = setup(cF), m = mapper(cF, -PI, PI, o.ym[0], o.ym[1], 34);
+    g.fillStyle = '#fff'; g.fillRect(0,0,m.W,m.H);
+    g.fillStyle = 'rgba(0,130,180,.13)';
+    for (var i=0;i<400;i++){ var x = -PI + 2*PI*(i+0.5)/400, fx = o.f(x), tx = v[0]/2 + v[1]*Math.cos(x) + v[2]*Math.sin(x);
+      g.fillRect(m.X(x - PI/400), Math.min(m.Y(fx), m.Y(tx)), m.X(x + PI/400) - m.X(x - PI/400) + 0.5, Math.abs(m.Y(fx) - m.Y(tx))); }
+    g.strokeStyle = '#9aa4b2'; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(m.X(-PI), m.Y(0)); g.lineTo(m.X(PI), m.Y(0)); g.stroke();
+    g.beginPath(); g.moveTo(m.X(0), m.Y(o.ym[0])); g.lineTo(m.X(0), m.Y(o.ym[1])); g.stroke();
+    g.fillStyle = '#5b6575'; g.font = '12px "Noto Sans", sans-serif';
+    [[-PI,'−π'],[-PI/2,'−π/2'],[PI/2,'π/2'],[PI,'π']].forEach(function(p){ g.fillText(p[1], m.X(p[0]) - 10, m.Y(0) + 15); });
+    [-3,-2,-1,1,2,3].forEach(function(k){ if (k > o.ym[0] && k < o.ym[1]){ g.beginPath(); g.moveTo(m.X(0)-3, m.Y(k)); g.lineTo(m.X(0)+3, m.Y(k)); g.stroke(); g.fillText(fmt(k,0), m.X(0)-22, m.Y(k)+4); } });
+    g.strokeStyle = '#8a94a3'; g.lineWidth = 3;
+    var prev = null;
+    for (i=0;i<=800;i++){ var xx = -PI + 2*PI*i/800, yy = o.f(xx);
+      if (prev !== null && Math.abs(yy - prev) > 0.5){ g.stroke(); g.beginPath(); g.moveTo(m.X(xx), m.Y(yy)); }
+      else if (i === 0){ g.beginPath(); g.moveTo(m.X(xx), m.Y(yy)); } else g.lineTo(m.X(xx), m.Y(yy)); prev = yy; }
+    g.stroke();
+    g.strokeStyle = '#0082b4'; g.lineWidth = 2.4; g.beginPath();
+    for (i=0;i<=400;i++){ var x2 = -PI + 2*PI*i/400, t2 = v[0]/2 + v[1]*Math.cos(x2) + v[2]*Math.sin(x2); if (i) g.lineTo(m.X(x2), m.Y(t2)); else g.moveTo(m.X(x2), m.Y(t2)); }
+    g.stroke();
+    g.fillStyle = '#1d2430'; g.font = 'italic 14px "Noto Serif", serif'; g.fillText('x', m.X(PI) - 4, m.Y(0) - 8);
+    g.fillStyle = '#0082b4'; g.fillText('T₁', 8, 18); g.fillStyle = '#5b6575'; g.fillText('f = ' + o.name, 44, 18);
+    // ---- δεξί παράθυρο: τρεις παραβολές E(α0), E(α1), E(β1)
+    var h = setup(cE); h.fillStyle = '#fff'; h.fillRect(0,0,cE._w,cE._h);
+    var names = ['α₀', 'α₁', 'β₁'], rng = [[-4,4],[-3,3],[-3,3]], best = [o.a0, o.a1, o.b1], wgt = [PI/2, PI, PI];
+    var Emax = 0;
+    for (var j=0;j<3;j++){ var e1 = E - wgt[j]*Math.pow(v[j]-best[j], 2); Emax = Math.max(Emax, e1 + wgt[j]*Math.max(Math.pow(rng[j][0]-best[j],2), Math.pow(rng[j][1]-best[j],2))); }
+    Emax = Math.max(Emax, 1e-9);
+    var H3 = cE._h/3;
+    for (j=0;j<3;j++){
+      var top = j*H3 + 8, bot = cE._h - (j+1)*H3 + 16;
+      var n = mapper(cE, rng[j][0], rng[j][1], 0, Emax*1.05, 30, top, bot);
+      var base = E - wgt[j]*Math.pow(v[j]-best[j], 2);
+      h.strokeStyle = '#d4d9e0'; h.lineWidth = 1; h.beginPath(); h.moveTo(n.X(rng[j][0]), n.Y(0)); h.lineTo(n.X(rng[j][1]), n.Y(0)); h.stroke();
+      h.strokeStyle = '#9aa4b2'; h.setLineDash([3,3]); h.beginPath(); h.moveTo(n.X(rng[j][0]), n.Y(Em)); h.lineTo(n.X(rng[j][1]), n.Y(Em)); h.stroke(); h.setLineDash([]);
+      h.strokeStyle = ['#0082b4','#2e7d32','#c64800'][j]; h.lineWidth = 2; h.beginPath();
+      for (i=0;i<=200;i++){ var a = rng[j][0] + (rng[j][1]-rng[j][0])*i/200, ev = base + wgt[j]*Math.pow(a-best[j], 2); if (i) h.lineTo(n.X(a), n.Y(ev)); else h.moveTo(n.X(a), n.Y(ev)); }
+      h.stroke();
+      h.fillStyle = '#b3261e'; h.font = '16px "Noto Sans", sans-serif'; h.fillText('★', n.X(best[j]) - 6, n.Y(base) + 6);
+      h.fillStyle = h.strokeStyle; h.beginPath(); h.arc(n.X(v[j]), n.Y(E), 5, 0, 2*PI); h.fill();
+      h.fillStyle = '#1d2430'; h.font = 'italic 13px "Noto Serif", serif'; h.fillText('E(' + names[j] + ')', 6, top + 12);
+      h.fillStyle = '#5b6575'; h.font = '11px "Noto Sans", sans-serif';
+      h.fillText(fmt(rng[j][0],0), n.X(rng[j][0]) - 4, n.Y(0) + 12); h.fillText(fmt(rng[j][1],0), n.X(rng[j][1]) - 6, n.Y(0) + 12); h.fillText('0', n.X(0) - 3, n.Y(0) + 12);
+    }
+    document.getElementById('eNow').textContent = 'E = ' + fmt(E, 4) + '  (' + fmt(100*E/o.n2, 2) + '% του ‖f‖²)';
+    document.getElementById('eMin').textContent = 'E min = ' + fmt(Em, 4) + '  (' + fmt(100*Em/o.n2, 2) + '%)';
+    document.getElementById('coef').textContent = 'a₀ = ' + fmt(o.a0, 3) + ',  a₁ = ' + fmt(o.a1, 3) + ',  b₁ = ' + fmt(o.b1, 3);
+    var d = Math.sqrt(0.5*Math.pow(v[0]-o.a0,2) + Math.pow(v[1]-o.a1,2) + Math.pow(v[2]-o.b1,2));
+    document.getElementById('note').textContent = d < 0.02 ? 'βέλτιστο: οι ρυθμιστές βρίσκονται στους συντελεστές Fourier' : (d < 0.3 ? 'πολύ κοντά — συνεχίστε προς το αστεράκι κάθε παραβολής' : 'μετακινήστε κάθε ρυθμιστή στην κορυφή της δικής του παραβολής');
+  }
+  [sA0, sA1, sB1].forEach(function(s){ s.addEventListener('input', draw); });
+  Array.prototype.forEach.call(document.querySelectorAll('#funcs [data-f]'), function(b){ b.addEventListener('click', function(){
+    cur = parseInt(b.getAttribute('data-f'), 10);
+    Array.prototype.forEach.call(document.querySelectorAll('#funcs [data-f]'), function(x){ x.classList.toggle('sel', x === b); });
+    draw(); }); });
+  function setv(a){ sA0.value = a[0]; sA1.value = a[1]; sB1.value = a[2]; draw(); }
+  document.getElementById('best').addEventListener('click', function(){ var o = F[cur]; setv([o.a0, o.a1, o.b1]); });
+  document.getElementById('zero').addEventListener('click', function(){ setv([0, 0, 0]); });
+  document.getElementById('rand').addEventListener('click', function(){ setv([(Math.random()*8-4).toFixed(2), (Math.random()*6-3).toFixed(2), (Math.random()*6-3).toFixed(2)]); });
+  var playing = null;
+  document.getElementById('play').addEventListener('click', function(){
+    var b = this;
+    if (playing){ cancelAnimationFrame(playing); playing = null; b.textContent = '▶ Αυτόματη αναζήτηση'; return; }
+    b.textContent = '❚❚ Παύση'; var k = 0;
+    (function step(){
+      // «κάθοδος συντεταγμένων»: κάθε φορά βελτιώνεται ένας ρυθμιστής, ανεξάρτητα από τους άλλους
+      var o = F[cur], v = vals(), best = [o.a0, o.a1, o.b1], j = Math.floor(k/40) % 3;
+      v[j] += 0.08*(best[j] - v[j]); setv(v.map(function(z){ return z.toFixed(3); })); k++;
+      var d = Math.abs(v[0]-best[0]) + Math.abs(v[1]-best[1]) + Math.abs(v[2]-best[2]);
+      if (d < 0.004){ playing = null; b.textContent = '▶ Αυτόματη αναζήτηση'; return; }
+      playing = requestAnimationFrame(step); })();
+  });
+  draw();
+})();
+</script>
+
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

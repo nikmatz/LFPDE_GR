@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Πόλοι και αποκρίσεις · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Πόλοι και αποκρίσεις">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script src="../../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../../index.html">Αρχική</a> › <a href="../../../index.html#ch03">Κεφάλαιο 3</a> › Animation</nav>
+<p><span class="badge anim">▶ Animation</span></p>
+<!--TITLE:Πόλοι και αποκρίσεις-->
+<h1>Πόλοι και αποκρίσεις</h1>
+<p class="subtitle">Κεφάλαιο 3 · Η θέση των πόλων του $F(s)$ «διαβάζεται» στη μορφή της $f(t)=\Lapinv\{F(s)\}$</p>
+
+<div class="card">
+<p>Κάθε πόλος του $F(s)$ συνεισφέρει στην $f(t)$ έναν «τρόπο»: ένας απλός πραγματικός πόλος $\alpha$ τον $e^{\alpha t}$, ένα ζεύγος συζυγών πόλων $\alpha\pm i\beta$ την ταλάντωση $e^{\alpha t}\sin\beta t$, ενώ ένας <strong>διπλός</strong> πόλος πολλαπλασιάζει τον τρόπο με $t$. <strong>Σύρετε</strong> τον πόλο στο επίπεδο του $s$ (ή χρησιμοποιήστε τους δρομείς) και παρατηρήστε την $f(t)$.</p>
+<div class="row"><button class="btn ghost" type="button" data-mode="real">πραγματικός πόλος $\alpha$</button><button class="btn ghost" type="button" data-mode="pair">ζεύγος $\alpha\pm i\beta$</button><button class="btn ghost" type="button" id="dbl">διπλός πόλος: όχι</button></div>
+<div class="ctrl"><label for="al"><strong>α</strong></label><input type="range" id="al" min="-2" max="1" step="0.01" value="-0.3"><output id="aOut">−0,30</output></div>
+<div class="ctrl" id="bRow"><label for="be"><strong>β</strong></label><input type="range" id="be" min="0.3" max="4" step="0.01" value="2"><output id="bOut">2,00</output></div>
+<div class="row"><button class="btn primary" type="button" id="play">▶ Αναπαραγωγή</button><button class="btn" type="button" id="reset">↺ Επαναφορά</button></div>
+</div>
+
+<div class="anim-grid">
+  <div><canvas id="cPlane" class="drag" width="440" height="360" aria-label="Το επίπεδο του s με τους πόλους"></canvas>
+  <p class="legend">Επίπεδο του $s$: οι πόλοι (×, διπλοί με κύκλο) και το αριστερό ημιεπίπεδο $\Re s<0$ (σκιασμένο), όπου οι τρόποι σβήνουν.</p></div>
+  <div><canvas id="cTime" width="440" height="360" aria-label="Η συνάρτηση f(t)"></canvas>
+  <p class="legend">Πεδίο του χρόνου: $f(t)$ (μπλε) και περιβάλλουσα $\pm e^{\alpha t}$, ή $\pm e^{\alpha t}\sqrt{1+\beta^2t^2}$ για διπλό ζεύγος (πορτοκαλί), όταν υπάρχει ταλάντωση.</p></div>
+</div>
+
+<div class="readout">
+  <div><strong>Πόλοι:</strong><br><span class="formula" id="poles"></span></div>
+  <div><strong>F(s):</strong><br><span class="formula" id="Fs"></span></div>
+  <div><strong>f(t):</strong><br><span class="formula" id="ft"></span></div>
+  <div><strong>Συμπεριφορά:</strong><br><span id="beh"></span></div>
+</div>
+
+<h2>Θεωρία &amp; αιτιολόγηση</h2>
+<div class="card">
+<ul>
+<li><strong>Πραγματικό μέρος $\alpha$:</strong> ρυθμίζει την περιβάλλουσα $e^{\alpha t}$. Αριστερά του φανταστικού άξονα ($\alpha<0$) ο τρόπος σβήνει, και μάλιστα τόσο πιο γρήγορα όσο πιο αριστερά βρίσκεται ο πόλος· δεξιά ($\alpha>0$) αυξάνεται εκθετικά.</li>
+<li><strong>Φανταστικό μέρος $\beta$:</strong> είναι η κυκλική συχνότητα της ταλάντωσης· πόλοι πάνω στον πραγματικό άξονα δεν δίνουν ταλάντωση.</li>
+<li><strong>Διπλοί πόλοι:</strong> από το Θεώρημα 3.4 (ή από την Πρόταση 3.4 για τα μιγαδικά ζεύγη), ο τρόπος πολλαπλασιάζεται με $t$: $\Lapinv\bigl\{\frac{1}{(s-\alpha)^2}\bigr\}=t\,e^{\alpha t}$ και $\Lapinv\bigl\{\frac{2\beta^3}{((s-\alpha)^2+\beta^2)^2}\bigr\}=e^{\alpha t}(\sin\beta t-\beta t\cos\beta t)$. Αριστερά του άξονα ο παράγοντας $t$ δεν αλλάζει το τελικό συμπέρασμα, αφού η $e^{\alpha t}$ τον «νικά»· <em>πάνω</em> στον άξονα όμως η ταλάντωση αποκτά πλάτος που μεγαλώνει γραμμικά: είναι ο μηχανισμός του <strong>συντονισμού</strong>.</li>
+</ul>
+<p><strong>Σύνδεση με το βιβλίο:</strong> Σχόλιο 3.4, Σχήμα 3.2, Θεώρημα 3.4 και Πρόταση 3.4. Στο Κεφάλαιο 4 οι ίδιοι κανόνες θα γίνουν το κριτήριο <strong>ευστάθειας</strong> ενός συστήματος (Θεώρημα 4.3).</p>
+<p class="small muted">Ερώτηση για σκέψη: ποιος από τους δύο πόλους $-0{,}2$ και $-2$ καθορίζει τη συμπεριφορά μιας $f$ με $F(s)=\frac{1}{(s+0{,}2)(s+2)}$ για μεγάλα $t$; Γιατί λέγεται «κυρίαρχος»;</p>
+</div>
+
+<script>
+(function(){
+  function fmt(x, d){ var s = Math.abs(x).toFixed(d===undefined?2:d).replace('.', ','); return (x < -1e-12 && parseFloat(s.replace(',', '.')) !== 0 ? '−' : '') + s; }
+  function setup(c){
+    var dpr = window.devicePixelRatio || 1, w = c.width, h = c.height;
+    if (!c._w){ c._w = w; c._h = h; c.width = w*dpr; c.height = h*dpr; }
+    var g = c.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,c._w,c._h); return g;
+  }
+  function mapper(c, x0, x1, y0, y1, pad){
+    pad = pad || 36; var W = c._w, H = c._h;
+    return { X: function(x){ return pad + (x-x0)/(x1-x0)*(W-2*pad); }, Y: function(y){ return H-pad - (y-y0)/(y1-y0)*(H-2*pad); },
+             iX: function(px){ return x0 + (px-pad)/(W-2*pad)*(x1-x0); }, iY: function(py){ return y0 + (H-pad-py)/(H-2*pad)*(y1-y0); },
+             x0:x0,x1:x1,y0:y0,y1:y1,W:W,H:H };
+  }
+  function axes(g, m, xl, yl, xt, yt, yd, ylLeft){
+    g.strokeStyle = '#9aa4b2'; g.lineWidth = 1; g.fillStyle = '#5b6575'; g.font = '12px "Noto Sans", sans-serif';
+    g.beginPath(); g.moveTo(m.X(m.x0), m.Y(0)); g.lineTo(m.X(m.x1), m.Y(0)); g.stroke();
+    g.beginPath(); g.moveTo(m.X(0), m.Y(m.y0)); g.lineTo(m.X(0), m.Y(m.y1)); g.stroke();
+    xt.forEach(function(v){ g.beginPath(); g.moveTo(m.X(v), m.Y(0)-3); g.lineTo(m.X(v), m.Y(0)+3); g.stroke(); g.fillText(fmt(v, v%1?1:0), m.X(v)-6, m.Y(0)+15); });
+    yt.forEach(function(v){ g.beginPath(); g.moveTo(m.X(0)-3, m.Y(v)); g.lineTo(m.X(0)+3, m.Y(v)); g.stroke(); g.fillText(fmt(v, yd||0), ylLeft ? m.X(m.x0)-26 : m.X(0)-32, m.Y(v)+4); });
+    g.fillStyle = '#1d2430'; g.font = 'italic 14px "Noto Serif", serif';
+    g.fillText(xl, m.X(m.x1)-30, m.Y(0)-8); g.fillText(yl, m.X(0)+8, m.Y(m.y1)+12);
+  }
+  var mode = 'pair', dbl = false;
+  var cP = document.getElementById('cPlane'), cT = document.getElementById('cTime');
+  var sa = document.getElementById('al'), sb = document.getElementById('be');
+  var mP = null;
+  function f(t, a, b){
+    if (mode === 'real') return dbl ? t*Math.exp(a*t) : Math.exp(a*t);
+    return dbl ? Math.exp(a*t)*(Math.sin(b*t) - b*t*Math.cos(b*t)) : Math.exp(a*t)*Math.sin(b*t);
+  }
+  function env(t, a, b){ return dbl ? Math.exp(a*t)*Math.sqrt(1 + b*b*t*t) : Math.exp(a*t); }
+  function draw(){
+    var a = parseFloat(sa.value), b = parseFloat(sb.value);
+    if (Math.abs(a) < 0.03) a = 0;
+    document.getElementById('aOut').textContent = fmt(a);
+    document.getElementById('bOut').textContent = fmt(b);
+    document.getElementById('bRow').style.display = mode === 'pair' ? '' : 'none';
+    Array.prototype.forEach.call(document.querySelectorAll('[data-mode]'), function(x){ x.classList.toggle('sel', x.getAttribute('data-mode') === mode); });
+    var bd = document.getElementById('dbl'); bd.textContent = 'διπλός πόλος: ' + (dbl ? 'ναι' : 'όχι'); bd.classList.toggle('sel', dbl);
+    // ---- επίπεδο του s
+    var g = setup(cP); mP = mapper(cP, -2.2, 1.3, -4.6, 4.6);
+    var m = mP; g.fillStyle = '#fff'; g.fillRect(0,0,m.W,m.H);
+    g.fillStyle = 'rgba(0,148,68,.07)'; g.fillRect(m.X(m.x0), m.Y(m.y1), m.X(0)-m.X(m.x0), m.Y(m.y0)-m.Y(m.y1));
+    axes(g, m, 'Re s', 'Im s', [-2,-1,1], [-4,-2,2,4], 0, true);
+    var pts = mode === 'pair' ? [[a, b], [a, -b]] : [[a, 0]];
+    pts.forEach(function(p){
+      var px = m.X(p[0]), py = m.Y(p[1]); g.strokeStyle = '#b3261e'; g.lineWidth = 2.6;
+      g.beginPath(); g.moveTo(px-7,py-7); g.lineTo(px+7,py+7); g.moveTo(px+7,py-7); g.lineTo(px-7,py+7); g.stroke();
+      if (dbl){ g.lineWidth = 1.6; g.beginPath(); g.arc(px, py, 11, 0, 2*Math.PI); g.stroke(); }
+    });
+    g.fillStyle = '#5b6575'; g.font = '12px "Noto Sans", sans-serif'; g.fillText('σύρετε τον πόλο', m.X(m.x0)+4, m.Y(m.y1)+14);
+    // ---- πεδίο του χρόνου
+    var T = 10, mx = 0, i, t, v;
+    for (i=0;i<=400;i++){ t = T*i/400; mx = Math.max(mx, Math.abs(f(t, a, b))); }
+    var Y = Math.min(Math.max(1.15, 1.1*mx), 14), lo = (mode === 'real') ? -0.12*Y : -Y;
+    var h = setup(cT), n = mapper(cT, 0, T, lo, Y);
+    h.fillStyle = '#fff'; h.fillRect(0,0,n.W,n.H);
+    var tk = Y > 6 ? [5, 10].filter(function(q){ return q < Y; }) : (Y > 2.5 ? [1, 2] : [0.5, 1]);
+    if (mode === 'pair') tk = tk.map(function(q){ return -q; }).concat(tk);
+    axes(h, n, 't', 'f(t)', [2,4,6,8,10], tk, (Y > 2.5) ? 0 : 1);
+    h.save(); h.beginPath(); h.rect(n.X(0), n.Y(Y), n.X(T)-n.X(0), n.Y(lo)-n.Y(Y)); h.clip();
+    if (mode === 'pair'){
+      h.setLineDash([5,4]); h.strokeStyle = '#c64800'; h.lineWidth = 1.4;
+      [1,-1].forEach(function(sg){ h.beginPath(); for (var k=0;k<=300;k++){ var tt = T*k/300, w = sg*env(tt, a, b); if(k) h.lineTo(n.X(tt), n.Y(w)); else h.moveTo(n.X(tt), n.Y(w)); } h.stroke(); });
+      h.setLineDash([]);
+    }
+    h.strokeStyle = '#0082b4'; h.lineWidth = 2.4; h.beginPath();
+    for (i=0;i<=1200;i++){ t = T*i/1200; v = f(t, a, b); if(i) h.lineTo(n.X(t), n.Y(v)); else h.moveTo(n.X(t), n.Y(v)); }
+    h.stroke(); h.restore();
+    // ---- αναγνώσεις
+    var sa_ = a === 0 ? 's' : (a > 0 ? '(s − ' + fmt(a) + ')' : '(s + ' + fmt(-a) + ')');
+    var ea = a === 0 ? '' : 'e^(' + fmt(a) + 't)';
+    if (mode === 'real'){
+      document.getElementById('poles').textContent = 's = ' + fmt(a) + (dbl ? ' (διπλός)' : '');
+      document.getElementById('Fs').textContent = '1/' + (a === 0 ? 's' : sa_) + (dbl ? '²' : '');
+      document.getElementById('ft').textContent = dbl ? ('t' + (ea ? '·' + ea : '')) : (ea || '1');
+    } else {
+      var q = sa_ + '² + ' + fmt(b*b);
+      document.getElementById('poles').textContent = 's = ' + fmt(a) + ' ± ' + fmt(b) + ' i' + (dbl ? ' (διπλοί)' : '');
+      document.getElementById('Fs').textContent = dbl ? (fmt(2*b*b*b) + '/(' + q + ')²') : (fmt(b) + '/(' + q + ')');
+      document.getElementById('ft').textContent = (ea ? ea + '·' : '') + (dbl ? '(sin ' + fmt(b) + 't − ' + fmt(b) + 't·cos ' + fmt(b) + 't)' : 'sin ' + fmt(b) + 't');
+    }
+    var beh;
+    if (a < 0) beh = 'φθίνει στο 0' + (dbl ? ' (ο παράγοντας t «χάνει» από την e^(αt))' : '') + ' — πόλοι στο αριστερό ημιεπίπεδο';
+    else if (a === 0) beh = mode === 'real' ? (dbl ? 'αυξάνεται γραμμικά (f = t)' : 'σταθερή (f = 1)') : (dbl ? 'ταλάντωση με γραμμικά αυξανόμενο πλάτος — συντονισμός' : 'ταλάντωση σταθερού πλάτους');
+    else beh = 'αυξάνεται εκθετικά — πόλοι στο δεξί ημιεπίπεδο';
+    document.getElementById('beh').textContent = beh;
+  }
+  // σύρσιμο του πόλου
+  var dragging = false;
+  function fromPointer(ev){
+    var r = cP.getBoundingClientRect(), px = (ev.clientX - r.left)*cP._w/r.width, py = (ev.clientY - r.top)*cP._h/r.height;
+    var a = Math.max(-2, Math.min(1, mP.iX(px))), b = Math.abs(mP.iY(py));
+    sa.value = a.toFixed(2); if (mode === 'pair') sb.value = Math.max(0.3, Math.min(4, b)).toFixed(2);
+    draw();
+  }
+  cP.addEventListener('pointerdown', function(ev){ dragging = true; cP.setPointerCapture(ev.pointerId); fromPointer(ev); });
+  cP.addEventListener('pointermove', function(ev){ if (dragging) fromPointer(ev); });
+  cP.addEventListener('pointerup', function(){ dragging = false; });
+  cP.addEventListener('pointercancel', function(){ dragging = false; });
+  sa.addEventListener('input', draw); sb.addEventListener('input', draw);
+  Array.prototype.forEach.call(document.querySelectorAll('[data-mode]'), function(x){ x.addEventListener('click', function(){ mode = x.getAttribute('data-mode'); draw(); }); });
+  document.getElementById('dbl').addEventListener('click', function(){ dbl = !dbl; draw(); });
+  var playing = null, dir = 1;
+  document.getElementById('play').addEventListener('click', function(){
+    var bt = this;
+    if (playing){ cancelAnimationFrame(playing); playing = null; bt.textContent = '▶ Αναπαραγωγή'; return; }
+    bt.textContent = '❚❚ Παύση';
+    (function step(){ var a = parseFloat(sa.value) + dir*0.004; if (a >= 0.3){ a = 0.3; dir = -1; } if (a <= -1.5){ a = -1.5; dir = 1; } sa.value = a.toFixed(3); draw(); playing = requestAnimationFrame(step); })();
+  });
+  document.getElementById('reset').addEventListener('click', function(){ mode = 'pair'; dbl = false; sa.value = -0.3; sb.value = 2; draw(); });
+  draw();
+})();
+</script>
+
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

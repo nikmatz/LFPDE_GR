@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ο τύπος του d&#x27;Alembert και η ανάκλαση · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Ο τύπος του d&#x27;Alembert και η ανάκλαση">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script src="../../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../../index.html">Αρχική</a> › <a href="../../../index.html#ch09">Κεφάλαιο 9</a> › Animation</nav>
+<p><span class="badge anim">▶ Animation</span></p>
+<!--TITLE:Ο τύπος του d'Alembert και η ανάκλαση-->
+<h1>Ο τύπος του d'Alembert και η ανάκλαση</h1>
+<p class="subtitle">Κεφάλαιο 9 · Δύο οδεύοντα κύματα, το χωρίο εξάρτησης και τα «είδωλα» στο άκρο μιας ημιάπειρης χορδής</p>
+
+<div class="card">
+<p>Η λύση του προβλήματος $u_{tt}=c^2u_{xx}$, $u(x,0)=f(x)$, $u_t(x,0)=g(x)$ δίνεται από τον τύπο του d'Alembert (Θεώρημα 9.2)
+\[ u(x,t)=\tfrac12\bigl[f(x-ct)+f(x+ct)\bigr]+\frac{1}{2c}\int_{x-ct}^{x+ct}g(s)\,ds , \]
+εδώ με $c=1$. Για ημιάπειρη χορδή $x&gt;0$ τα δεδομένα επεκτείνονται περιττά (στερεωμένο άκρο, $u(0,t)=0$) ή άρτια (ελεύθερο άκρο, $u_x(0,t)=0$) και ο ίδιος τύπος εφαρμόζεται στις επεκτάσεις (Πρόταση 9.4).</p>
+<div class="row" id="modes"><span class="small muted">Χορδή:</span><button class="btn sel" type="button" data-m="inf">απείρου μήκους</button><button class="btn" type="button" data-m="fixed">στερεωμένο άκρο στο $x=0$</button><button class="btn" type="button" data-m="free">ελεύθερο άκρο στο $x=0$</button></div>
+<div class="row" id="fs"><span class="small muted">Αρχική μορφή $f$:</span><button class="btn sel" type="button" data-f="tri">τριγωνικός παλμός</button><button class="btn" type="button" data-f="gauss">γκαουσιανός παλμός</button><button class="btn" type="button" data-f="none">$f=0$</button><button class="btn" type="button" data-f="draw">✎ σχεδιάστε την $f$</button></div>
+<div class="row" id="gs"><span class="small muted">Αρχική ταχύτητα $g$:</span><button class="btn sel" type="button" data-g="zero">$g=0$</button><button class="btn" type="button" data-g="hit">κρούση: $g=\frac12$ στο $|x-x_0|&lt;1$</button></div>
+<div class="ctrl"><label for="sx"><strong>x₀</strong></label><input type="range" id="sx" min="-8" max="8" step="0.1" value="0"><output id="ox">0,0</output></div>
+<div class="ctrl"><label for="st"><strong>t</strong></label><input type="range" id="st" min="0" max="12" step="0.01" value="0"><output id="ot">0,00</output></div>
+<div class="row"><button class="btn primary" type="button" id="play">▶ Κίνηση</button><button class="btn" type="button" id="reset">↺ Επαναφορά</button><span class="small muted" id="hint">Κάντε κλικ στο δεξί παράθυρο για να επιλέξετε σημείο $(x,t)$.</span></div>
+</div>
+
+<div class="anim-grid">
+  <div><canvas id="cU" width="440" height="360" aria-label="Η χορδή τη στιγμή t"></canvas>
+  <p class="legend">Η χορδή $u(x,t)$ (μπλε) και τα δύο οδεύοντα κύματα από τα οποία αποτελείται: προς τα δεξιά (πορτοκαλί) και προς τα αριστερά (μωβ). Στην ημιάπειρη χορδή η γκρίζα περιοχή $x&lt;0$ δείχνει την επέκταση: εκεί κινούνται τα «είδωλα».</p></div>
+  <div><canvas id="cXT" class="drag" width="440" height="360" aria-label="Χαρακτηριστικές και χωρίο εξάρτησης στο επίπεδο x, t"></canvas>
+  <p class="legend">Το επίπεδο $(x,t)$: η περιοχή επιρροής των αρχικών δεδομένων (γαλάζια), η τρέχουσα στιγμή (διακεκομμένη) και οι χαρακτηριστικές από το επιλεγμένο σημείο (πορτοκαλί) με το χωρίο εξάρτησής του στον άξονα $t=0$.</p></div>
+</div>
+
+<div class="readout">
+  <div><strong>Επιλεγμένο σημείο:</strong><br><span id="pt"></span></div>
+  <div><strong>Χωρίο εξάρτησης:</strong><br><span id="dom"></span></div>
+  <div><strong>Μόνιμο ίχνος της $g$:</strong><br><span id="trace"></span></div>
+  <div><strong>Σχόλιο:</strong><br><span id="note"></span></div>
+</div>
+
+<h2>Θεωρία &amp; αιτιολόγηση</h2>
+<div class="card">
+<ul>
+<li>Η αρχική απομάκρυνση χωρίζεται σε δύο ίσα μισά που κινούνται αντίθετα με ταχύτητα $c$ χωρίς να αλλάζουν σχήμα: οι γωνίες του τριγωνικού παλμού δεν στρογγυλεύουν (Παράδειγμα 9.4, Σχήμα 9.3).</li>
+<li>Η αρχική ταχύτητα δίνει τον όρο $\frac1{2c}\int_{x-ct}^{x+ct}g$: όταν το διάστημα $[x-ct,x+ct]$ καλύψει όλη την περιοχή της κρούσης, η απομάκρυνση μένει σταθερή, $\frac1{2c}\int g$ (Παράδειγμα 9.5).</li>
+<li>Η $u(x_0,t_0)$ εξαρτάται μόνο από τα δεδομένα στο $[x_0-ct_0,\,x_0+ct_0]$ (Ορισμός 9.2, Πρόταση 9.3). Στην ημιάπειρη χορδή η αριστερή χαρακτηριστική «ανακλάται» στο άκρο και το χωρίο εξάρτησης γίνεται $[\,|x_0-ct_0|,\,x_0+ct_0]$.</li>
+<li>Στο στερεωμένο άκρο το είδωλο είναι αντεστραμμένο και ο ανακλώμενος παλμός αντιστρέφεται· στο ελεύθερο άκρο το είδωλο είναι όρθιο και η απομάκρυνση του άκρου διπλασιάζεται στιγμιαία (Παράδειγμα 9.11, Σχήμα 9.6).</li>
+</ul>
+<p><strong>Σύνδεση με το βιβλίο:</strong> Θεώρημα 9.2, Προτάσεις 9.3 και 9.4 και Σχήματα 9.3, 9.5 και 9.6.</p>
+<p class="small muted">Ερώτηση για σκέψη: στη χορδή με στερεωμένο άκρο δώστε μόνο κρούση ($f=0$). Επανέρχεται η χορδή στην ηρεμία, σε αντίθεση με τη χορδή απείρου μήκους; Τι κάνει το είδωλο της $g$;</p>
+</div>
+
+<script>
+(function(){
+  function fmt(x, d){ if (d === undefined) d = 2; var s = Math.abs(x).toFixed(d).replace('.', ','); return (x < 0 && parseFloat(Math.abs(x).toFixed(d)) !== 0 ? '−' : '') + s; }
+  function setup(c){
+    var dpr = window.devicePixelRatio || 1, w = c.width, h = c.height;
+    if (!c._w){ c._w = w; c._h = h; c.width = w*dpr; c.height = h*dpr; }
+    var g = c.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,c._w,c._h); return g;
+  }
+  function mapper(c, x0, x1, y0, y1, pad){
+    pad = pad || 30;
+    return { X: function(x){ return pad + (x-x0)/(x1-x0)*(c._w-2*pad); }, Y: function(y){ return c._h-pad - (y-y0)/(y1-y0)*(c._h-2*pad); },
+             ix: function(px){ return x0 + (px-pad)/(c._w-2*pad)*(x1-x0); }, iy: function(py){ return y0 + (c._h-pad-py)/(c._h-2*pad)*(y1-y0); },
+             x0:x0,x1:x1,y0:y0,y1:y1,W:c._w,H:c._h };
+  }
+  // ---- δεδομένα σε πλέγμα [-XM, XM]
+  var XM = 40, DX = 0.02, N = Math.round(2*XM/DX) + 1, XV = 12;
+  var fRaw = new Float64Array(N), gRaw = new Float64Array(N), fDraw = new Float64Array(N);
+  var Fx = new Float64Array(N), Gx = new Float64Array(N), Gam = new Float64Array(N);
+  var mode = 'inf', ftype = 'tri', gtype = 'zero', P = {x: 5, t: 4}, total = 0;
+  var sx = document.getElementById('sx'), st = document.getElementById('st');
+  var cU = document.getElementById('cU'), cXT = document.getElementById('cXT');
+  function xi(i){ return -XM + i*DX; }
+  function build(){
+    var x0 = parseFloat(sx.value), i, x;
+    for (i = 0; i < N; i++){
+      x = xi(i);
+      var f = 0, d = Math.abs(x - x0);
+      if (ftype === 'tri') f = d < 1 ? 1 - d : 0;
+      else if (ftype === 'gauss') f = Math.exp(-4*d*d);
+      else if (ftype === 'draw') f = fDraw[i];
+      fRaw[i] = f;
+      // η κρούση ως μέση τιμή σε κάθε κελί, ώστε το ∫g να υπολογίζεται ακριβώς
+      var lo = x - DX/2, hi = x + DX/2;
+      if (mode !== 'inf') lo = Math.max(lo, 0);
+      gRaw[i] = gtype === 'hit' ? 0.5*Math.max(0, Math.min(hi, x0 + 1) - Math.max(lo, x0 - 1))/DX : 0;
+      if (mode !== 'inf' && x < 0){ fRaw[i] = 0; gRaw[i] = 0; }
+    }
+    // επεκτάσεις: περιττή (στερεωμένο) ή άρτια (ελεύθερο)
+    var mid = Math.round(XM/DX);
+    for (i = 0; i < N; i++){
+      x = xi(i);
+      if (mode !== 'inf' && i === mid){ Fx[i] = mode === 'fixed' ? 0 : fRaw[i]; Gx[i] = mode === 'fixed' ? 0 : 2*gRaw[i]; }
+      else if (mode === 'inf' || x >= 0){ Fx[i] = fRaw[i]; Gx[i] = gRaw[i]; }
+      else { var j = 2*mid - i, s = mode === 'fixed' ? -1 : 1; Fx[i] = s*fRaw[j]; Gx[i] = s*gRaw[j]; }
+    }
+    Gam[0] = 0;
+    for (i = 1; i < N; i++) Gam[i] = Gam[i-1] + 0.5*(Gx[i] + Gx[i-1])*DX;
+    total = Gam[N-1];
+    for (i = 0; i < N; i++) Gam[i] -= 0.5*total;     // συμμετρικό μοίρασμα του ίχνους στα δύο κύματα
+  }
+  function interp(A, x){
+    var p = (x + XM)/DX; if (p <= 0) return A[0]; if (p >= N - 1) return A[N-1];
+    var i = Math.floor(p), r = p - i; return A[i]*(1 - r) + A[i+1]*r;
+  }
+  function right(x, t){ return 0.5*interp(Fx, x - t) - 0.5*interp(Gam, x - t); }
+  function left(x, t){ return 0.5*interp(Fx, x + t) + 0.5*interp(Gam, x + t); }
+  function u(x, t){ return right(x, t) + left(x, t); }
+  function support(){
+    var lo = Infinity, hi = -Infinity;
+    for (var i = 0; i < N; i++) if (Math.abs(fRaw[i]) > 1e-3 || Math.abs(gRaw[i]) > 1e-9){ var x = xi(i); if (x < lo) lo = x; if (x > hi) hi = x; }
+    return lo <= hi ? [lo, hi] : null;
+  }
+  function draw(){
+    build();
+    var t = parseFloat(st.value), x0 = parseFloat(sx.value), semi = mode !== 'inf';
+    document.getElementById('ox').textContent = fmt(x0, 1); document.getElementById('ot').textContent = fmt(t);
+    // ---- η χορδή
+    var g = setup(cU), m = mapper(cU, -XV, XV, -1.25, 1.45, 28);
+    g.fillStyle = '#fff'; g.fillRect(0,0,m.W,m.H);
+    if (semi){ g.fillStyle = '#f1f3f6'; g.fillRect(m.X(-XV), 0, m.X(0) - m.X(-XV), m.H); }
+    g.strokeStyle = '#9aa4b2'; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(m.X(-XV), m.Y(0)); g.lineTo(m.X(XV), m.Y(0)); g.stroke();
+    g.fillStyle = '#5b6575'; g.font = '12px "Noto Sans", sans-serif';
+    [-10,-5,5,10].forEach(function(v){ g.beginPath(); g.moveTo(m.X(v), m.Y(0)-3); g.lineTo(m.X(v), m.Y(0)+3); g.stroke(); g.fillText(fmt(v,0), m.X(v)-8, m.Y(0)+15); });
+    var n = 600, i, x;
+    function plot(fn, col, w, dash, alphaNeg){
+      g.lineWidth = w; g.setLineDash(dash || []);
+      for (var pass = 0; pass < 2; pass++){
+        if (!semi && pass === 1) break;
+        g.strokeStyle = col; g.globalAlpha = (semi && pass === 0) ? alphaNeg : 1;
+        g.beginPath(); var started = false;
+        for (i = 0; i <= n; i++){
+          x = -XV + 2*XV*i/n;
+          if (semi && ((pass === 0 && x > 0) || (pass === 1 && x < 0))) continue;
+          var y = fn(x);
+          if (started) g.lineTo(m.X(x), m.Y(y)); else { g.moveTo(m.X(x), m.Y(y)); started = true; }
+        }
+        g.stroke();
+      }
+      g.globalAlpha = 1; g.setLineDash([]);
+    }
+    plot(function(x){ return right(x, t); }, '#c64800', 1.5, [6,4], 0.35);
+    plot(function(x){ return left(x, t); }, '#7b3fa0', 1.5, [6,4], 0.35);
+    plot(function(x){ return u(x, t); }, '#0082b4', 3, null, 0.3);
+    if (semi){
+      if (mode === 'fixed'){
+        g.fillStyle = '#5b6575'; g.fillRect(m.X(0) - 4, m.Y(1.4), 4, m.Y(-1.2) - m.Y(1.4));
+      } else {
+        g.strokeStyle = '#5b6575'; g.lineWidth = 2; g.beginPath(); g.moveTo(m.X(0), m.Y(1.4)); g.lineTo(m.X(0), m.Y(-1.2)); g.stroke();
+        var ue = u(0, t); g.strokeStyle = '#0082b4'; g.lineWidth = 2; g.beginPath(); g.arc(m.X(0), m.Y(ue), 5, 0, 2*Math.PI); g.stroke();
+      }
+    }
+    g.fillStyle = '#1d2430'; g.font = 'italic 14px "Noto Serif", serif'; g.fillText('x', m.X(XV) - 10, m.Y(0) - 8);
+    g.font = '13px "Noto Sans", sans-serif'; g.fillText('t = ' + fmt(t), 12, 18);
+    if (ftype === 'draw' && t === 0){ g.fillStyle = '#b3261e'; g.fillText('σχεδιάστε με το ποντίκι (κρατήστε το πατημένο)', 12, 36); }
+    // ---- επίπεδο (x,t)
+    var h = setup(cXT), q = mapper(cXT, -XV, XV, 0, 12, 28);
+    h.fillStyle = '#fff'; h.fillRect(0,0,q.W,q.H);
+    var sup = support();
+    if (sup){
+      var cones = [sup]; if (semi) cones.push([-sup[1], -sup[0]]);
+      h.fillStyle = 'rgba(0,130,180,0.13)';
+      cones.forEach(function(S){ h.beginPath(); h.moveTo(q.X(S[0]), q.Y(0)); h.lineTo(q.X(S[1]), q.Y(0)); h.lineTo(q.X(S[1] + 12), q.Y(12)); h.lineTo(q.X(S[0] - 12), q.Y(12)); h.closePath(); h.fill(); });
+    }
+    if (semi){ h.fillStyle = 'rgba(200,205,212,0.55)'; h.fillRect(q.X(-XV), 0, q.X(0) - q.X(-XV), q.H); h.strokeStyle = '#5b6575'; h.lineWidth = 2; h.beginPath(); h.moveTo(q.X(0), q.Y(0)); h.lineTo(q.X(0), q.Y(12)); h.stroke(); }
+    h.strokeStyle = '#9aa4b2'; h.lineWidth = 1;
+    h.beginPath(); h.moveTo(q.X(-XV), q.Y(0)); h.lineTo(q.X(XV), q.Y(0)); h.stroke();
+    h.beginPath(); h.moveTo(q.X(0), q.Y(0)); h.lineTo(q.X(0), q.Y(12)); h.stroke();
+    h.fillStyle = '#5b6575'; h.font = '12px "Noto Sans", sans-serif';
+    [-10,-5,5,10].forEach(function(v){ h.fillText(fmt(v,0), q.X(v)-8, q.Y(0)+15); });
+    [4,8,12].forEach(function(v){ h.fillText(String(v), q.X(0)+5, q.Y(v)+4); });
+    h.setLineDash([5,4]); h.strokeStyle = '#1d2430'; h.beginPath(); h.moveTo(q.X(-XV), q.Y(t)); h.lineTo(q.X(XV), q.Y(t)); h.stroke(); h.setLineDash([]);
+    // χαρακτηριστικές από το P
+    if (semi && P.x < 0) P.x = 0.5;
+    var a0 = P.x - P.t, b0 = P.x + P.t, lo = a0, hi = b0;
+    h.strokeStyle = '#c64800'; h.lineWidth = 2;
+    h.beginPath(); h.moveTo(q.X(P.x), q.Y(P.t)); h.lineTo(q.X(b0), q.Y(0)); h.stroke();
+    if (semi && a0 < 0){
+      var tr = P.t - P.x;                      // η αριστερή χαρακτηριστική φτάνει στο άκρο τη στιγμή t = t0 − x0
+      h.beginPath(); h.moveTo(q.X(P.x), q.Y(P.t)); h.lineTo(q.X(0), q.Y(tr)); h.lineTo(q.X(-a0), q.Y(0)); h.stroke();
+      h.setLineDash([3,3]); h.globalAlpha = 0.6; h.beginPath(); h.moveTo(q.X(0), q.Y(tr)); h.lineTo(q.X(a0), q.Y(0)); h.stroke(); h.setLineDash([]); h.globalAlpha = 1;
+      lo = -a0;
+      h.fillStyle = 'rgba(198,72,0,0.15)'; h.beginPath(); h.moveTo(q.X(P.x), q.Y(P.t)); h.lineTo(q.X(0), q.Y(tr)); h.lineTo(q.X(-a0), q.Y(0)); h.lineTo(q.X(b0), q.Y(0)); h.closePath(); h.fill();
+    } else {
+      h.beginPath(); h.moveTo(q.X(P.x), q.Y(P.t)); h.lineTo(q.X(a0), q.Y(0)); h.stroke();
+      h.fillStyle = 'rgba(198,72,0,0.15)'; h.beginPath(); h.moveTo(q.X(P.x), q.Y(P.t)); h.lineTo(q.X(a0), q.Y(0)); h.lineTo(q.X(b0), q.Y(0)); h.closePath(); h.fill();
+    }
+    h.strokeStyle = '#c64800'; h.lineWidth = 5; h.beginPath(); h.moveTo(q.X(Math.max(lo, -XV)), q.Y(0)); h.lineTo(q.X(Math.min(hi, XV)), q.Y(0)); h.stroke();
+    h.fillStyle = '#c64800'; h.beginPath(); h.arc(q.X(P.x), q.Y(P.t), 5, 0, 2*Math.PI); h.fill();
+    h.fillStyle = '#1d2430'; h.font = 'italic 14px "Noto Serif", serif'; h.fillText('x', q.X(XV) - 10, q.Y(0) - 8); h.fillText('t', q.X(0) + 7, q.Y(12) + 14);
+    // ---- αναγνώσεις
+    var uP = u(P.x, P.t);
+    document.getElementById('pt').textContent = '(x, t) = (' + fmt(P.x, 1) + ', ' + fmt(P.t, 1) + '),  u = ' + fmt(uP, 3);
+    var semiNote = (semi && a0 < 0) ? ' (με ανάκλαση στο άκρο)' : '';
+    document.getElementById('dom').textContent = '[' + fmt(lo, 1) + ', ' + fmt(hi, 1) + ']' + semiNote;
+    var tot = 0.5*total;
+    document.getElementById('trace').textContent = gtype === 'zero' ? 'g = 0: η χορδή ηρεμεί πίσω από τα κύματα' : '½∫g̃ = ' + fmt(tot, 3) + (Math.abs(tot) < 1e-9 ? ' (το είδωλο «σβήνει» το ίχνος)' : '');
+    var note;
+    if (ftype === 'draw' && t === 0) note = 'σχεδιάστε μια αρχική μορφή και πατήστε «Κίνηση»';
+    else if (mode === 'fixed') note = 'στο στερεωμένο άκρο το είδωλο είναι αντεστραμμένο: ο παλμός επιστρέφει ανάποδα';
+    else if (mode === 'free') note = 'στο ελεύθερο άκρο το είδωλο είναι όρθιο: τη στιγμή της ανάκλασης η απομάκρυνση του άκρου διπλασιάζεται';
+    else if (gtype === 'hit') note = 'η κρούση αφήνει πίσω από τα κύματα ένα «πλατό» ύψους ½∫g';
+    else note = 'κάθε μισό του παλμού ταξιδεύει χωρίς να αλλάζει σχήμα· οι γωνίες δεν στρογγυλεύουν';
+    document.getElementById('note').textContent = note;
+  }
+  // ---- κουμπιά επιλογής
+  function group(id, attr, fn){
+    Array.prototype.forEach.call(document.querySelectorAll('#' + id + ' [data-' + attr + ']'), function(bt){
+      bt.addEventListener('click', function(){
+        Array.prototype.forEach.call(document.querySelectorAll('#' + id + ' [data-' + attr + ']'), function(o){ o.classList.remove('sel'); });
+        bt.classList.add('sel'); fn(bt.getAttribute('data-' + attr)); draw();
+      });
+    });
+  }
+  group('modes', 'm', function(v){ mode = v; if (v !== 'inf' && parseFloat(sx.value) < 3){ sx.value = 5; } if (v !== 'inf' && P.x < 0) P.x = 2; });
+  group('fs', 'f', function(v){ ftype = v; cU.classList.toggle('drag', v === 'draw'); if (v === 'draw'){ st.value = 0; stop(); } });
+  group('gs', 'g', function(v){ gtype = v; });
+  sx.addEventListener('input', draw); st.addEventListener('input', draw);
+  // ---- σχεδίαση της f με το ποντίκι
+  var drawing = false, last = null;
+  function ptr(c, ev){ var r = c.getBoundingClientRect(); return {px: (ev.clientX - r.left)*c._w/r.width, py: (ev.clientY - r.top)*c._h/r.height}; }
+  cU.addEventListener('pointerdown', function(ev){ if (ftype !== 'draw') return; drawing = true; last = null; st.value = 0; stop(); cU.setPointerCapture(ev.pointerId); paint(ev); });
+  cU.addEventListener('pointermove', function(ev){ if (drawing) paint(ev); });
+  window.addEventListener('pointerup', function(){ drawing = false; last = null; });
+  function paint(ev){
+    var p = ptr(cU, ev), m = mapper(cU, -XV, XV, -1.25, 1.45, 28), x = m.ix(p.px), y = Math.max(-1, Math.min(1.2, m.iy(p.py)));
+    if (mode !== 'inf' && x < 0) return;
+    var i1 = Math.round((x + XM)/DX);
+    if (last){ var i0 = last.i, y0 = last.y, a = Math.min(i0, i1), b = Math.max(i0, i1);
+      for (var i = a; i <= b; i++){ var r = b === a ? 1 : (i - i0)/(i1 - i0); fDraw[i] = y0 + (y - y0)*r; } }
+    else fDraw[i1] = y;
+    last = {i: i1, y: y}; draw();
+  }
+  cXT.addEventListener('pointerdown', function(ev){ cXT.setPointerCapture(ev.pointerId); pick(ev); cXT._down = true; });
+  cXT.addEventListener('pointermove', function(ev){ if (cXT._down) pick(ev); });
+  window.addEventListener('pointerup', function(){ cXT._down = false; });
+  function pick(ev){
+    var p = ptr(cXT, ev), q = mapper(cXT, -XV, XV, 0, 12, 28);
+    P.x = Math.max(mode === 'inf' ? -XV : 0, Math.min(XV, q.ix(p.px))); P.t = Math.max(0.2, Math.min(12, q.iy(p.py))); draw();
+  }
+  var playing = null;
+  function stop(){ if (playing){ cancelAnimationFrame(playing); playing = null; } document.getElementById('play').textContent = '▶ Κίνηση'; }
+  document.getElementById('play').addEventListener('click', function(){
+    if (playing){ stop(); return; }
+    if (parseFloat(st.value) >= 11.99) st.value = 0;
+    this.textContent = '❚❚ Παύση';
+    (function step(){ var v = parseFloat(st.value) + 0.025; if (v >= 12){ st.value = 12; draw(); stop(); return; } st.value = v.toFixed(3); draw(); playing = requestAnimationFrame(step); })();
+  });
+  document.getElementById('reset').addEventListener('click', function(){
+    stop(); sx.value = mode === 'inf' ? 0 : 5; st.value = 0; P = {x: 5, t: 4}; for (var i = 0; i < N; i++) fDraw[i] = 0; draw();
+  });
+  draw();
+})();
+</script>
+
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

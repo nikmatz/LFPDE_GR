@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Από τη σειρά στο ολοκλήρωμα Fourier · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Από τη σειρά στο ολοκλήρωμα Fourier">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script src="../../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../../index.html">Αρχική</a> › <a href="../../../index.html#ch07">Κεφάλαιο 7</a> › Animation</nav>
+<p><span class="badge anim">▶ Animation</span></p>
+<!--TITLE:Από τη σειρά στο ολοκλήρωμα Fourier-->
+<h1>Από τη σειρά στο ολοκλήρωμα Fourier</h1>
+<p class="subtitle">Κεφάλαιο 7 · Όταν η περίοδος μεγαλώνει, οι φασματικές γραμμές πυκνώνουν και η σειρά γίνεται ολοκλήρωμα</p>
+
+<div class="card">
+<p>Ο παλμός $f(x)=1$ για $|x|<1$, $f(x)=0$ για $|x|>1$, επεκτείνεται περιοδικά με ημιπερίοδο $L>1$. Οι συντελεστές της σειράς είναι $a_n=\frac{2}{n\pi}\sin\frac{n\pi}{L}$, οπότε
+\[ \frac{L}{\pi}\,a_n=A(\omega_n),\qquad \omega_n=\frac{n\pi}{L},\qquad A(\omega)=\frac2\pi\,\frac{\sin\omega}{\omega}: \]
+οι κλιμακωμένες γραμμές είναι δείγματα της ίδιας καμπύλης (Παράδειγμα 7.1). Το μερικό ολοκλήρωμα Fourier μέχρι τη συχνότητα $\Omega$ είναι
+\[ f_\Omega(x)=\int_0^{\Omega}A(\omega)\cos\omega x\,d\omega=\frac1\pi\Bigl[\Si\bigl(\Omega(1+x)\bigr)+\Si\bigl(\Omega(1-x)\bigr)\Bigr]. \]</p>
+<div class="ctrl"><label for="sL"><strong>L</strong></label><input type="range" id="sL" min="1.2" max="20" step="0.01" value="2"><output id="oL">2,00</output></div>
+<div class="ctrl"><label for="sO"><strong>Ω</strong></label><input type="range" id="sO" min="1" max="64" step="0.1" value="8"><output id="oO">8,0</output></div>
+<div class="row"><label class="small"><input type="checkbox" id="ser" checked> δείξε και τη μερική σειρά με τις συχνότητες $\omega_n\le\Omega$</label></div>
+<div class="row"><button class="btn primary" type="button" id="play">▶ Αύξηση του L</button><button class="btn" type="button" id="reset">↺ Επαναφορά</button>
+<button class="btn ghost" type="button" data-O="4">Ω = 4</button><button class="btn ghost" type="button" data-O="16">Ω = 16</button><button class="btn ghost" type="button" data-O="64">Ω = 64</button></div>
+</div>
+
+<div class="anim-grid">
+  <div><canvas id="cA" width="440" height="360" aria-label="Οι φασματικές γραμμές και η καμπύλη A(ω)"></canvas>
+  <p class="legend">Οι γραμμές $\frac{L}{\pi}a_n$ στις συχνότητες $n\pi/L$ (μπλε) και η καμπύλη $A(\omega)$ (διακεκομμένη). Οι γραμμές πέρα από τη συχνότητα $\Omega$ (κόκκινη κατακόρυφη) δεν μετέχουν στις προσεγγίσεις του δεξιού σχήματος.</p></div>
+  <div><canvas id="cX" width="440" height="360" aria-label="Το μερικό ολοκλήρωμα και η μερική σειρά"></canvas>
+  <p class="legend">Ο παλμός (γκρι), το μερικό ολοκλήρωμα $f_\Omega$ (πορτοκαλί) και, αν επιλεγεί, η μερική σειρά της περιοδικής επέκτασης (μπλε), που επαναλαμβάνει τον παλμό ανά $2L$.</p></div>
+</div>
+
+<div class="readout">
+  <div><strong>Απόσταση των γραμμών:</strong><br><span id="dw"></span></div>
+  <div><strong>Γραμμές μέχρι το Ω:</strong><br><span id="nl"></span></div>
+  <div><strong>Μέγιστο της f_Ω:</strong><br><span id="mx"></span></div>
+  <div><strong>Σχόλιο:</strong><br><span id="note"></span></div>
+</div>
+
+<h2>Θεωρία &amp; αιτιολόγηση</h2>
+<div class="card">
+<ul>
+<li>Η σειρά της περιοδικής επέκτασης γράφεται $\sum A(\omega_n)\cos(\omega_nx)\,\Delta\omega$ με $\Delta\omega=\pi/L$: ένα άθροισμα Riemann. Καθώς $L\to\infty$, οι γραμμές πυκνώνουν πάνω στην ίδια καμπύλη $A(\omega)$ και το άθροισμα γίνεται το ολοκλήρωμα Fourier (Σχήμα 7.1, Θεώρημα 7.1).</li>
+<li>Το μερικό ολοκλήρωμα $f_\Omega$ περνά πάντα από τη μέση τιμή $\frac12$ στα άλματα $x=\pm1$ και, κοντά τους, παρουσιάζει υπερύψωση που δεν μειώνεται όσο μεγαλώνει το $\Omega$: τείνει στο $\frac12+\frac1\pi\Si(\pi)\approx1{,}0895$, δηλαδή περίπου $9\%$ του άλματος (φαινόμενο Gibbs, Σχήμα 7.2).</li>
+<li>Η $\Si(z)=\int_0^z\frac{\sin u}{u}\,du$ υπολογίζεται εδώ με τη σειρά Taylor για $|z|\le20$ και με την ασυμπτωτική της ανάπτυξη για μεγαλύτερα $|z|$.</li>
+</ul>
+<p><strong>Σύνδεση με το βιβλίο:</strong> Παράδειγμα 7.1, Θεώρημα 7.1 και Σχήματα 7.1, 7.2.</p>
+<p class="small muted">Ερώτηση για σκέψη: με $L=2$ και μεγάλο $\Omega$ η μπλε καμπύλη επαναλαμβάνει τον παλμό στα $x=\pm4,\pm8,\dots$, ενώ η πορτοκαλί όχι. Τι «ξέρει» η σειρά που δεν το ξέρει το ολοκλήρωμα, και ποια από τις δύο περιγράφει έναν μοναδικό παλμό;</p>
+</div>
+
+<script>
+(function(){
+  function fmt(x, d){ var s = Math.abs(x).toFixed(d===undefined?2:d).replace('.', ','); return (x < -1e-12 && parseFloat(s.replace(',', '.')) !== 0 ? '−' : '') + s; }
+  function setup(c){
+    var dpr = window.devicePixelRatio || 1, w = c.width, h = c.height;
+    if (!c._w){ c._w = w; c._h = h; c.width = w*dpr; c.height = h*dpr; }
+    var g = c.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,c._w,c._h); return g;
+  }
+  function mapper(c, x0, x1, y0, y1, pad){
+    pad = pad || 36;
+    return { X: function(x){ return pad + (x-x0)/(x1-x0)*(c._w-2*pad); }, Y: function(y){ return c._h-pad - (y-y0)/(y1-y0)*(c._h-2*pad); }, x0:x0,x1:x1,y0:y0,y1:y1,W:c._w,H:c._h };
+  }
+  var PI = Math.PI;
+  // Si(z): σειρά Taylor για |z| ≤ 20, ασυμπτωτική ανάπτυξη για |z| > 20
+  function Si(z){
+    var s = z < 0 ? -1 : 1, x = Math.abs(z);
+    if (x <= 20){ var term = x, sum = x, k = 0;
+      while (Math.abs(term) > 1e-17*Math.max(1, Math.abs(sum)) && k < 200){ k++; term *= -x*x/((2*k)*(2*k+1)); sum += term/(2*k+1); }
+      return s*sum; }
+    var f = 0, g = 0, t = 1/x, i;
+    for (i=0;i<12;i++){ f += t; t *= -(2*i+1)*(2*i+2)/(x*x); }
+    t = 1/(x*x);
+    for (i=0;i<12;i++){ g += t; t *= -(2*i+2)*(2*i+3)/(x*x); }
+    return s*(PI/2 - f*Math.cos(x) - g*Math.sin(x));
+  }
+  function A(w){ return Math.abs(w) < 1e-9 ? 2/PI : 2/PI*Math.sin(w)/w; }
+  var sL = document.getElementById('sL'), sO = document.getElementById('sO'), cb = document.getElementById('ser');
+  var cA = document.getElementById('cA'), cX = document.getElementById('cX');
+  function draw(){
+    var L = parseFloat(sL.value), Om = parseFloat(sO.value), dw = PI/L;
+    document.getElementById('oL').textContent = fmt(L); document.getElementById('oO').textContent = fmt(Om, 1);
+    // ---- φάσμα
+    var W = 20, g = setup(cA), m = mapper(cA, 0, W, -0.2, 0.72, 32);
+    g.fillStyle = '#fff'; g.fillRect(0,0,m.W,m.H);
+    g.strokeStyle = '#9aa4b2'; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(m.X(0), m.Y(0)); g.lineTo(m.X(W), m.Y(0)); g.stroke();
+    g.beginPath(); g.moveTo(m.X(0), m.Y(-0.2)); g.lineTo(m.X(0), m.Y(0.72)); g.stroke();
+    g.fillStyle = '#5b6575'; g.font = '12px "Noto Sans", sans-serif';
+    [PI, 2*PI, 3*PI, 4*PI, 5*PI, 6*PI].forEach(function(v, k){ g.beginPath(); g.moveTo(m.X(v), m.Y(0)-3); g.lineTo(m.X(v), m.Y(0)+3); g.stroke(); g.fillText((k ? (k+1) : '') + 'π', m.X(v)-7, m.Y(0)+15); });
+    g.fillText('2/π', m.X(0)-30, m.Y(2/PI)+4);
+    g.setLineDash([5,4]); g.strokeStyle = '#8a94a3'; g.lineWidth = 1.4; g.beginPath();
+    for (var i=0;i<=600;i++){ var w = W*i/600; if (i) g.lineTo(m.X(w), m.Y(A(w))); else g.moveTo(m.X(w), m.Y(A(w))); }
+    g.stroke(); g.setLineDash([]);
+    var nmax = Math.floor(W/dw), nin = 0;
+    for (var n=0;n<=nmax;n++){ var wn = n*dw, an = A(wn), inside = wn <= Om + 1e-9; if (inside) nin++;
+      g.strokeStyle = inside ? '#0082b4' : 'rgba(0,130,180,.28)'; g.fillStyle = g.strokeStyle; g.lineWidth = 1.8;
+      g.beginPath(); g.moveTo(m.X(wn), m.Y(0)); g.lineTo(m.X(wn), m.Y(an)); g.stroke(); g.beginPath(); g.arc(m.X(wn), m.Y(an), 2.2, 0, 2*PI); g.fill(); }
+    if (Om <= W){ g.strokeStyle = '#b3261e'; g.lineWidth = 1.4; g.beginPath(); g.moveTo(m.X(Om), m.Y(-0.2)); g.lineTo(m.X(Om), m.Y(0.72)); g.stroke();
+      g.fillStyle = '#b3261e'; g.fillText('Ω', m.X(Om)+4, m.Y(0.66)); }
+    g.fillStyle = '#1d2430'; g.font = 'italic 14px "Noto Serif", serif'; g.fillText('ω', m.X(W)-10, m.Y(0)-8);
+    // ---- χρόνος
+    var X0 = -5, X1 = 5, h = setup(cX), q = mapper(cX, X0, X1, -0.25, 1.3, 30);
+    h.fillStyle = '#fff'; h.fillRect(0,0,q.W,q.H);
+    h.strokeStyle = '#9aa4b2'; h.lineWidth = 1;
+    h.beginPath(); h.moveTo(q.X(X0), q.Y(0)); h.lineTo(q.X(X1), q.Y(0)); h.stroke();
+    h.beginPath(); h.moveTo(q.X(0), q.Y(-0.25)); h.lineTo(q.X(0), q.Y(1.3)); h.stroke();
+    h.fillStyle = '#5b6575'; h.font = '12px "Noto Sans", sans-serif';
+    [-4,-2,-1,1,2,4].forEach(function(v){ h.beginPath(); h.moveTo(q.X(v), q.Y(0)-3); h.lineTo(q.X(v), q.Y(0)+3); h.stroke(); h.fillText(fmt(v,0), q.X(v)-6, q.Y(0)+15); });
+    h.fillText('1', q.X(0)-12, q.Y(1)+4); h.fillText('½', q.X(0)-12, q.Y(0.5)+4);
+    h.setLineDash([4,4]); h.strokeStyle = '#d4d9e0'; h.beginPath(); h.moveTo(q.X(X0), q.Y(0.5)); h.lineTo(q.X(X1), q.Y(0.5)); h.stroke(); h.setLineDash([]);
+    h.strokeStyle = '#8a94a3'; h.lineWidth = 3; h.beginPath(); h.moveTo(q.X(X0), q.Y(0)); h.lineTo(q.X(-1), q.Y(0)); h.moveTo(q.X(-1), q.Y(1)); h.lineTo(q.X(1), q.Y(1)); h.moveTo(q.X(1), q.Y(0)); h.lineTo(q.X(X1), q.Y(0)); h.stroke();
+    if (cb.checked){
+      var N = Math.floor(Om/dw + 1e-9);
+      h.strokeStyle = '#0082b4'; h.lineWidth = 1.6; h.beginPath();
+      for (i=0;i<=900;i++){ var x = X0 + (X1-X0)*i/900, s = 1/L; for (n=1;n<=N;n++) s += 2/(n*PI)*Math.sin(n*PI/L)*Math.cos(n*PI*x/L); if (i) h.lineTo(q.X(x), q.Y(s)); else h.moveTo(q.X(x), q.Y(s)); }
+      h.stroke(); }
+    var fmax = -1, xm = 0;
+    h.strokeStyle = '#c64800'; h.lineWidth = 2.2; h.beginPath();
+    for (i=0;i<=900;i++){ var x2 = X0 + (X1-X0)*i/900, fo = (Si(Om*(1 + x2)) + Si(Om*(1 - x2)))/PI; if (fo > fmax){ fmax = fo; xm = x2; } if (i) h.lineTo(q.X(x2), q.Y(fo)); else h.moveTo(q.X(x2), q.Y(fo)); }
+    h.stroke();
+    // ακριβέστερο μέγιστο κοντά στο άλμα x = 1 (σε απόσταση περίπου π/Ω)
+    for (i=0;i<=400;i++){ var x3 = 1 - 3*PI/Om*i/400, f3 = (Si(Om*(1 + x3)) + Si(Om*(1 - x3)))/PI; if (f3 > fmax){ fmax = f3; xm = x3; } }
+    h.fillStyle = '#1d2430'; h.font = 'italic 14px "Noto Serif", serif'; h.fillText('x', q.X(X1)-8, q.Y(0)-8);
+    // ---- αναγνώσεις
+    document.getElementById('dw').textContent = 'Δω = π/L = ' + fmt(dw, 3) + ' rad/s';
+    document.getElementById('nl').textContent = nin + ' γραμμές (n = 0,…,' + (nin - 1) + ')';
+    document.getElementById('mx').textContent = 'max f_Ω = ' + fmt(fmax, 4) + ' (υπερύψωση ' + fmt(100*(fmax - 1), 2) + '% του άλματος)';
+    document.getElementById('note').textContent = L > 12 ? 'οι γραμμές σχεδόν «γεμίζουν» την καμπύλη A(ω): η σειρά τείνει στο ολοκλήρωμα' : (Om > 30 ? 'μεγάλο Ω: η υπερύψωση στριμώχνεται κοντά στα άλματα αλλά δεν χαμηλώνει' : 'αυξήστε το L για να πυκνώσουν οι γραμμές, και το Ω για να βελτιωθεί η προσέγγιση');
+  }
+  [sL, sO].forEach(function(s){ s.addEventListener('input', draw); }); cb.addEventListener('change', draw);
+  Array.prototype.forEach.call(document.querySelectorAll('[data-O]'), function(b){ b.addEventListener('click', function(){ sO.value = b.getAttribute('data-O'); draw(); }); });
+  var playing = null;
+  document.getElementById('play').addEventListener('click', function(){
+    var b = this;
+    if (playing){ cancelAnimationFrame(playing); playing = null; b.textContent = '▶ Αύξηση του L'; return; }
+    b.textContent = '❚❚ Παύση';
+    (function step(){ var L = parseFloat(sL.value)*1.006 + 0.004; if (L > 20) L = 1.2; sL.value = L.toFixed(3); draw(); playing = requestAnimationFrame(step); })();
+  });
+  document.getElementById('reset').addEventListener('click', function(){ sL.value = 2; sO.value = 8; cb.checked = true; draw(); });
+  draw();
+})();
+</script>
+
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

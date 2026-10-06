@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Μερικές σειρές και φαινόμενο Gibbs · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Μερικές σειρές και φαινόμενο Gibbs">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script src="../../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../../index.html">Αρχική</a> › <a href="../../../index.html#ch05">Κεφάλαιο 5</a> › Animation</nav>
+<p><span class="badge anim">▶ Animation</span></p>
+<!--TITLE:Μερικές σειρές και φαινόμενο Gibbs-->
+<h1>Μερικές σειρές και φαινόμενο Gibbs</h1>
+<p class="subtitle">Κεφάλαιο 5 · Πώς «χτίζεται» μια κυματομορφή από τις αρμονικές της και τι συμβαίνει δίπλα στα άλματα</p>
+
+<div class="card">
+<p>Επιλέξτε κυματομορφή με περίοδο $2\pi$ και αυξήστε τον βαθμό $N$ της μερικής σειράς
+\[ S_N(x)=\frac{a_0}{2}+\sum_{n=1}^{N}\bigl(a_n\cos nx+b_n\sin nx\bigr). \]
+Στη «δική σας» κυματομορφή σύρετε με το ποντίκι (ή το δάχτυλο) τους κόμβους μιας τμηματικά γραμμικής συνάρτησης στο $[-\pi,\pi]$· οι συντελεστές υπολογίζονται ακριβώς, τμήμα προς τμήμα.</p>
+<div class="row" id="waves"><button class="btn sel" type="button" data-w="0">τετραγωνικός παλμός</button><button class="btn" type="button" data-w="1">πριονωτή</button><button class="btn" type="button" data-w="2">τριγωνική</button><button class="btn" type="button" data-w="3">δική σας (σύρετε τους κόμβους)</button></div>
+<div class="ctrl"><label for="sN"><strong>N</strong></label><input type="range" id="sN" min="1" max="200" step="1" value="9"><output id="oN">9</output></div>
+<div class="row"><button class="btn primary" type="button" id="play">▶ Αναπαραγωγή</button><button class="btn" type="button" id="reset">↺ Επαναφορά</button>
+<button class="btn ghost" type="button" data-N="9">N = 9</button><button class="btn ghost" type="button" data-N="49">N = 49</button><button class="btn ghost" type="button" data-N="199">N = 199</button></div>
+</div>
+
+<div class="anim-grid">
+  <div><canvas id="cS" class="drag" width="440" height="360" aria-label="Η κυματομορφή και η μερική σειρά S_N"></canvas>
+  <p class="legend">Η κυματομορφή (γκρι) και η $S_N$ (μπλε) σε μιάμιση περίοδο. Στη «δική σας» κυματομορφή οι κόκκινοι κόμβοι σύρονται κατακόρυφα.</p></div>
+  <div><canvas id="cZ" width="440" height="360" aria-label="Μεγέθυνση κοντά στο άλμα"></canvas>
+  <p class="legend">Μεγέθυνση γύρω από το σημείο που σημειώνεται με γκρι στο αριστερό σχήμα (ένα άλμα, αν υπάρχει). Η διακεκομμένη δείχνει τη μέγιστη τιμή της $S_N$.</p></div>
+</div>
+
+<div class="readout">
+  <div><strong>Άλμα στο σημείο μεγέθυνσης:</strong><br><span id="jump"></span></div>
+  <div><strong>Υπέρβαση της S_N:</strong><br><span id="over"></span></div>
+  <div><strong>Μέσο τετραγωνικό σφάλμα:</strong><br><span id="mse"></span></div>
+  <div><strong>Σχόλιο:</strong><br><span id="note"></span></div>
+</div>
+
+<h2>Θεωρία &amp; αιτιολόγηση</h2>
+<div class="card">
+<ul>
+<li>Στα σημεία συνέχειας η $S_N$ τείνει στην $f$ και στα άλματα στο μέσο του άλματος (θεώρημα Dirichlet, Θεώρημα 5.4). Δίπλα σε κάθε άλμα όμως η $S_N$ ξεπερνά την $f$ κατά περίπου $8{,}95\%$ του άλματος, όσο μεγάλο κι αν είναι το $N$: το φαινόμενο Gibbs (Πρόταση 5.3). Η κορυφή απλώς πλησιάζει το άλμα, σε απόσταση περίπου $\pi/N$.</li>
+<li>Το όριο της υπέρβασης είναι $\bigl(\frac1\pi\Si(\pi)-\frac12\bigr)\cdot(\text{άλμα})\approx0{,}0895\cdot(\text{άλμα})$: $1{,}179$ για τον τετραγωνικό παλμό $\pm1$, $2\Si(\pi)\approx3{,}704$ για την πριονωτή κοντά στο $\pi$ (Παράδειγμα 5.12).</li>
+<li>Για συνεχή, τμηματικά ομαλή $f$ (τριγωνική, ή «δική σας» με ίσες τιμές στα $\pm\pi$) η σύγκλιση είναι ομοιόμορφη (Θεώρημα 5.5) και το φαινόμενο εξαφανίζεται. Το μέσο τετραγωνικό σφάλμα, αντίθετα, τείνει πάντα στο μηδέν: η «ενέργεια» της υπέρβασης συγκεντρώνεται σε όλο και στενότερη περιοχή.</li>
+</ul>
+<p><strong>Σύνδεση με το βιβλίο:</strong> Πρόταση 5.3, Θεώρημα 5.5, Παράδειγμα 5.12 και Σχήματα 5.5, 5.6.</p>
+<p class="small muted">Ερώτηση για σκέψη: στη «δική σας» κυματομορφή κάντε ίσες τις τιμές στα $x=-\pi$ και $x=\pi$. Τι αλλάζει στη μεγέθυνση και στον ρυθμό με τον οποίο μικραίνει το σφάλμα; Συνδέστε το με την Πρόταση 5.4.</p>
+</div>
+
+<script>
+(function(){
+  function fmt(x, d){ var s = Math.abs(x).toFixed(d===undefined?2:d).replace('.', ','); return (x < -1e-12 && parseFloat(s.replace(',', '.')) !== 0 ? '−' : '') + s; }
+  function setup(c){
+    var dpr = window.devicePixelRatio || 1, w = c.width, h = c.height;
+    if (!c._w){ c._w = w; c._h = h; c.width = w*dpr; c.height = h*dpr; }
+    var g = c.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,c._w,c._h); return g;
+  }
+  function mapper(c, x0, x1, y0, y1, pad){
+    pad = pad || 36;
+    return { X: function(x){ return pad + (x-x0)/(x1-x0)*(c._w-2*pad); }, Y: function(y){ return c._h-pad - (y-y0)/(y1-y0)*(c._h-2*pad); },
+             ix: function(px){ return x0 + (px-pad)/(c._w-2*pad)*(x1-x0); }, iy: function(py){ return y0 + (c._h-pad-py)/(c._h-2*pad)*(y1-y0); }, x0:x0,x1:x1,y0:y0,y1:y1,W:c._w,H:c._h };
+  }
+  var PI = Math.PI, NMAX = 200, wave = 0;
+  // κόμβοι της «δικής σας» κυματομορφής στα x_j = -π + jπ/3
+  var KX = [], KY = [-0.6, 0.4, 1.3, 0.2, -0.3, 0.9, 1.4];
+  for (var j=0;j<7;j++) KX.push(-PI + j*PI/3);
+  function wrap(x){ var y = (x + PI) % (2*PI); if (y < 0) y += 2*PI; return y - PI; }
+  function fval(x){
+    var u = wrap(x);
+    if (wave === 0) return u > 0 ? 1 : (u < 0 ? -1 : 0);
+    if (wave === 1) return u;
+    if (wave === 2) return Math.abs(u);
+    for (var j=0;j<6;j++) if (u <= KX[j+1]) return KY[j] + (KY[j+1]-KY[j])*(u-KX[j])/(KX[j+1]-KX[j]);
+    return KY[6];
+  }
+  // συντελεστές a_n, b_n (n = 0..NMAX) και ‖f‖² = ∫ f²
+  var A = new Float64Array(NMAX+1), B = new Float64Array(NMAX+1), NORM2 = 0, ZX = 0, JUMP = 0, LO = 0, HI = 0;
+  function coeffs(){
+    var n;
+    if (wave === 0){ for (n=0;n<=NMAX;n++){ A[n] = 0; B[n] = (n % 2) ? 4/(PI*n) : 0; } NORM2 = 2*PI; ZX = 0; JUMP = 2; LO = -1; HI = 1; return; }
+    if (wave === 1){ for (n=0;n<=NMAX;n++){ A[n] = 0; B[n] = n ? 2*((n % 2) ? 1 : -1)/n : 0; } NORM2 = 2*PI*PI*PI/3; ZX = PI; JUMP = 2*PI; LO = -PI; HI = PI; return; }
+    if (wave === 2){ for (n=0;n<=NMAX;n++){ B[n] = 0; A[n] = n === 0 ? PI : ((n % 2) ? -4/(PI*n*n) : 0); } NORM2 = 2*PI*PI*PI/3; ZX = PI; JUMP = 0; LO = PI; HI = PI; return; }
+    // τμηματικά γραμμική: ∫(mx+c)cos nx και ∫(mx+c)sin nx ακριβώς σε κάθε τμήμα
+    for (n=0;n<=NMAX;n++){ A[n] = 0; B[n] = 0; }
+    NORM2 = 0;
+    for (var j=0;j<6;j++){
+      var x0 = KX[j], x1 = KX[j+1], m = (KY[j+1]-KY[j])/(x1-x0), c = KY[j] - m*x0;
+      A[0] += (m/2*(x1*x1 - x0*x0) + c*(x1 - x0))/PI;
+      NORM2 += Math.abs(m) > 1e-12 ? (Math.pow(m*x1 + c, 3) - Math.pow(m*x0 + c, 3))/(3*m) : c*c*(x1 - x0);
+      for (n=1;n<=NMAX;n++){
+        var Fc = function(x){ return (m*x + c)*Math.sin(n*x)/n + m*Math.cos(n*x)/(n*n); };
+        var Fs = function(x){ return -(m*x + c)*Math.cos(n*x)/n + m*Math.sin(n*x)/(n*n); };
+        A[n] += (Fc(x1) - Fc(x0))/PI; B[n] += (Fs(x1) - Fs(x0))/PI;
+      }
+    }
+    ZX = PI; LO = KY[6]; HI = KY[0]; JUMP = Math.abs(KY[0] - KY[6]);
+  }
+  function S(x, N){ var s = A[0]/2; for (var n=1;n<=N;n++) s += A[n]*Math.cos(n*x) + B[n]*Math.sin(n*x); return s; }
+  var cS = document.getElementById('cS'), cZ = document.getElementById('cZ'), sN = document.getElementById('sN'), mS = null, drag = -1;
+  function draw(){
+    var N = parseInt(sN.value, 10); document.getElementById('oN').textContent = N;
+    var ymin = -1.6, ymax = 1.6;
+    if (wave === 1){ ymin = -4.2; ymax = 4.2; } else if (wave === 2){ ymin = -0.6; ymax = 3.8; } else if (wave === 3){ ymin = -2.2; ymax = 2.2; }
+    var g = setup(cS), m = mapper(cS, -1.5*PI, 1.5*PI, ymin, ymax, 30); mS = m;
+    g.fillStyle = '#fff'; g.fillRect(0,0,m.W,m.H);
+    g.fillStyle = 'rgba(155,164,178,.18)'; g.fillRect(m.X(ZX - 0.6), m.Y(ymax), m.X(ZX + 0.6) - m.X(ZX - 0.6), m.Y(ymin) - m.Y(ymax));
+    g.strokeStyle = '#9aa4b2'; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(m.X(m.x0), m.Y(0)); g.lineTo(m.X(m.x1), m.Y(0)); g.stroke();
+    g.beginPath(); g.moveTo(m.X(0), m.Y(ymin)); g.lineTo(m.X(0), m.Y(ymax)); g.stroke();
+    g.fillStyle = '#5b6575'; g.font = '12px "Noto Sans", sans-serif';
+    [[-PI,'−π'],[PI,'π']].forEach(function(p){ g.beginPath(); g.moveTo(m.X(p[0]), m.Y(0)-3); g.lineTo(m.X(p[0]), m.Y(0)+3); g.stroke(); g.fillText(p[1], m.X(p[0]) - 6, m.Y(0) + 15); });
+    g.strokeStyle = '#8a94a3'; g.lineWidth = 3; g.beginPath();
+    var prev = null;
+    for (var i=0;i<=900;i++){ var x = m.x0 + (m.x1-m.x0)*i/900, y = fval(x);
+      if (prev !== null && Math.abs(y - prev) > 0.3){ g.stroke(); g.beginPath(); g.moveTo(m.X(x), m.Y(y)); } else if (i === 0) g.moveTo(m.X(x), m.Y(y)); else g.lineTo(m.X(x), m.Y(y)); prev = y; }
+    g.stroke();
+    g.strokeStyle = '#0082b4'; g.lineWidth = 2; g.beginPath();
+    for (i=0;i<=900;i++){ var x2 = m.x0 + (m.x1-m.x0)*i/900, s2 = S(x2, N); if (i) g.lineTo(m.X(x2), m.Y(s2)); else g.moveTo(m.X(x2), m.Y(s2)); }
+    g.stroke();
+    if (wave === 3){ g.fillStyle = '#b3261e'; for (j=0;j<7;j++){ g.beginPath(); g.arc(m.X(KX[j]), m.Y(KY[j]), 6, 0, 2*PI); g.fill(); } }
+    g.fillStyle = '#0082b4'; g.font = 'italic 14px "Noto Serif", serif'; g.fillText('S', 8, 18); g.font = 'italic 10px "Noto Serif", serif'; g.fillText(String(N), 17, 22);
+    // ---- μεγέθυνση γύρω από το ZX
+    var h = setup(cZ), w0 = ZX - 0.6, w1 = ZX + 0.6, zl, zh, k, pts = [];
+    var fl = fval(ZX - 1e-9), fr = fval(ZX + 1e-9), right = !(fl > fr), smax = -1e9, sx = ZX, err = 0;
+    for (k=0;k<=700;k++){ var xz = w0 + (w1-w0)*k/700, sz = S(xz, N); pts.push(sz);
+      if (JUMP > 1e-6){ if ((right ? xz > ZX : xz < ZX) && sz > smax){ smax = sz; sx = xz; } }
+      else { var ez = Math.abs(sz - fval(xz)); if (ez > err){ err = ez; sx = xz; smax = sz; } } }
+    var lo = Math.min.apply(null, pts), hi = Math.max.apply(null, pts), fmin = Math.min(fl, fr, fval(w0), fval(w1)), fmax = Math.max(fl, fr, fval(w0), fval(w1));
+    var span = Math.max(hi, fmax) - Math.min(lo, fmin) + 0.2;
+    zl = Math.min(lo, fmin) - 0.12*span; zh = Math.max(hi, fmax) + 0.12*span;
+    var n2 = mapper(cZ, w0, w1, zl, zh, 30);
+    h.fillStyle = '#fff'; h.fillRect(0,0,n2.W,n2.H);
+    h.strokeStyle = '#d4d9e0'; h.lineWidth = 1; h.beginPath(); h.moveTo(n2.X(ZX), n2.Y(zl)); h.lineTo(n2.X(ZX), n2.Y(zh)); h.stroke();
+    h.strokeStyle = '#8a94a3'; h.lineWidth = 3; h.beginPath(); prev = null;
+    for (k=0;k<=700;k++){ var xf = w0 + (w1-w0)*k/700, yf = fval(xf);
+      if (prev !== null && Math.abs(yf - prev) > 0.3){ h.stroke(); h.beginPath(); h.moveTo(n2.X(xf), n2.Y(yf)); } else if (k === 0) h.moveTo(n2.X(xf), n2.Y(yf)); else h.lineTo(n2.X(xf), n2.Y(yf)); prev = yf; }
+    h.stroke();
+    h.strokeStyle = '#0082b4'; h.lineWidth = 2; h.beginPath();
+    for (k=0;k<=700;k++){ var xs = w0 + (w1-w0)*k/700; if (k) h.lineTo(n2.X(xs), n2.Y(pts[k])); else h.moveTo(n2.X(xs), n2.Y(pts[k])); }
+    h.stroke();
+    h.setLineDash([5,4]); h.strokeStyle = '#b3261e'; h.lineWidth = 1.3; h.beginPath(); h.moveTo(n2.X(w0), n2.Y(smax)); h.lineTo(n2.X(w1), n2.Y(smax)); h.stroke(); h.setLineDash([]);
+    h.fillStyle = '#b3261e'; h.beginPath(); h.arc(n2.X(sx), n2.Y(smax), 5, 0, 2*PI); h.fill();
+    h.fillStyle = '#5b6575'; h.font = '12px "Noto Sans", sans-serif';
+    h.fillText('x = ' + (ZX === 0 ? '0' : 'π'), n2.X(ZX) + 4, n2.Y(zl) - 6); h.fillText((JUMP > 1e-6 ? 'max S = ' : 'S στο μέγιστο σφάλμα = ') + fmt(smax, 4), 8, 16);
+    // ---- αναγνώσεις
+    var en = NORM2 - PI*A[0]*A[0]/2; for (var q=1;q<=N;q++) en -= PI*(A[q]*A[q] + B[q]*B[q]);
+    document.getElementById('jump').textContent = JUMP > 1e-6 ? 'από ' + fmt(fl, 3) + ' σε ' + fmt(fr, 3) + ' (ύψος ' + fmt(JUMP, 3) + ')' : 'κανένα άλμα (συνεχής κυματομορφή)';
+    var ov = smax - (right ? fr : fl);
+    document.getElementById('over').textContent = JUMP > 1e-6 ? fmt(ov, 4) + ' = ' + fmt(100*ov/JUMP, 2) + '% του άλματος' : 'καμία· μέγιστο σφάλμα στο παράθυρο ≈ ' + fmt(err, 4);
+    document.getElementById('mse').textContent = '‖f − S_N‖² / ‖f‖² = ' + fmt(100*Math.max(en, 0)/NORM2, 4) + '%';
+    document.getElementById('note').textContent = JUMP > 1e-6 ? (N < 20 ? 'αυξήστε το N: η κορυφή πλησιάζει το άλμα αλλά δεν χαμηλώνει' : 'η υπέρβαση μένει κοντά στο 8,95% του άλματος — φαινόμενο Gibbs') : 'συνεχής κυματομορφή: η σύγκλιση είναι ομοιόμορφη, χωρίς υπέρβαση';
+  }
+  function select(w){ wave = w; Array.prototype.forEach.call(document.querySelectorAll('#waves [data-w]'), function(x){ x.classList.toggle('sel', parseInt(x.getAttribute('data-w'), 10) === w); }); coeffs(); draw(); }
+  Array.prototype.forEach.call(document.querySelectorAll('#waves [data-w]'), function(b){ b.addEventListener('click', function(){ select(parseInt(b.getAttribute('data-w'), 10)); }); });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-N]'), function(b){ b.addEventListener('click', function(){ sN.value = b.getAttribute('data-N'); draw(); }); });
+  sN.addEventListener('input', draw);
+  // σύρσιμο κόμβων
+  function pos(e){ var r = cS.getBoundingClientRect(), p = e.touches ? e.touches[0] : e; return [(p.clientX - r.left)*cS._w/r.width, (p.clientY - r.top)*cS._h/r.height]; }
+  function down(e){ if (wave !== 3 || !mS) return; var p = pos(e), best = -1, bd = 400;
+    for (var j=0;j<7;j++){ var dx = mS.X(KX[j]) - p[0], dy = mS.Y(KY[j]) - p[1], d = dx*dx + dy*dy; if (d < bd){ bd = d; best = j; } }
+    drag = best; if (drag >= 0){ e.preventDefault(); move(e); } }
+  function move(e){ if (drag < 0) return; e.preventDefault(); var p = pos(e), y = Math.max(-2, Math.min(2, mS.iy(p[1]))); KY[drag] = Math.round(y*100)/100; coeffs(); draw(); }
+  function up(){ drag = -1; }
+  cS.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  cS.addEventListener('touchstart', down, {passive: false}); cS.addEventListener('touchmove', move, {passive: false}); cS.addEventListener('touchend', up);
+  var playing = null;
+  document.getElementById('play').addEventListener('click', function(){
+    var b = this;
+    if (playing){ clearInterval(playing); playing = null; b.textContent = '▶ Αναπαραγωγή'; return; }
+    b.textContent = '❚❚ Παύση';
+    playing = setInterval(function(){ var N = parseInt(sN.value, 10) + (parseInt(sN.value, 10) < 40 ? 1 : 4); if (N > NMAX) N = 1; sN.value = N; draw(); }, 90);
+  });
+  document.getElementById('reset').addEventListener('click', function(){ sN.value = 9; draw(); });
+  coeffs(); draw();
+})();
+</script>
+
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Πόλοι, ευστάθεια και βηματική απόκριση · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Πόλοι, ευστάθεια και βηματική απόκριση">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script src="../../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../../index.html">Αρχική</a> › <a href="../../../index.html#ch04">Κεφάλαιο 4</a> › Animation</nav>
+<p><span class="badge anim">▶ Animation</span></p>
+<!--TITLE:Πόλοι, ευστάθεια και βηματική απόκριση-->
+<h1>Πόλοι, ευστάθεια και βηματική απόκριση</h1>
+<p class="subtitle">Κεφάλαιο 4 · Σύστημα δεύτερης τάξης με πόλους $\sigma\pm i\omega_d$: κρουστική και βηματική απόκριση</p>
+
+<div class="card">
+<p>Θεωρούμε το σύστημα με συνάρτηση μεταφοράς
+\[ H(s)=\frac{\omega_n^2}{(s-\sigma)^2+\omega_d^2},\qquad \omega_n^2=\sigma^2+\omega_d^2, \]
+δηλαδή την τυπική μορφή $\frac{\omega_n^2}{s^2+2\zeta\omega_ns+\omega_n^2}$ με $\sigma=-\zeta\omega_n$ και $\omega_d=\omega_n\sqrt{1-\zeta^2}$. <strong>Σύρετε</strong> τον πάνω πόλο στο επίπεδο του $s$ (ο συζυγής του ακολουθεί) ή χρησιμοποιήστε τους δρομείς.</p>
+<div class="ctrl"><label for="sg"><strong>σ</strong></label><input type="range" id="sg" min="-3" max="0.8" step="0.01" value="-0.5"><output id="sOut">−0,50</output></div>
+<div class="ctrl"><label for="wd"><strong>ω<sub>d</sub></strong></label><input type="range" id="wd" min="0.2" max="4" step="0.01" value="2"><output id="wOut">2,00</output></div>
+<div class="row"><button class="btn primary" type="button" id="play">▶ Αναπαραγωγή</button><button class="btn" type="button" id="reset">↺ Επαναφορά</button>
+<button class="btn ghost" type="button" data-z="0.2">ζ = 0,2</button><button class="btn ghost" type="button" data-z="0.5">ζ = 0,5</button><button class="btn ghost" type="button" data-z="0.7071">ζ = 0,707</button><button class="btn ghost" type="button" data-z="0">ζ = 0</button></div>
+</div>
+
+<div class="anim-grid">
+  <div><canvas id="cPlane" class="drag" width="440" height="360" aria-label="Το επίπεδο του s με τους πόλους"></canvas>
+  <p class="legend">Επίπεδο του $s$: οι πόλοι (×), ο κύκλος ακτίνας $\omega_n$ (που λόγω διαφορετικής κλίμακας στους άξονες φαίνεται ως έλλειψη) και οι ακτίνες σταθερού $\zeta$ από την αρχή (διακεκομμένες). Σκιασμένο: το αριστερό ημιεπίπεδο της ευστάθειας.</p></div>
+  <div><canvas id="cTime" width="440" height="360" aria-label="Κρουστική και βηματική απόκριση"></canvas>
+  <p class="legend">Βηματική απόκριση $y_u(t)$ (μπλε) και κρουστική απόκριση $h(t)$ (πορτοκαλί). Η διακεκομμένη είναι η τελική τιμή $H(0)=1$.</p></div>
+</div>
+
+<div class="readout">
+  <div><strong>Ευστάθεια:</strong><br><span id="stab"></span></div>
+  <div><strong>ω<sub>n</sub> και ζ:</strong><br><span id="wz"></span></div>
+  <div><strong>Χρόνος κορυφής t<sub>p</sub>:</strong><br><span id="tp"></span></div>
+  <div><strong>Υπερύψωση M<sub>p</sub>:</strong><br><span id="mp"></span></div>
+</div>
+
+<h2>Θεωρία &amp; αιτιολόγηση</h2>
+<div class="card">
+<ul>
+<li>Η κρουστική απόκριση είναι $h(t)=\dfrac{\omega_n^2}{\omega_d}\,e^{\sigma t}\sin\omega_dt$ και η βηματική $y_u(t)=1-e^{\sigma t}\Bigl(\cos\omega_dt-\dfrac{\sigma}{\omega_d}\sin\omega_dt\Bigr)$, με $y_u'=h$.</li>
+<li><strong>Οριζόντια μετακίνηση</strong> (αλλαγή του $\sigma$): αλλάζει η ταχύτητα με την οποία σβήνει η ταλάντωση, $e^{\sigma t}$. <strong>Κατακόρυφη μετακίνηση</strong> (αλλαγή του $\omega_d$): αλλάζει η συχνότητα της ταλάντωσης και ο χρόνος κορυφής $t_p=\pi/\omega_d$.</li>
+<li>Η υπερύψωση εξαρτάται μόνο από τη <em>γωνία</em> των πόλων: $M_p=e^{\sigma\pi/\omega_d}=e^{-\zeta\pi/\sqrt{1-\zeta^2}}$ (Πρόταση 4.4). Πόλοι πάνω στην ίδια ακτίνα από την αρχή έχουν το ίδιο $\zeta$ και την ίδια υπερύψωση.</li>
+<li>Για $\sigma<0$ το σύστημα είναι ευσταθές κατά BIBO· για $\sigma=0$ η $h$ δεν σβήνει (οριακή ευστάθεια) και η βηματική απόκριση ταλαντώνεται ανάμεσα στο $0$ και το $2$· για $\sigma>0$ η απόκριση «εκρήγνυται» (Θεώρημα 4.3).</li>
+</ul>
+<p><strong>Σύνδεση με το βιβλίο:</strong> Θεώρημα 4.3, Ορισμός 4.5, Πρόταση 4.4 και Σχήματα 4.3 και 4.4.</p>
+<p class="small muted">Ερώτηση για σκέψη: αν κρατήσετε σταθερό το $\omega_n$ και αυξήσετε το $\zeta$ από $0$ προς $1$, σε ποια καμπύλη κινούνται οι πόλοι; Τι γίνεται με τον χρόνο κορυφής;</p>
+</div>
+
+<script>
+(function(){
+  function fmt(x, d){ var s = Math.abs(x).toFixed(d===undefined?2:d).replace('.', ','); return (x < -1e-12 && parseFloat(s.replace(',', '.')) !== 0 ? '−' : '') + s; }
+  function setup(c){
+    var dpr = window.devicePixelRatio || 1, w = c.width, h = c.height;
+    if (!c._w){ c._w = w; c._h = h; c.width = w*dpr; c.height = h*dpr; }
+    var g = c.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,c._w,c._h); return g;
+  }
+  function mapper(c, x0, x1, y0, y1, pad){
+    pad = pad || 36; var W = c._w, H = c._h;
+    return { X: function(x){ return pad + (x-x0)/(x1-x0)*(W-2*pad); }, Y: function(y){ return H-pad - (y-y0)/(y1-y0)*(H-2*pad); },
+             iX: function(px){ return x0 + (px-pad)/(W-2*pad)*(x1-x0); }, iY: function(py){ return y0 + (H-pad-py)/(H-2*pad)*(y1-y0); },
+             x0:x0,x1:x1,y0:y0,y1:y1,W:W,H:H };
+  }
+  function axes(g, m, xl, yl, xt, yt, yd, ylLeft){
+    g.strokeStyle = '#9aa4b2'; g.lineWidth = 1; g.fillStyle = '#5b6575'; g.font = '12px "Noto Sans", sans-serif';
+    g.beginPath(); g.moveTo(m.X(m.x0), m.Y(0)); g.lineTo(m.X(m.x1), m.Y(0)); g.stroke();
+    g.beginPath(); g.moveTo(m.X(0), m.Y(m.y0)); g.lineTo(m.X(0), m.Y(m.y1)); g.stroke();
+    xt.forEach(function(v){ g.beginPath(); g.moveTo(m.X(v), m.Y(0)-3); g.lineTo(m.X(v), m.Y(0)+3); g.stroke(); g.fillText(fmt(v, v%1?1:0), m.X(v)-6, m.Y(0)+15); });
+    yt.forEach(function(v){ g.beginPath(); g.moveTo(m.X(0)-3, m.Y(v)); g.lineTo(m.X(0)+3, m.Y(v)); g.stroke(); g.fillText(fmt(v, yd||0), ylLeft ? m.X(m.x0)-26 : m.X(0)-32, m.Y(v)+4); });
+    g.fillStyle = '#1d2430'; g.font = 'italic 14px "Noto Serif", serif';
+    g.fillText(xl, m.X(m.x1)-30, m.Y(0)-8); g.fillText(yl, m.X(0)+8, m.Y(m.y1)+12);
+  }
+  var cP = document.getElementById('cPlane'), cT = document.getElementById('cTime');
+  var ss = document.getElementById('sg'), sw = document.getElementById('wd'), mP = null;
+  function draw(){
+    var sg = parseFloat(ss.value), wd = parseFloat(sw.value);
+    if (Math.abs(sg) < 0.02) sg = 0;
+    var wn = Math.sqrt(sg*sg + wd*wd), z = -sg/wn;
+    document.getElementById('sOut').textContent = fmt(sg);
+    document.getElementById('wOut').textContent = fmt(wd);
+    // ---- επίπεδο του s
+    var g = setup(cP);
+    mP = mapper(cP, -3.4, 1.2, -4.4, 4.4); var m = mP;
+    g.fillStyle = '#fff'; g.fillRect(0,0,m.W,m.H);
+    g.fillStyle = 'rgba(0,148,68,.07)'; g.fillRect(m.X(m.x0), m.Y(m.y1), m.X(0)-m.X(m.x0), m.Y(m.y0)-m.Y(m.y1));
+    g.fillStyle = 'rgba(179,38,30,.05)'; g.fillRect(m.X(0), m.Y(m.y1), m.X(m.x1)-m.X(0), m.Y(m.y0)-m.Y(m.y1));
+    axes(g, m, 'Re s', 'Im s', [-3,-2,-1,1], [-4,-2,2,4], 0, true);
+    g.save(); g.beginPath(); g.rect(m.X(m.x0), m.Y(m.y1), m.X(m.x1)-m.X(m.x0), m.Y(m.y0)-m.Y(m.y1)); g.clip();
+    g.setLineDash([4,4]); g.strokeStyle = '#c64800'; g.lineWidth = 1.2;
+    g.beginPath(); g.ellipse(m.X(0), m.Y(0), m.X(wn)-m.X(0), m.Y(0)-m.Y(wn), 0, 0, 2*Math.PI); g.stroke();
+    g.strokeStyle = '#0b5f86'; g.beginPath(); g.moveTo(m.X(0), m.Y(0)); g.lineTo(m.X(sg*10), m.Y(wd*10)); g.moveTo(m.X(0), m.Y(0)); g.lineTo(m.X(sg*10), m.Y(-wd*10)); g.stroke();
+    g.setLineDash([]); g.restore();
+    [wd, -wd].forEach(function(im){ var px = m.X(sg), py = m.Y(im); g.strokeStyle = '#b3261e'; g.lineWidth = 2.6;
+      g.beginPath(); g.moveTo(px-7,py-7); g.lineTo(px+7,py+7); g.moveTo(px+7,py-7); g.lineTo(px-7,py+7); g.stroke(); });
+    g.fillStyle = '#5b6575'; g.font = '12px "Noto Sans", sans-serif';
+    g.fillText('ευσταθές', m.X(-3.2), m.Y(m.y0)-8); g.fillText('ασταθές', m.X(0.25), m.Y(m.y0)-8);
+    // ---- αποκρίσεις
+    var T = 10, i, t;
+    function h(t){ return wn*wn/wd*Math.exp(sg*t)*Math.sin(wd*t); }
+    function yu(t){ return 1 - Math.exp(sg*t)*(Math.cos(wd*t) - sg/wd*Math.sin(wd*t)); }
+    var mx = 0; for (i=0;i<=400;i++){ t = T*i/400; mx = Math.max(mx, Math.abs(yu(t)), Math.abs(h(t))); }
+    var Y = Math.min(Math.max(2.2, 1.1*mx), 8);
+    var k = setup(cT), n = mapper(cT, 0, T, -Y, Y);
+    k.fillStyle = '#fff'; k.fillRect(0,0,n.W,n.H);
+    var tk = Y > 4 ? [-6, -4, -2, 2, 4, 6].filter(function(v){ return Math.abs(v) < Y; }) : [-2, -1, 1, 2].filter(function(v){ return Math.abs(v) < Y; });
+    axes(k, n, 't', '', [2,4,6,8,10], tk, 0);
+    k.save(); k.beginPath(); k.rect(n.X(0), n.Y(Y), n.X(T)-n.X(0), n.Y(-Y)-n.Y(Y)); k.clip();
+    k.setLineDash([5,4]); k.strokeStyle = '#5b6575'; k.lineWidth = 1; k.beginPath(); k.moveTo(n.X(0), n.Y(1)); k.lineTo(n.X(T), n.Y(1)); k.stroke(); k.setLineDash([]);
+    k.strokeStyle = '#d9822b'; k.lineWidth = 2; k.beginPath();
+    for (i=0;i<=1000;i++){ t = T*i/1000; if(i) k.lineTo(n.X(t), n.Y(h(t))); else k.moveTo(n.X(t), n.Y(h(t))); } k.stroke();
+    k.strokeStyle = '#0082b4'; k.lineWidth = 2.6; k.beginPath();
+    for (i=0;i<=1000;i++){ t = T*i/1000; if(i) k.lineTo(n.X(t), n.Y(yu(t))); else k.moveTo(n.X(t), n.Y(yu(t))); } k.stroke();
+    var tp = Math.PI/wd;
+    if (sg < 0 && tp < T){ k.fillStyle = '#0082b4'; k.beginPath(); k.arc(n.X(tp), n.Y(yu(tp)), 4.5, 0, 2*Math.PI); k.fill(); }
+    k.restore();
+    // ---- αναγνώσεις
+    document.getElementById('stab').textContent = sg < 0 ? 'ευσταθές (πόλοι στο αριστερό ημιεπίπεδο)' : (sg === 0 ? 'οριακά ευσταθές — όχι ευσταθές κατά BIBO' : 'ασταθές (πόλοι στο δεξί ημιεπίπεδο)');
+    document.getElementById('wz').textContent = 'ω_n = ' + fmt(wn) + ',  ζ = ' + fmt(z, 3);
+    document.getElementById('tp').textContent = sg < 0 ? ('π/ω_d = ' + fmt(tp)) : '—';
+    document.getElementById('mp').textContent = sg < 0 ? (fmt(100*Math.exp(sg*Math.PI/wd), 1) + ' %') : (sg === 0 ? '100 % (η απόκριση φτάνει ως το 2)' : '—');
+  }
+  var dragging = false;
+  function fromPointer(ev){
+    var r = cP.getBoundingClientRect(), px = (ev.clientX - r.left)*cP._w/r.width, py = (ev.clientY - r.top)*cP._h/r.height;
+    ss.value = Math.max(-3, Math.min(0.8, mP.iX(px))).toFixed(2);
+    sw.value = Math.max(0.2, Math.min(4, Math.abs(mP.iY(py)))).toFixed(2);
+    draw();
+  }
+  cP.addEventListener('pointerdown', function(ev){ dragging = true; cP.setPointerCapture(ev.pointerId); fromPointer(ev); });
+  cP.addEventListener('pointermove', function(ev){ if (dragging) fromPointer(ev); });
+  cP.addEventListener('pointerup', function(){ dragging = false; });
+  cP.addEventListener('pointercancel', function(){ dragging = false; });
+  ss.addEventListener('input', draw); sw.addEventListener('input', draw);
+  // κουμπιά ζ: ίδιο ω_n = 2
+  Array.prototype.forEach.call(document.querySelectorAll('[data-z]'), function(b){ b.addEventListener('click', function(){
+    var z = parseFloat(b.getAttribute('data-z')), wn = 2; ss.value = (-z*wn).toFixed(2); sw.value = (wn*Math.sqrt(1-z*z)).toFixed(2); draw(); }); });
+  var playing = null, dir = 1;
+  document.getElementById('play').addEventListener('click', function(){
+    var bt = this;
+    if (playing){ cancelAnimationFrame(playing); playing = null; bt.textContent = '▶ Αναπαραγωγή'; return; }
+    bt.textContent = '❚❚ Παύση';
+    (function step(){ var s = parseFloat(ss.value) + dir*0.004; if (s >= 0.3){ s = 0.3; dir = -1; } if (s <= -2){ s = -2; dir = 1; } ss.value = s.toFixed(3); draw(); playing = requestAnimationFrame(step); })();
+  });
+  document.getElementById('reset').addEventListener('click', function(){ ss.value = -0.5; sw.value = 2; draw(); });
+  draw();
+})();
+</script>
+
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

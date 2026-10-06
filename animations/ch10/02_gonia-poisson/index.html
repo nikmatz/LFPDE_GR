@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Η γωνία που «βλέπει» το σημείο · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Η γωνία που «βλέπει» το σημείο">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script src="../../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../../index.html">Αρχική</a> › <a href="../../../index.html#ch10">Κεφάλαιο 10</a> › Animation</nav>
+<p><span class="badge anim">▶ Animation</span></p>
+<!--TITLE:Η γωνία που «βλέπει» το σημείο-->
+<h1>Η γωνία που «βλέπει» το σημείο</h1>
+<p class="subtitle">Κεφάλαιο 10 · Ο πυρήνας Poisson και η γεωμετρική ερμηνεία της μόνιμης θερμοκρασίας στο ημιεπίπεδο</p>
+
+<div class="card">
+<p>Το σύνορο $y=0$ του άνω ημιεπιπέδου διατηρείται σε θερμοκρασία $1$ στο τμήμα $\alpha&lt;x&lt;\beta$ και $0$ στο υπόλοιπο. Από τον τύπο του Poisson (Θεώρημα 10.2) η μόνιμη θερμοκρασία είναι
+\[ u(x,y)=\int_\alpha^\beta P(x-\xi,y)\,d\xi=\frac1\pi\Bigl[\arctan\frac{x-\alpha}{y}-\arctan\frac{x-\beta}{y}\Bigr]=\frac{\theta}{\pi}, \qquad P(x,y)=\frac{y}{\pi(x^2+y^2)}, \]
+όπου $\theta$ η γωνία υπό την οποία φαίνεται η θερμή λωρίδα από το σημείο $(x,y)$. <strong>Σύρετε το σημείο</strong> στο αριστερό παράθυρο.</p>
+<div class="ctrl"><label for="sa"><strong>α</strong></label><input type="range" id="sa" min="-4" max="0" step="0.05" value="-1"><output id="oa">−1,00</output></div>
+<div class="ctrl"><label for="sb"><strong>β</strong></label><input type="range" id="sb" min="0" max="4" step="0.05" value="1"><output id="ob">1,00</output></div>
+<div class="row"><button class="btn primary" type="button" id="play">▶ Το σημείο πλησιάζει το σύνορο</button><button class="btn" type="button" id="reset">↺ Επαναφορά</button>
+<label class="small"><input type="checkbox" id="heat" checked> χρωματικός χάρτης της $u$</label><label class="small"><input type="checkbox" id="iso" checked> ισόθερμη από το σημείο</label></div>
+</div>
+
+<div class="anim-grid">
+  <div><canvas id="cP" class="drag" width="440" height="360" aria-label="Το άνω ημιεπίπεδο με τη θερμή λωρίδα και το σημείο"></canvas>
+  <p class="legend">Η θερμή λωρίδα (κόκκινη) στο σύνορο, το σημείο $(x,y)$ και η γωνία $\theta$ (πορτοκαλί). Η διακεκομμένη καμπύλη είναι η ισόθερμη που περνά από το σημείο: τόξο κύκλου από τα άκρα $(\alpha,0)$ και $(\beta,0)$, πάνω στο οποίο η γωνία, άρα και η $u$, δεν αλλάζει (θεώρημα της εγγεγραμμένης γωνίας).</p></div>
+  <div><canvas id="cK" width="440" height="360" aria-label="Τα βάρη του πυρήνα Poisson πάνω στο σύνορο"></canvas>
+  <p class="legend">Τα «βάρη» $P(x-\xi,y)$ με τα οποία κάθε σημείο $\xi$ του συνόρου συνεισφέρει στην $u(x,y)$. Το σκιασμένο εμβαδόν πάνω από τη λωρίδα είναι ακριβώς η $u(x,y)=\theta/\pi$· το συνολικό εμβαδόν είναι $1$.</p></div>
+</div>
+
+<div class="readout">
+  <div><strong>Σημείο:</strong><br><span id="pt"></span></div>
+  <div><strong>Γωνία και θερμοκρασία:</strong><br><span id="th"></span></div>
+  <div><strong>Ισόθερμη:</strong><br><span id="circ"></span></div>
+  <div><strong>Σχόλιο:</strong><br><span id="note"></span></div>
+</div>
+
+<h2>Θεωρία &amp; αιτιολόγηση</h2>
+<div class="card">
+<ul>
+<li>Ο πυρήνας Poisson είναι θετικός, έχει εμβαδόν $1$ για κάθε $y&gt;0$ και μέγιστο $\frac{1}{\pi y}$ ακριβώς κάτω από το σημείο: η $u(x,y)$ είναι ένας σταθμισμένος μέσος όρος των τιμών του συνόρου (Θεώρημα 10.2).</li>
+<li>Καθώς $y\to0^+$ τα βάρη συγκεντρώνονται κάτω από το σημείο και η $u$ τείνει στην τιμή του συνόρου: $1$ πάνω από τη λωρίδα, $0$ έξω από αυτήν, $\frac12$ ακριβώς πάνω από τα άκρα.</li>
+<li>Η διαφορά των δύο τοξεφαπτομένων είναι η γωνία $\theta$ μεταξύ των ευθειών από το σημείο προς τα άκρα. Οι ισόθερμες $\theta=$ σταθ. είναι, από το θεώρημα της εγγεγραμμένης γωνίας, τόξα κύκλων που περνούν από τα άκρα (Παράδειγμα 10.7, Σχήμα 10.4).</li>
+<li>Μακριά από τη λωρίδα η $u$ φθίνει σαν $\frac{\beta-\alpha}{\pi r}$, πολύ πιο αργά από την εκθετική απόσβεση κάθε μεμονωμένης συχνότητας $e^{-|\omega|y}$.</li>
+</ul>
+<p><strong>Σύνδεση με το βιβλίο:</strong> Θεώρημα 10.2, Παράδειγμα 10.7 και Σχήμα 10.4.</p>
+<p class="small muted">Ερώτηση για σκέψη: πού πρέπει να τοποθετήσετε το σημείο ώστε $u=\frac12$; Γιατί η ισόθερμη $u=\frac12$ είναι ο ημικύκλιος με διάμετρο τη λωρίδα;</p>
+</div>
+
+<script>
+(function(){
+  function fmt(x, d){ if (d === undefined) d = 2; var s = Math.abs(x).toFixed(d).replace('.', ','); return (x < 0 && parseFloat(Math.abs(x).toFixed(d)) !== 0 ? '−' : '') + s; }
+  function setup(c){
+    var dpr = window.devicePixelRatio || 1, w = c.width, h = c.height;
+    if (!c._w){ c._w = w; c._h = h; c.width = w*dpr; c.height = h*dpr; }
+    var g = c.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,c._w,c._h); return g;
+  }
+  function mapper(c, x0, x1, y0, y1, pad){
+    pad = pad || 30;
+    return { X: function(x){ return pad + (x-x0)/(x1-x0)*(c._w-2*pad); }, Y: function(y){ return c._h-pad - (y-y0)/(y1-y0)*(c._h-2*pad); },
+             ix: function(px){ return x0 + (px-pad)/(c._w-2*pad)*(x1-x0); }, iy: function(py){ return y0 + (c._h-pad-py)/(c._h-2*pad)*(y1-y0); },
+             x0:x0,x1:x1,y0:y0,y1:y1,W:c._w,H:c._h };
+  }
+  var PI = Math.PI, XR = 5, YR = 4.2;
+  var sa = document.getElementById('sa'), sb = document.getElementById('sb'), cP = document.getElementById('cP'), cK = document.getElementById('cK');
+  var P = {x: 0.6, y: 1.2};
+  function U(x, y, a, b){ return (Math.atan2(x - a, y) - Math.atan2(x - b, y))/PI; }
+  // χρωματική κλίμακα από μπλε (0) σε κόκκινο (1)
+  function col(v){ v = Math.max(0, Math.min(1, v)); var r = Math.round(40 + 215*v), gg = Math.round(90 + 60*Math.sin(PI*v)), bb = Math.round(230 - 200*v); return [r, gg, bb]; }
+  var img = null;
+  function heatmap(g, m, a, b){
+    var W = Math.round(m.X(XR) - m.X(-XR)), H = Math.round(m.Y(0) - m.Y(YR));
+    if (!img || img.width !== W || img.height !== H) img = g.createImageData(W, H);
+    var d = img.data, x0 = m.X(-XR), y0 = m.Y(YR);
+    for (var j = 0; j < H; j++){
+      var y = m.iy(y0 + j + 0.5);
+      for (var i = 0; i < W; i++){
+        var x = m.ix(x0 + i + 0.5), c = col(U(x, Math.max(y, 1e-6), a, b)), k = 4*(j*W + i);
+        d[k] = c[0]; d[k+1] = c[1]; d[k+2] = c[2]; d[k+3] = 70;
+      }
+    }
+    var dpr = window.devicePixelRatio || 1;
+    // putImageData αγνοεί τον μετασχηματισμό· σχεδιάζουμε μέσω προσωρινού καμβά
+    var tmp = heatmap._tmp || (heatmap._tmp = document.createElement('canvas'));
+    tmp.width = W; tmp.height = H; tmp.getContext('2d').putImageData(img, 0, 0);
+    g.drawImage(tmp, x0, y0, W, H);
+  }
+  function draw(){
+    var a = parseFloat(sa.value), b = parseFloat(sb.value);
+    if (b - a < 0.1){ b = a + 0.1; }
+    document.getElementById('oa').textContent = fmt(a); document.getElementById('ob').textContent = fmt(b);
+    var g = setup(cP), m = mapper(cP, -XR, XR, 0, YR, 24);
+    g.fillStyle = '#fff'; g.fillRect(0,0,m.W,m.H);
+    if (document.getElementById('heat').checked) heatmap(g, m, a, b);
+    // σύνορο
+    g.lineWidth = 5; g.strokeStyle = '#3a6fb0'; g.beginPath(); g.moveTo(m.X(-XR), m.Y(0)); g.lineTo(m.X(XR), m.Y(0)); g.stroke();
+    g.strokeStyle = '#b3261e'; g.beginPath(); g.moveTo(m.X(a), m.Y(0)); g.lineTo(m.X(b), m.Y(0)); g.stroke();
+    g.fillStyle = '#5b6575'; g.font = '12px "Noto Sans", sans-serif';
+    [-4,-2,2,4].forEach(function(v){ g.fillText(fmt(v,0), m.X(v)-6, m.Y(0)+16); });
+    g.fillStyle = '#b3261e'; g.fillText('u = 1', m.X((a + b)/2) - 14, m.Y(0) + 16);
+    // ισόθερμη: κύκλος από (α,0), (β,0) και το P
+    var mid = (a + b)/2, hw = (b - a)/2, yc = ((P.x - mid)*(P.x - mid) + P.y*P.y - hw*hw)/(2*P.y), R = Math.sqrt(hw*hw + yc*yc);
+    if (document.getElementById('iso').checked){
+      g.setLineDash([6,4]); g.strokeStyle = '#1d2430'; g.lineWidth = 1.6; g.beginPath(); var st = false;
+      for (var k = 0; k <= 720; k++){ var ph = 2*PI*k/720, X = mid + R*Math.cos(ph), Y = yc + R*Math.sin(ph);
+        if (Y < 0 || X < -XR || X > XR || Y > YR){ st = false; continue; }
+        if (st) g.lineTo(m.X(X), m.Y(Y)); else { g.moveTo(m.X(X), m.Y(Y)); st = true; } }
+      g.stroke(); g.setLineDash([]);
+    }
+    // ευθείες προς τα άκρα και γωνία
+    g.strokeStyle = '#c64800'; g.lineWidth = 2;
+    g.beginPath(); g.moveTo(m.X(P.x), m.Y(P.y)); g.lineTo(m.X(a), m.Y(0)); g.moveTo(m.X(P.x), m.Y(P.y)); g.lineTo(m.X(b), m.Y(0)); g.stroke();
+    var angA = Math.atan2(m.Y(0) - m.Y(P.y), m.X(a) - m.X(P.x)), angB = Math.atan2(m.Y(0) - m.Y(P.y), m.X(b) - m.X(P.x));
+    g.fillStyle = 'rgba(198,72,0,0.22)'; g.beginPath(); g.moveTo(m.X(P.x), m.Y(P.y)); g.arc(m.X(P.x), m.Y(P.y), 26, angB, angA, false); g.closePath(); g.fill();
+    g.fillStyle = '#c64800'; g.font = 'italic 15px "Noto Serif", serif'; g.fillText('θ', m.X(P.x) - 4, m.Y(P.y) + 42);
+    g.fillStyle = '#1d2430'; g.beginPath(); g.arc(m.X(P.x), m.Y(P.y), 6, 0, 2*PI); g.fill();
+    g.fillStyle = '#fff'; g.beginPath(); g.arc(m.X(P.x), m.Y(P.y), 2.5, 0, 2*PI); g.fill();
+    g.fillStyle = '#1d2430'; g.font = 'italic 14px "Noto Serif", serif'; g.fillText('x', m.X(XR) - 10, m.Y(0) - 8);
+    // ---- πυρήνας Poisson στο σύνορο
+    var h = setup(cK), pk = 1/(PI*P.y), ymax = Math.max(0.35, 1.15*pk), q = mapper(cK, -XR, XR, 0, ymax, 30);
+    h.fillStyle = '#fff'; h.fillRect(0,0,q.W,q.H);
+    h.strokeStyle = '#9aa4b2'; h.lineWidth = 1; h.beginPath(); h.moveTo(q.X(-XR), q.Y(0)); h.lineTo(q.X(XR), q.Y(0)); h.stroke();
+    h.fillStyle = '#5b6575'; h.font = '12px "Noto Sans", sans-serif';
+    [-4,-2,0,2,4].forEach(function(v){ h.fillText(fmt(v,0), q.X(v)-5, q.Y(0)+15); });
+    function Pk(xi){ var d = P.x - xi; return P.y/(PI*(d*d + P.y*P.y)); }
+    h.fillStyle = 'rgba(179,38,30,0.25)'; h.beginPath(); h.moveTo(q.X(a), q.Y(0));
+    for (k = 0; k <= 300; k++){ var xx = a + (b - a)*k/300; h.lineTo(q.X(xx), q.Y(Math.min(Pk(xx), ymax))); }
+    h.lineTo(q.X(b), q.Y(0)); h.closePath(); h.fill();
+    h.strokeStyle = '#0082b4'; h.lineWidth = 2.4; h.beginPath();
+    for (k = 0; k <= 800; k++){ var x2 = -XR + 2*XR*k/800, v2 = Math.min(Pk(x2), ymax); if (k) h.lineTo(q.X(x2), q.Y(v2)); else h.moveTo(q.X(x2), q.Y(v2)); }
+    h.stroke();
+    h.setLineDash([4,4]); h.strokeStyle = '#8a94a3'; h.beginPath(); h.moveTo(q.X(P.x), q.Y(0)); h.lineTo(q.X(P.x), q.Y(Math.min(pk, ymax))); h.stroke(); h.setLineDash([]);
+    h.fillStyle = '#1d2430'; h.font = 'italic 14px "Noto Serif", serif'; h.fillText('ξ', q.X(XR) - 10, q.Y(0) - 8);
+    h.font = '12px "Noto Sans", sans-serif'; h.fillText('μέγιστο 1/(πy) = ' + fmt(pk, 3), q.X(-XR) + 4, 16);
+    // ---- αναγνώσεις
+    var u = U(P.x, P.y, a, b), th = u*PI;
+    document.getElementById('pt').textContent = '(x, y) = (' + fmt(P.x) + ', ' + fmt(P.y) + ')';
+    document.getElementById('th').textContent = 'θ = ' + fmt(th, 3) + ' rad = ' + fmt(th*180/PI, 1) + '°,  u = θ/π = ' + fmt(u, 4);
+    document.getElementById('circ').textContent = 'κέντρο (' + fmt(mid) + ', ' + fmt(yc) + '), ακτίνα ' + fmt(R);
+    var note;
+    if (P.y < 0.15) note = 'πολύ κοντά στο σύνορο: τα βάρη συγκεντρώθηκαν κάτω από το σημείο και η u πλησιάζει την τιμή του συνόρου';
+    else if (Math.abs(u - 0.5) < 0.02) note = 'u ≈ 1/2: το σημείο βρίσκεται σχεδόν πάνω στον ημικύκλιο με διάμετρο τη λωρίδα';
+    else if (Math.sqrt(P.x*P.x + P.y*P.y) > 3.5) note = 'μακριά από τη λωρίδα η u φθίνει αργά, σαν 1/r';
+    else note = 'μετακινήστε το σημείο πάνω στη διακεκομμένη ισόθερμη: η γωνία θ δεν αλλάζει';
+    document.getElementById('note').textContent = note;
+  }
+  [sa, sb].forEach(function(s){ s.addEventListener('input', draw); });
+  ['heat', 'iso'].forEach(function(id){ document.getElementById(id).addEventListener('change', draw); });
+  function ptr(c, ev){ var r = c.getBoundingClientRect(); return {px: (ev.clientX - r.left)*c._w/r.width, py: (ev.clientY - r.top)*c._h/r.height}; }
+  var down = false;
+  function pick(ev){ var p = ptr(cP, ev), m = mapper(cP, -XR, XR, 0, YR, 24); P.x = Math.max(-XR, Math.min(XR, m.ix(p.px))); P.y = Math.max(0.03, Math.min(YR, m.iy(p.py))); draw(); }
+  cP.addEventListener('pointerdown', function(ev){ down = true; cP.setPointerCapture(ev.pointerId); stop(); pick(ev); });
+  cP.addEventListener('pointermove', function(ev){ if (down) pick(ev); });
+  window.addEventListener('pointerup', function(){ down = false; });
+  var playing = null;
+  function stop(){ if (playing){ cancelAnimationFrame(playing); playing = null; } document.getElementById('play').textContent = '▶ Το σημείο πλησιάζει το σύνορο'; }
+  document.getElementById('play').addEventListener('click', function(){
+    if (playing){ stop(); return; }
+    if (P.y < 0.06) P.y = 3;
+    this.textContent = '❚❚ Παύση';
+    (function step(){ P.y *= 0.985; if (P.y < 0.05){ P.y = 0.05; draw(); stop(); return; } draw(); playing = requestAnimationFrame(step); })();
+  });
+  document.getElementById('reset').addEventListener('click', function(){ stop(); sa.value = -1; sb.value = 1; P = {x: 0.6, y: 1.2}; draw(); });
+  draw();
+})();
+</script>
+
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

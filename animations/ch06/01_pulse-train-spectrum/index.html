@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Το φάσμα μιας παλμοσειράς · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Το φάσμα μιας παλμοσειράς">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script src="../../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../../index.html">Αρχική</a> › <a href="../../../index.html#ch06">Κεφάλαιο 6</a> › Animation</nav>
+<p><span class="badge anim">▶ Animation</span></p>
+<!--TITLE:Το φάσμα μιας παλμοσειράς-->
+<h1>Το φάσμα μιας παλμοσειράς</h1>
+<p class="subtitle">Κεφάλαιο 6 · Διάρκεια παλμού, περίοδος και φασματικές γραμμές: «στενό στον χρόνο, πλατύ στη συχνότητα»</p>
+
+<div class="card">
+<p>Η παλμοσειρά ύψους $1$, διάρκειας $\tau$ και περιόδου $T$ έχει μιγαδικούς συντελεστές (Παράδειγμα 6.3)
+\[ c_n=d\,\sinc(n\pi d),\qquad d=\frac{\tau}{T},\qquad \omega_0=\frac{2\pi}{T}, \]
+που «δειγματοληπτούν» την περιβάλλουσα $c(\omega)=d\,\sinc\frac{\omega\tau}{2}$ στις συχνότητες $n\omega_0$. Μετακινήστε τους δρομείς και παρατηρήστε τις γραμμές.</p>
+<div class="ctrl"><label for="sTau"><strong>τ</strong></label><input type="range" id="sTau" min="0.25" max="4" step="0.01" value="1"><output id="oTau">1,00</output></div>
+<div class="ctrl"><label for="sT"><strong>T</strong></label><input type="range" id="sT" min="1.2" max="16" step="0.01" value="4"><output id="oT">4,00</output></div>
+<div class="ctrl"><label for="sN"><strong>N</strong></label><input type="range" id="sN" min="1" max="60" step="1" value="15"><output id="oN">15</output></div>
+<div class="row"><label class="small"><input type="checkbox" id="norm"> γραμμές κανονικοποιημένες, $c_n/d=\sinc(n\pi d)$</label></div>
+<div class="row"><button class="btn primary" type="button" id="play">▶ Αύξηση του T</button><button class="btn" type="button" id="reset">↺ Επαναφορά</button>
+<button class="btn ghost" type="button" data-d="4">d = 1/4</button><button class="btn ghost" type="button" data-d="8">d = 1/8</button><button class="btn ghost" type="button" data-d="2">d = 1/2</button></div>
+</div>
+
+<div class="anim-grid">
+  <div><canvas id="cT" width="440" height="360" aria-label="Η παλμοσειρά και η μερική σειρά Fourier"></canvas>
+  <p class="legend">Η παλμοσειρά (γκρι) και η μερική σειρά $\sum_{|n|\le N}c_ne^{in\omega_0t}$ (μπλε).</p></div>
+  <div><canvas id="cW" width="440" height="360" aria-label="Το δίπλευρο φάσμα"></canvas>
+  <p class="legend">Δίπλευρο φάσμα: οι γραμμές $c_n$ στις συχνότητες $n\omega_0$ (μπλε· πορτοκαλί όσες μπαίνουν στη μερική σειρά) και η περιβάλλουσα (διακεκομμένη). Το σκιασμένο διάστημα είναι ο κύριος λοβός $|\omega|<2\pi/\tau$.</p></div>
+</div>
+
+<div class="readout">
+  <div><strong>Συχνότητες:</strong><br><span id="freq"></span></div>
+  <div><strong>Κύριος λοβός:</strong><br><span id="lobe"></span></div>
+  <div><strong>Αρμονικές που λείπουν:</strong><br><span id="miss"></span></div>
+  <div><strong>Ισχύς στον κύριο λοβό:</strong><br><span id="pow"></span></div>
+</div>
+
+<h2>Θεωρία &amp; αιτιολόγηση</h2>
+<div class="card">
+<ul>
+<li>Η περιβάλλουσα $d\,\sinc\frac{\omega\tau}{2}$ εξαρτάται μόνο από τη διάρκεια $\tau$· η περίοδος $T$ καθορίζει απλώς <em>πού</em> τη δειγματοληπτούμε (ανά $\omega_0=2\pi/T$) και πόσο ψηλά είναι οι γραμμές (ανάλογα του $d$). Με σταθερό $\tau$ και $T\to\infty$ οι γραμμές πυκνώνουν· οι κανονικοποιημένες $Tc_n=\tau\,\sinc(n\pi d)$ «γεμίζουν» την καμπύλη $\tau\,\sinc\frac{\omega\tau}{2}$, που είναι ο μετασχηματισμός Fourier ενός μόνο παλμού (Κεφάλαιο 7).</li>
+<li>Η περιβάλλουσα μηδενίζεται στις συχνότητες $\omega=2k\pi/\tau$. Αν το $1/d$ είναι ακέραιος $m$, οι γραμμές $n=\pm m,\pm2m,\dots$ πέφτουν ακριβώς σε μηδενισμούς και λείπουν (Παράδειγμα 6.7).</li>
+<li>Ο κύριος λοβός $|\omega|<2\pi/\tau$ πλαταίνει όταν ο παλμός στενεύει: ένας παλμός διάρκειας $\tau$ χρειάζεται εύρος ζώνης της τάξης του $1/\tau$ σε $\mathrm{Hz}$. Η ταυτότητα Parseval (Θεώρημα 6.1) δείχνει ότι στον κύριο λοβό βρίσκεται πάνω από το $90\%$ της ισχύος.</li>
+</ul>
+<p><strong>Σύνδεση με το βιβλίο:</strong> Παραδείγματα 6.3 και 6.7, Σχήμα 6.3 και Θεώρημα 6.1.</p>
+<p class="small muted">Ερώτηση για σκέψη: κρατήστε σταθερό τον λόγο $d=\tau/T$ και διπλασιάστε ταυτόχρονα τα $\tau$ και $T$. Ποιες γραμμές αλλάζουν και ποιες όχι; Τι σημαίνει αυτό για ένα σήμα ρολογιού με διπλάσια συχνότητα;</p>
+</div>
+
+<script>
+(function(){
+  function fmt(x, d){ var s = Math.abs(x).toFixed(d===undefined?2:d).replace('.', ','); return (x < -1e-12 && parseFloat(s.replace(',', '.')) !== 0 ? '−' : '') + s; }
+  function setup(c){
+    var dpr = window.devicePixelRatio || 1, w = c.width, h = c.height;
+    if (!c._w){ c._w = w; c._h = h; c.width = w*dpr; c.height = h*dpr; }
+    var g = c.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,c._w,c._h); return g;
+  }
+  function mapper(c, x0, x1, y0, y1, pad){
+    pad = pad || 36;
+    return { X: function(x){ return pad + (x-x0)/(x1-x0)*(c._w-2*pad); }, Y: function(y){ return c._h-pad - (y-y0)/(y1-y0)*(c._h-2*pad); }, x0:x0,x1:x1,y0:y0,y1:y1,W:c._w,H:c._h };
+  }
+  function sinc(u){ return Math.abs(u) < 1e-9 ? 1 : Math.sin(u)/u; }
+  var PI = Math.PI, sTau = document.getElementById('sTau'), sT = document.getElementById('sT'), sN = document.getElementById('sN'), cb = document.getElementById('norm');
+  var cT = document.getElementById('cT'), cW = document.getElementById('cW');
+  function draw(){
+    var tau = parseFloat(sTau.value), T = parseFloat(sT.value), N = parseInt(sN.value, 10);
+    if (tau > 0.95*T){ tau = 0.95*T; sTau.value = tau.toFixed(2); }
+    var d = tau/T, w0 = 2*PI/T, nm = cb.checked;
+    document.getElementById('oTau').textContent = fmt(tau); document.getElementById('oT').textContent = fmt(T); document.getElementById('oN').textContent = N;
+    // ---- χρόνος
+    var g = setup(cT), m = mapper(cT, -12, 12, -0.35, 1.45, 30);
+    g.fillStyle = '#fff'; g.fillRect(0,0,m.W,m.H);
+    g.strokeStyle = '#9aa4b2'; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(m.X(-12), m.Y(0)); g.lineTo(m.X(12), m.Y(0)); g.stroke();
+    g.beginPath(); g.moveTo(m.X(0), m.Y(-0.35)); g.lineTo(m.X(0), m.Y(1.45)); g.stroke();
+    g.fillStyle = '#5b6575'; g.font = '12px "Noto Sans", sans-serif';
+    [-10,-5,5,10].forEach(function(v){ g.beginPath(); g.moveTo(m.X(v), m.Y(0)-3); g.lineTo(m.X(v), m.Y(0)+3); g.stroke(); g.fillText(fmt(v,0), m.X(v)-8, m.Y(0)+15); });
+    g.fillText('1', m.X(0)-12, m.Y(1)+4);
+    g.fillStyle = 'rgba(138,148,163,.28)'; g.strokeStyle = '#8a94a3'; g.lineWidth = 1.5;
+    for (var k=-Math.ceil(12/T)-1;k<=Math.ceil(12/T)+1;k++){ var a = k*T - tau/2, b = k*T + tau/2;
+      if (b < -12 || a > 12) continue; a = Math.max(a, -12); b = Math.min(b, 12);
+      g.fillRect(m.X(a), m.Y(1), m.X(b)-m.X(a), m.Y(0)-m.Y(1)); g.strokeRect(m.X(a), m.Y(1), m.X(b)-m.X(a), m.Y(0)-m.Y(1)); }
+    g.strokeStyle = '#0082b4'; g.lineWidth = 2; g.beginPath();
+    var cn = []; for (var n=0;n<=N;n++) cn.push(d*sinc(n*PI*d));
+    for (var i=0;i<=900;i++){ var t = -12 + 24*i/900, s = cn[0]; for (n=1;n<=N;n++) s += 2*cn[n]*Math.cos(n*w0*t); if (i) g.lineTo(m.X(t), m.Y(s)); else g.moveTo(m.X(t), m.Y(s)); }
+    g.stroke();
+    g.fillStyle = '#1d2430'; g.font = 'italic 14px "Noto Serif", serif'; g.fillText('t', m.X(12)-8, m.Y(0)-8);
+    // ---- συχνότητα
+    var W = 25, yt = nm ? 1.12 : 1.05, yb = nm ? -0.3 : -0.25;
+    var h = setup(cW), q = mapper(cW, -W, W, yb, yt, 30);
+    h.fillStyle = '#fff'; h.fillRect(0,0,q.W,q.H);
+    var edge = 2*PI/tau;
+    h.fillStyle = 'rgba(0,130,180,.08)'; h.fillRect(q.X(Math.max(-edge, -W)), q.Y(yt), q.X(Math.min(edge, W)) - q.X(Math.max(-edge, -W)), q.Y(yb) - q.Y(yt));
+    h.strokeStyle = '#9aa4b2'; h.lineWidth = 1;
+    h.beginPath(); h.moveTo(q.X(-W), q.Y(0)); h.lineTo(q.X(W), q.Y(0)); h.stroke();
+    h.beginPath(); h.moveTo(q.X(0), q.Y(yb)); h.lineTo(q.X(0), q.Y(yt)); h.stroke();
+    h.fillStyle = '#5b6575'; h.font = '12px "Noto Sans", sans-serif';
+    [-20,-10,10,20].forEach(function(v){ h.beginPath(); h.moveTo(q.X(v), q.Y(0)-3); h.lineTo(q.X(v), q.Y(0)+3); h.stroke(); h.fillText(fmt(v,0), q.X(v)-8, q.Y(0)+15); });
+    var scale = nm ? 1/d : 1;
+    h.setLineDash([5,4]); h.strokeStyle = '#8a94a3'; h.lineWidth = 1.4; h.beginPath();
+    for (i=0;i<=600;i++){ var w = -W + 2*W*i/600, e = d*sinc(w*tau/2)*scale; if (i) h.lineTo(q.X(w), q.Y(e)); else h.moveTo(q.X(w), q.Y(e)); }
+    h.stroke(); h.setLineDash([]);
+    var nmax = Math.floor(W/w0);
+    for (n=-nmax;n<=nmax;n++){ var c = d*sinc(n*PI*d)*scale;
+      h.strokeStyle = Math.abs(n) <= N ? '#c64800' : '#0082b4'; h.fillStyle = h.strokeStyle; h.lineWidth = 1.8;
+      h.beginPath(); h.moveTo(q.X(n*w0), q.Y(0)); h.lineTo(q.X(n*w0), q.Y(c)); h.stroke();
+      h.beginPath(); h.arc(q.X(n*w0), q.Y(c), 2.4, 0, 2*PI); h.fill(); }
+    h.fillStyle = '#1d2430'; h.font = 'italic 14px "Noto Serif", serif'; h.fillText('ω', q.X(W)-10, q.Y(0)-8);
+    h.fillText(nm ? 'c_n / d' : 'c_n', q.X(0)+6, q.Y(yt)+12);
+    // ---- αναγνώσεις
+    document.getElementById('freq').textContent = 'ω₀ = 2π/T = ' + fmt(w0, 3) + ' rad/s,  d = τ/T = ' + fmt(d, 3);
+    var inside = 0; for (n=1;n*d<1-1e-9;n++) inside++;
+    document.getElementById('lobe').textContent = '|ω| < 2π/τ = ' + fmt(edge, 2) + ' rad/s,  ' + (2*inside + 1) + ' γραμμές';
+    var inv = 1/d, mi = Math.round(inv);
+    document.getElementById('miss').textContent = Math.abs(inv - mi) < 0.005 && mi >= 2 ? 'n = ±' + mi + ', ±' + 2*mi + ', ±' + 3*mi + ', …  (1/d = ' + mi + ')' : 'καμία (το 1/d = ' + fmt(inv, 2) + ' δεν είναι ακέραιος)';
+    var pw = d*d; for (n=1;n<=inside;n++) pw += 2*Math.pow(d*sinc(n*PI*d), 2);
+    document.getElementById('pow').textContent = fmt(100*pw/d, 1) + '% της μέσης ισχύος P = d = ' + fmt(d, 3);
+  }
+  [sTau, sT, sN].forEach(function(s){ s.addEventListener('input', draw); }); cb.addEventListener('change', draw);
+  Array.prototype.forEach.call(document.querySelectorAll('[data-d]'), function(b){ b.addEventListener('click', function(){ var tau = parseFloat(sTau.value), k = parseFloat(b.getAttribute('data-d'));
+    var T = tau*k; if (T > 16){ T = 16; tau = T/k; } if (T < 1.2){ T = 1.2; tau = T/k; } sT.value = T.toFixed(2); sTau.value = tau.toFixed(2); draw(); }); });
+  var playing = null;
+  document.getElementById('play').addEventListener('click', function(){
+    var b = this;
+    if (playing){ cancelAnimationFrame(playing); playing = null; b.textContent = '▶ Αύξηση του T'; return; }
+    b.textContent = '❚❚ Παύση';
+    (function step(){ var T = parseFloat(sT.value) + 0.03; if (T > 16) T = Math.max(1.2, parseFloat(sTau.value)/0.95 + 0.05); sT.value = T.toFixed(2); draw(); playing = requestAnimationFrame(step); })();
+  });
+  document.getElementById('reset').addEventListener('click', function(){ sTau.value = 1; sT.value = 4; sN.value = 15; cb.checked = false; draw(); });
+  draw();
+})();
+</script>
+
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

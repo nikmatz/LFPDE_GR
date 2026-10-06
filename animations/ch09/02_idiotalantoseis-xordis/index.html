@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ιδιοταλαντώσεις και αρμονικές μιας χορδής · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Ιδιοταλαντώσεις και αρμονικές μιας χορδής">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script src="../../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../../index.html">Αρχική</a> › <a href="../../../index.html#ch09">Κεφάλαιο 9</a> › Animation</nav>
+<p><span class="badge anim">▶ Animation</span></p>
+<!--TITLE:Ιδιοταλαντώσεις και αρμονικές μιας χορδής-->
+<h1>Ιδιοταλαντώσεις και αρμονικές μιας χορδής</h1>
+<p class="subtitle">Κεφάλαιο 9 · Η κίνηση μιας χορδής με στερεωμένα άκρα ως άθροισμα κανονικών τρόπων ταλάντωσης</p>
+
+<div class="card">
+<p>Για χορδή μήκους $L=1$ με $c=1$ και στερεωμένα άκρα η λύση είναι (Θεώρημα 9.4)
+\[ u(x,t)=\sum_{n=1}^{N}\sin n\pi x\,\bigl(A_n\cos n\pi t+B_n\sin n\pi t\bigr), \]
+όπου οι $A_n$ είναι οι ημιτονικοί συντελεστές της αρχικής μορφής και οι $n\pi B_n$ της αρχικής ταχύτητας. Για τράβηγμα σε ύψος $1$ στο σημείο $a$ είναι $A_n=\frac{2\sin n\pi a}{n^2\pi^2a(1-a)}$, ενώ για χτύπημα με σφυράκι πλάτους $2\delta$ και ταχύτητας $1$ γύρω από το $a$ είναι $B_n=\frac{4}{n^2\pi^2}\sin n\pi a\,\sin n\pi\delta$.</p>
+<div class="row" id="exc"><span class="small muted">Διέγερση:</span><button class="btn sel" type="button" data-e="pluck">τράβηγμα στο $x=a$</button><button class="btn" type="button" data-e="hammer">χτύπημα με σφυράκι</button><button class="btn" type="button" data-e="mode">ένας κανονικός τρόπος</button></div>
+<div class="ctrl"><label for="sa"><strong>a</strong></label><input type="range" id="sa" min="0.05" max="0.95" step="0.005" value="0.333"><output id="oa">0,333</output></div>
+<div class="ctrl"><label for="sd"><strong>δ</strong></label><input type="range" id="sd" min="0.01" max="0.25" step="0.005" value="0.05"><output id="od">0,050</output></div>
+<div class="ctrl"><label for="sn"><strong>n</strong></label><input type="range" id="sn" min="1" max="8" step="1" value="2"><output id="on">2</output></div>
+<div class="ctrl"><label for="sN"><strong>N</strong></label><input type="range" id="sN" min="1" max="60" step="1" value="30"><output id="oN">30</output></div>
+<div class="ctrl"><label for="st"><strong>t</strong></label><input type="range" id="st" min="0" max="4" step="0.002" value="0"><output id="ot">0,000</output></div>
+<div class="row"><button class="btn primary" type="button" id="play">▶ Κίνηση</button><button class="btn" type="button" id="reset">↺ Επαναφορά</button>
+<button class="btn ghost" type="button" data-a="2">a = 1/2</button><button class="btn ghost" type="button" data-a="3">a = 1/3</button><button class="btn ghost" type="button" data-a="4">a = 1/4</button><button class="btn ghost" type="button" data-a="8">a = 1/8</button>
+<label class="small"><input type="checkbox" id="comp" checked> οι τρεις πρώτοι κανονικοί τρόποι</label></div>
+</div>
+
+<div class="anim-grid">
+  <div><canvas id="cS" width="440" height="360" aria-label="Η χορδή τη στιγμή t"></canvas>
+  <p class="legend">Η χορδή $u(x,t)$ (μπλε), το σημείο διέγερσης (κόκκινο) και, αν επιλεγεί, οι τρεις πρώτοι κανονικοί τρόποι $\sin n\pi x\,(A_n\cos n\pi t+B_n\sin n\pi t)$ (λεπτές γραμμές) από τους οποίους αποτελείται η κίνηση.</p></div>
+  <div><canvas id="cP" width="440" height="360" aria-label="Το φάσμα των πλατών και της ενέργειας"></canvas>
+  <p class="legend">Πάνω: τα πλάτη $\sqrt{A_n^2+B_n^2}$ των αρμονικών (κανονικοποιημένα). Κάτω: το ποσοστό της ενέργειας $E_n=\frac14(n\pi)^2(A_n^2+B_n^2)$ που μεταφέρει κάθε αρμονική. Με $\times$ σημειώνονται οι αρμονικές που λείπουν.</p></div>
+</div>
+
+<div class="readout">
+  <div><strong>Περίοδος κίνησης:</strong><br><span id="per"></span></div>
+  <div><strong>Αρμονικές που λείπουν:</strong><br><span id="miss"></span></div>
+  <div><strong>Ενέργεια θεμελιώδους:</strong><br><span id="en1"></span></div>
+  <div><strong>Σχόλιο:</strong><br><span id="note"></span></div>
+</div>
+
+<h2>Θεωρία &amp; αιτιολόγηση</h2>
+<div class="card">
+<ul>
+<li>Κάθε κανονικός τρόπος ταλαντώνεται με τη δική του συχνότητα $f_n=\frac{nc}{2L}$ (Ορισμός 9.3, Σχήμα 9.7), και η κίνηση είναι η επαλληλία τους (Θεώρημα 9.4). Επειδή όλες οι περίοδοι $\frac{2L}{nc}$ διαιρούν το $\frac{2L}{c}$, η κίνηση επαναλαμβάνεται με περίοδο $2L/c$.</li>
+<li>Ο παράγοντας $\sin n\pi a$ μηδενίζεται όταν το σημείο διέγερσης είναι δεσμός της $n$-οστής αρμονικής: τράβηγμα στο μέσο δεν δίνει άρτιες αρμονικές, τράβηγμα στο $L/3$ δεν δίνει τις $3,6,9,\dots$ (Παραδείγματα 9.13 και 9.14).</li>
+<li>Στην τραβηγμένη χορδή οι συντελεστές φθίνουν σαν $1/n^2$, γιατί η αρχική μορφή έχει γωνία· στο χτύπημα με πολύ μικρό σφυράκι σαν $1/n$, οπότε ο ήχος είναι πιο «φωτεινός». Οι γωνίες της τραβηγμένης χορδής ταξιδεύουν με ταχύτητα $c$ και ανακλώνται στα άκρα (Σχήμα 9.8).</li>
+<li>Η ενέργεια μοιράζεται στις αρμονικές χωρίς ανταλλαγές μεταξύ τους (Πρόταση 9.6): για τράβηγμα στο $L/3$ η θεμελιώδης μεταφέρει περίπου το $68\%$ (Παράδειγμα 9.15).</li>
+</ul>
+<p><strong>Σύνδεση με το βιβλίο:</strong> Θεώρημα 9.4, Παραδείγματα 9.13 και 9.14 και Σχήματα 9.7 και 9.8.</p>
+<p class="small muted">Ερώτηση για σκέψη: οι κιθαρίστες παίζουν πιο «γλυκά» κοντά στο μέσο της χορδής και πιο «μεταλλικά» κοντά στη γέφυρα. Τι δείχνει το φάσμα όταν μετακινείτε το $a$ προς το $0$;</p>
+</div>
+
+<script>
+(function(){
+  function fmt(x, d){ if (d === undefined) d = 2; var s = Math.abs(x).toFixed(d).replace('.', ','); return (x < 0 && parseFloat(Math.abs(x).toFixed(d)) !== 0 ? '−' : '') + s; }
+  function setup(c){
+    var dpr = window.devicePixelRatio || 1, w = c.width, h = c.height;
+    if (!c._w){ c._w = w; c._h = h; c.width = w*dpr; c.height = h*dpr; }
+    var g = c.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,c._w,c._h); return g;
+  }
+  function mapper(c, x0, x1, y0, y1, pad){
+    pad = pad || 30;
+    return { X: function(x){ return pad + (x-x0)/(x1-x0)*(c._w-2*pad); }, Y: function(y){ return c._h-pad - (y-y0)/(y1-y0)*(c._h-2*pad); }, x0:x0,x1:x1,y0:y0,y1:y1,W:c._w,H:c._h };
+  }
+  var PI = Math.PI, NMAX = 60;
+  var exc = 'pluck', aExact = 1/3;      // ακριβής τιμή για τα κουμπιά (π.χ. 1/3), αλλιώς ο ρυθμιστής
+  var sa = document.getElementById('sa'), sd = document.getElementById('sd'), sn = document.getElementById('sn'), sN = document.getElementById('sN'), st = document.getElementById('st');
+  var cS = document.getElementById('cS'), cP = document.getElementById('cP');
+  function coeffs(){
+    var a = aExact !== null ? aExact : parseFloat(sa.value), d = parseFloat(sd.value), nm = parseInt(sn.value, 10), A = [0], B = [0];
+    for (var n = 1; n <= NMAX; n++){
+      var An = 0, Bn = 0, s = Math.sin(n*PI*a);
+      if (Math.abs(s) < 1e-9) s = 0;
+      if (exc === 'pluck') An = 2*s/(n*n*PI*PI*a*(1 - a));
+      else if (exc === 'hammer') Bn = 4/(n*n*PI*PI)*s*Math.sin(n*PI*d);
+      else if (n === nm) An = 0.6;
+      A.push(An); B.push(Bn);
+    }
+    return {A: A, B: B, a: a, d: d, nm: nm};
+  }
+  function draw(){
+    var C = coeffs(), N = parseInt(sN.value, 10), t = parseFloat(st.value);
+    document.getElementById('oa').textContent = fmt(C.a, 3); document.getElementById('od').textContent = fmt(C.d, 3);
+    document.getElementById('on').textContent = C.nm; document.getElementById('oN').textContent = N; document.getElementById('ot').textContent = fmt(t, 3);
+    // κλίμακα: μέγιστη απομάκρυνση της κίνησης
+    var amp = exc === 'pluck' ? 1 : (exc === 'mode' ? 0.6 : 0);
+    if (exc === 'hammer'){ for (var n = 1; n <= NMAX; n++) amp += Math.abs(C.B[n]); amp = Math.max(amp, 0.05); }
+    var Y = 1.25*amp;
+    // ---- χορδή
+    var g = setup(cS), m = mapper(cS, -0.04, 1.04, -Y, Y, 26);
+    g.fillStyle = '#fff'; g.fillRect(0,0,m.W,m.H);
+    g.strokeStyle = '#d4d9e0'; g.lineWidth = 1; g.beginPath(); g.moveTo(m.X(0), m.Y(0)); g.lineTo(m.X(1), m.Y(0)); g.stroke();
+    var K = 400, i, x;
+    if (document.getElementById('comp').checked && exc !== 'mode'){
+      var cols = ['#c64800', '#2e8b57', '#7b3fa0'];
+      for (var k = 1; k <= 3; k++){
+        if (k > N) break;
+        g.strokeStyle = cols[k-1]; g.lineWidth = 1.2; g.globalAlpha = 0.85; g.beginPath();
+        for (i = 0; i <= K; i++){ x = i/K; var y = Math.sin(k*PI*x)*(C.A[k]*Math.cos(k*PI*t) + C.B[k]*Math.sin(k*PI*t)); if (i) g.lineTo(m.X(x), m.Y(y)); else g.moveTo(m.X(x), m.Y(y)); }
+        g.stroke(); g.globalAlpha = 1;
+      }
+    }
+    g.strokeStyle = '#0082b4'; g.lineWidth = 3; g.beginPath();
+    for (i = 0; i <= K; i++){
+      x = i/K; var s = 0;
+      for (var n2 = 1; n2 <= N; n2++){ var an = C.A[n2], bn = C.B[n2]; if (an === 0 && bn === 0) continue; s += Math.sin(n2*PI*x)*(an*Math.cos(n2*PI*t) + bn*Math.sin(n2*PI*t)); }
+      if (i) g.lineTo(m.X(x), m.Y(s)); else g.moveTo(m.X(x), m.Y(s));
+    }
+    g.stroke();
+    g.fillStyle = '#5b6575'; g.fillRect(m.X(0)-5, m.Y(0)-14, 5, 28); g.fillRect(m.X(1), m.Y(0)-14, 5, 28);
+    if (exc !== 'mode'){
+      g.fillStyle = '#b3261e'; g.beginPath(); g.arc(m.X(C.a), m.Y(-Y) + 8, 5, 0, 2*PI); g.fill();
+      if (exc === 'hammer'){ g.fillStyle = 'rgba(179,38,30,0.18)'; g.fillRect(m.X(Math.max(0, C.a - C.d)), m.Y(Y), m.X(Math.min(1, C.a + C.d)) - m.X(Math.max(0, C.a - C.d)), m.Y(-Y) - m.Y(Y)); }
+    }
+    g.fillStyle = '#1d2430'; g.font = '13px "Noto Sans", sans-serif'; g.fillText('t = ' + fmt(t, 3) + ' (σε μονάδες L/c)', 10, 18);
+    // ---- φάσμα
+    var h = setup(cP), M = Math.min(N, 20), W = cP._w, H = cP._h, pad = 30, half = (H - 3*pad)/2;
+    h.fillStyle = '#fff'; h.fillRect(0,0,W,H);
+    var ampl = [], En = [], Et = 0, amax = 0;
+    for (n = 1; n <= N; n++){ var r = Math.sqrt(C.A[n]*C.A[n] + C.B[n]*C.B[n]); var e = 0.25*n*n*PI*PI*r*r; if (n <= M){ ampl.push(r); amax = Math.max(amax, r); } En.push(e); Et += e; }
+    var bw = (W - 2*pad)/M;
+    h.font = '11px "Noto Sans", sans-serif';
+    for (n = 1; n <= M; n++){
+      var xb = pad + (n - 1)*bw + bw*0.18, ww = bw*0.64, a1 = amax > 0 ? ampl[n-1]/amax : 0, e1 = Et > 0 ? En[n-1]/Et : 0;
+      var y1 = pad + half, y2 = 2*pad + 2*half;
+      if (a1 < 1e-9 && exc !== 'mode'){ h.strokeStyle = '#b3261e'; h.lineWidth = 1.5; h.beginPath(); h.moveTo(xb + ww*0.2, y1 - 10); h.lineTo(xb + ww*0.8, y1 - 2); h.moveTo(xb + ww*0.8, y1 - 10); h.lineTo(xb + ww*0.2, y1 - 2); h.stroke(); }
+      h.fillStyle = '#0082b4'; h.fillRect(xb, y1 - a1*half, ww, a1*half);
+      h.fillStyle = '#c64800'; h.fillRect(xb, y2 - e1*half, ww, e1*half);
+      if (M <= 20 && (n <= 10 || n % 5 === 0)){ h.fillStyle = '#5b6575'; h.fillText(String(n), xb + ww/2 - 4, y2 + 13); }
+    }
+    h.strokeStyle = '#9aa4b2'; h.lineWidth = 1;
+    h.beginPath(); h.moveTo(pad, pad + half); h.lineTo(W - pad, pad + half); h.moveTo(pad, 2*pad + 2*half); h.lineTo(W - pad, 2*pad + 2*half); h.stroke();
+    h.fillStyle = '#1d2430'; h.font = '12px "Noto Sans", sans-serif';
+    h.fillText('πλάτη √(Aₙ² + Bₙ²)', pad, pad - 10); h.fillText('ποσοστό ενέργειας Eₙ / E', pad, 2*pad + half - 10);
+    // ---- αναγνώσεις
+    document.getElementById('per').textContent = '2L/c = 2 (θεμελιώδης f₁ = c/(2L))';
+    var miss = [];
+    if (exc !== 'mode') for (n = 1; n <= 20; n++) if (Math.abs(Math.sin(n*PI*C.a)) < 1e-6) miss.push(n);
+    document.getElementById('miss').textContent = exc === 'mode' ? 'όλες εκτός από την n = ' + C.nm : (miss.length ? miss.join(', ') + (miss.length >= 3 ? ', …' : '') : 'καμία (μέχρι την 20ή)');
+    document.getElementById('en1').textContent = Et > 0 ? fmt(100*En[0]/Et, 1) + '% της ενέργειας των ' + N + ' όρων' : '—';
+    var note;
+    if (exc === 'mode') note = 'ένας μόνο κανονικός τρόπος: στάσιμο κύμα με ' + (C.nm - 1) + ' εσωτερικούς δεσμούς';
+    else if (exc === 'pluck' && N < 8) note = 'λίγοι όροι: η γωνία της τραβηγμένης χορδής «στρογγυλεύει»· αυξήστε το N';
+    else if (exc === 'pluck') note = 'οι γωνίες της χορδής ταξιδεύουν με ταχύτητα c και ανακλώνται στα άκρα';
+    else note = 'το χτύπημα δίνει αρχική ταχύτητα: τη στιγμή t = 0 η χορδή είναι ευθεία';
+    document.getElementById('note').textContent = note;
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('#exc [data-e]'), function(bt){
+    bt.addEventListener('click', function(){
+      Array.prototype.forEach.call(document.querySelectorAll('#exc [data-e]'), function(o){ o.classList.remove('sel'); });
+      bt.classList.add('sel'); exc = bt.getAttribute('data-e'); draw();
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-a]'), function(bt){ bt.addEventListener('click', function(){ aExact = 1/parseInt(bt.getAttribute('data-a'), 10); sa.value = aExact; draw(); }); });
+  sa.addEventListener('input', function(){ aExact = null; draw(); });
+  [sd, sn, sN, st].forEach(function(s){ s.addEventListener('input', draw); });
+  document.getElementById('comp').addEventListener('change', draw);
+  var playing = null;
+  function stop(){ if (playing){ cancelAnimationFrame(playing); playing = null; } document.getElementById('play').textContent = '▶ Κίνηση'; }
+  document.getElementById('play').addEventListener('click', function(){
+    if (playing){ stop(); return; }
+    this.textContent = '❚❚ Παύση';
+    (function step(){ var v = parseFloat(st.value) + 0.004; if (v > 4) v -= 4; st.value = v.toFixed(3); draw(); playing = requestAnimationFrame(step); })();
+  });
+  document.getElementById('reset').addEventListener('click', function(){ stop(); aExact = 1/3; sa.value = 0.333; sd.value = 0.05; sn.value = 2; sN.value = 30; st.value = 0; draw(); });
+  draw();
+})();
+</script>
+
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

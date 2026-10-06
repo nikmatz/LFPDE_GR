@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Εξερευνητής τύπων και χαρακτηριστικών · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Εξερευνητής τύπων και χαρακτηριστικών">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script src="../../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../../index.html">Αρχική</a> › <a href="../../../index.html#ch08">Κεφάλαιο 8</a> › Animation</nav>
+<p><span class="badge anim">▶ Animation</span></p>
+<!--TITLE:Εξερευνητής τύπων και χαρακτηριστικών-->
+<h1>Εξερευνητής τύπων και χαρακτηριστικών</h1>
+<p class="subtitle">Κεφάλαιο 8 · Η διακρίνουσα $\Delta=b^2-ac$ του κύριου μέρους αποφασίζει τον τύπο, την κωνική τομή και τις χαρακτηριστικές</p>
+
+<div class="card">
+<p>Για το κύριο μέρος $a\,u_{xx}+2b\,u_{xy}+c\,u_{yy}$ μιας γραμμικής ΜΔΕ με σταθερούς συντελεστές ορίζετε με τους δρομείς τα $a$, $2b$ και $c$, δηλαδή τους συντελεστές <em>όπως εμφανίζονται</em> στην εξίσωση. Το $b$ είναι το μισό του συντελεστή της $u_{xy}$ (Σχόλιο 8.4). Η εφαρμογή υπολογίζει τη διακρίνουσα και τον τύπο (Ορισμός 8.6), σχεδιάζει την κωνική τομή $aX^2+2bXY+cY^2=1$ και τις χαρακτηριστικές ευθείες, που προκύπτουν από την
+\[ a\,(dy)^2-2b\,dx\,dy+c\,(dx)^2=0,\qquad \frac{dy}{dx}=\frac{b\pm\sqrt\Delta}{a}. \]</p>
+<div class="ctrl"><label for="sa"><strong>a</strong></label><input type="range" id="sa" min="-3" max="3" step="0.01" value="1"><output id="oa">1,00</output></div>
+<div class="ctrl"><label for="sb"><strong>2b</strong></label><input type="range" id="sb" min="-8" max="8" step="0.01" value="0"><output id="ob">0,00</output></div>
+<div class="ctrl"><label for="sc"><strong>c</strong></label><input type="range" id="sc" min="-3" max="3" step="0.01" value="-1"><output id="oc">−1,00</output></div>
+<div class="row"><span class="small muted">Παραδείγματα:</span>
+<button class="btn ghost" type="button" data-p="1,0,-1">κυματική $u_{xx}-u_{yy}$</button>
+<button class="btn ghost" type="button" data-p="1,0,0">θερμότητας $u_{xx}-u_y$</button>
+<button class="btn ghost" type="button" data-p="1,0,1">Laplace $u_{xx}+u_{yy}$</button>
+<button class="btn ghost" type="button" data-p="2,7,3">Παράδειγμα 8.12</button>
+<button class="btn ghost" type="button" data-p="1,3,3">η «παγίδα» $u_{xx}+3u_{xy}+3u_{yy}$</button>
+<button class="btn ghost" type="button" data-p="0,1,0">$u_{xy}$</button></div>
+<div class="row"><button class="btn primary" type="button" id="play">▶ Σάρωση του c</button><button class="btn" type="button" id="flip">± Αλλαγή προσήμου του b</button><button class="btn" type="button" id="reset">↺ Επαναφορά</button></div>
+</div>
+
+<div class="anim-grid">
+  <div><canvas id="cQ" width="440" height="400" aria-label="Η κωνική τομή του κύριου μέρους"></canvas>
+  <p class="legend">Η καμπύλη $aX^2+2bXY+cY^2=1$ (μπλε) και, όπου υπάρχει, η $aX^2+2bXY+cY^2=-1$ (διακεκομμένη): υπερβολή για $\Delta&gt;0$, ζεύγος παράλληλων ευθειών για $\Delta=0$ (εκφυλισμένη παραβολή, αφού λείπουν οι όροι πρώτου βαθμού) και έλλειψη για $\Delta&lt;0$.</p></div>
+  <div><canvas id="cC" width="440" height="400" aria-label="Οι χαρακτηριστικές ευθείες στο επίπεδο x, y"></canvas>
+  <p class="legend">Οι χαρακτηριστικές ευθείες στο επίπεδο $(x,y)$: πορτοκαλί η οικογένεια με κλίση $\frac{b+\sqrt\Delta}{a}$, μωβ η οικογένεια με κλίση $\frac{b-\sqrt\Delta}{a}$. Για $\Delta=0$ συμπίπτουν, για $\Delta&lt;0$ δεν υπάρχουν.</p></div>
+</div>
+
+<div class="readout">
+  <div><strong>Διακρίνουσα και τύπος:</strong><br><span id="typ"></span></div>
+  <div><strong>Χαρακτηριστικές:</strong><br><span id="chr"></span></div>
+  <div><strong>Κανονική μορφή:</strong><br><span id="can"></span></div>
+  <div><strong>Σχόλιο:</strong><br><span id="note"></span></div>
+</div>
+
+<h2>Θεωρία &amp; αιτιολόγηση</h2>
+<div class="card">
+<ul>
+<li>Ο τύπος εξαρτάται μόνο από τους συντελεστές του κύριου μέρους· οι όροι $d\,u_x+e\,u_y+f\,u$ και ο όρος πηγής δεν τον επηρεάζουν. Γι' αυτό η εξίσωση θερμότητας $u_{xx}-u_y=0$ έχει $a=1$, $b=c=0$ και είναι παραβολική (Ορισμός 8.6).</li>
+<li>Η χαρακτηριστική εξίσωση έχει δύο πραγματικές ρίζες όταν $\Delta&gt;0$, μία διπλή όταν $\Delta=0$ και καμία πραγματική όταν $\Delta&lt;0$ (Πρόταση 8.3). Όταν $a=0$, μία οικογένεια είναι οι κατακόρυφες ευθείες $x=C$.</li>
+<li>Αλλάζοντας το πρόσημο του $b$ η διακρίνουσα και ο τύπος δεν αλλάζουν, αλλάζουν όμως οι κλίσεις των χαρακτηριστικών: η εικόνα «καθρεφτίζεται» ως προς τον άξονα $y$.</li>
+<li>Οι χαρακτηριστικές δίνουν τις νέες μεταβλητές: $\xi$, $\eta$ για υπερβολική, $\xi$ και μια βοηθητική $\eta$ για παραβολική, το πραγματικό και το φανταστικό μέρος μιας μιγαδικής χαρακτηριστικής για ελλειπτική (Θεώρημα 8.4, Σχήμα 8.7).</li>
+</ul>
+<p><strong>Σύνδεση με το βιβλίο:</strong> Ορισμός 8.6, Πρόταση 8.3, Θεώρημα 8.4 και Σχήματα 8.5, 8.7.</p>
+<p class="small muted">Ερώτηση για σκέψη: πατήστε το παράδειγμα της «παγίδας» και θέστε προσωρινά $2b=6$ (το λάθος $b=3$). Πώς αλλάζει η κωνική τομή και γιατί η εξίσωση με $2b=3$ δεν έχει πραγματικές χαρακτηριστικές;</p>
+</div>
+
+<script>
+(function(){
+  function fmt(x, d){ if (d === undefined) d = 2; var s = Math.abs(x).toFixed(d).replace('.', ','); return (x < 0 && parseFloat(Math.abs(x).toFixed(d)) !== 0 ? '−' : '') + s; }
+  function setup(c){
+    var dpr = window.devicePixelRatio || 1, w = c.width, h = c.height;
+    if (!c._w){ c._w = w; c._h = h; c.width = w*dpr; c.height = h*dpr; }
+    var g = c.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,c._w,c._h); return g;
+  }
+  function mapper(c, x0, x1, y0, y1, pad){
+    pad = pad || 30;
+    return { X: function(x){ return pad + (x-x0)/(x1-x0)*(c._w-2*pad); }, Y: function(y){ return c._h-pad - (y-y0)/(y1-y0)*(c._h-2*pad); }, x0:x0,x1:x1,y0:y0,y1:y1,W:c._w,H:c._h };
+  }
+  function axes(g, m, lx, ly){
+    g.strokeStyle = '#9aa4b2'; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(m.X(m.x0), m.Y(0)); g.lineTo(m.X(m.x1), m.Y(0)); g.stroke();
+    g.beginPath(); g.moveTo(m.X(0), m.Y(m.y0)); g.lineTo(m.X(0), m.Y(m.y1)); g.stroke();
+    g.fillStyle = '#1d2430'; g.font = 'italic 14px "Noto Serif", serif';
+    g.fillText(lx, m.X(m.x1)-12, m.Y(0)-7); g.fillText(ly, m.X(0)+7, m.Y(m.y1)+12);
+  }
+  var sa = document.getElementById('sa'), sb = document.getElementById('sb'), sc = document.getElementById('sc');
+  var cQ = document.getElementById('cQ'), cC = document.getElementById('cC');
+  var EPS = 1e-9;
+  function lineLabel(m){            // y = m x + C  ->  κείμενο «y − m x = C»
+    if (Math.abs(m) < 1e-12) return 'y = C';
+    return 'y ' + (m > 0 ? '− ' : '+ ') + fmt(Math.abs(m)) + 'x = C';
+  }
+  function draw(){
+    var a = parseFloat(sa.value), B2 = parseFloat(sb.value), c = parseFloat(sc.value), b = B2/2;
+    document.getElementById('oa').textContent = fmt(a); document.getElementById('ob').textContent = fmt(B2); document.getElementById('oc').textContent = fmt(c);
+    var D = b*b - a*c, Dr = Math.abs(D) < 1e-9 ? 0 : D;
+    var degenerate = Math.abs(a) < EPS && Math.abs(b) < EPS && Math.abs(c) < EPS;
+    // ---- κωνική τομή σε πολικές συντεταγμένες: Q(cosφ, sinφ) = q(φ), r = 1/√|q|
+    var g = setup(cQ), R = 3, m = mapper(cQ, -R, R, -R*cQ._h/cQ._w, R*cQ._h/cQ._w, 26);
+    g.fillStyle = '#fff'; g.fillRect(0,0,m.W,m.H);
+    g.strokeStyle = '#eef1f5'; g.lineWidth = 1;
+    for (var k = -3; k <= 3; k++){ g.beginPath(); g.moveTo(m.X(k), m.Y(m.y0)); g.lineTo(m.X(k), m.Y(m.y1)); g.stroke(); g.beginPath(); g.moveTo(m.X(m.x0), m.Y(k)); g.lineTo(m.X(m.x1), m.Y(k)); g.stroke(); }
+    axes(g, m, 'X', 'Y');
+    function curve(sign, style){
+      var started = false, Rmax = 6, n = 1440;
+      g.beginPath();
+      for (var i = 0; i <= n; i++){
+        var ph = 2*Math.PI*i/n, cs = Math.cos(ph), sn = Math.sin(ph), q = sign*(a*cs*cs + 2*b*cs*sn + c*sn*sn);
+        if (q > 1e-6){ var r = 1/Math.sqrt(q); if (r < Rmax){ var X = r*cs, Y = r*sn; if (started) g.lineTo(m.X(X), m.Y(Y)); else { g.moveTo(m.X(X), m.Y(Y)); started = true; } continue; } }
+        started = false;
+      }
+      g.strokeStyle = style.col; g.lineWidth = style.w; g.setLineDash(style.dash || []); g.stroke(); g.setLineDash([]);
+    }
+    if (!degenerate){
+      curve(1, {col:'#0082b4', w:2.6});
+      curve(-1, {col:'#8a94a3', w:1.6, dash:[6,5]});
+    }
+    g.fillStyle = '#1d2430'; g.font = '13px "Noto Sans", sans-serif';
+    var conic = degenerate ? 'χωρίς κύριο μέρος' : (Dr > 0 ? 'υπερβολή' : (Dr === 0 ? 'ζεύγος παράλληλων ευθειών' : (a > 0 || c > 0 ? 'έλλειψη' : 'η Q = 1 είναι κενή· έλλειψη η Q = −1')));
+    g.fillText(conic, 12, 18);
+    // ---- χαρακτηριστικές ευθείες
+    var h = setup(cC), q2 = mapper(cC, -4, 4, -4*cC._h/cC._w, 4*cC._h/cC._w, 26);
+    h.fillStyle = '#fff'; h.fillRect(0,0,q2.W,q2.H);
+    axes(h, q2, 'x', 'y');
+    var fams = [];      // κάθε οικογένεια: {vertical: bool, m: κλίση}
+    if (!degenerate){
+      if (Math.abs(a) > EPS){
+        if (Dr > 0){ fams.push({v:false, m:(b + Math.sqrt(Dr))/a}); fams.push({v:false, m:(b - Math.sqrt(Dr))/a}); }
+        else if (Dr === 0){ fams.push({v:false, m:b/a}); }
+      } else {
+        fams.push({v:true});                                   // dx = 0
+        if (Math.abs(b) > EPS) fams.push({v:false, m:c/(2*b)});
+      }
+    }
+    var cols = ['#c64800', '#7b3fa0'];
+    fams.forEach(function(F, i){
+      h.strokeStyle = cols[i]; h.lineWidth = 1.5; h.globalAlpha = 0.85;
+      var X0 = q2.x0, X1 = q2.x1, Y0 = q2.y0, Y1 = q2.y1, d = 0.7, v;
+      if (F.v){
+        for (v = Math.ceil(X0/d)*d; v <= X1; v += d){ h.beginPath(); h.moveTo(q2.X(v), q2.Y(Y0)); h.lineTo(q2.X(v), q2.Y(Y1)); h.stroke(); }
+      } else {
+        // ευθείες y = m x + β, ισαπέχουσες κατά d (κάθετη απόσταση)
+        var mm = F.m, corners = [[X0,Y0],[X0,Y1],[X1,Y0],[X1,Y1]].map(function(P){ return P[1] - mm*P[0]; });
+        var bmin = Math.min.apply(null, corners), bmax = Math.max.apply(null, corners), db = d*Math.sqrt(1 + mm*mm);
+        for (v = Math.ceil(bmin/db)*db; v <= bmax; v += db){
+          h.beginPath();
+          if (Math.abs(mm) <= 1){ h.moveTo(q2.X(X0), q2.Y(mm*X0 + v)); h.lineTo(q2.X(X1), q2.Y(mm*X1 + v)); }
+          else { h.moveTo(q2.X((Y0 - v)/mm), q2.Y(Y0)); h.lineTo(q2.X((Y1 - v)/mm), q2.Y(Y1)); }
+          h.stroke();
+        }
+      }
+      h.globalAlpha = 1;
+    });
+    h.font = '13px "Noto Sans", sans-serif'; h.fillStyle = '#1d2430';
+    if (degenerate) h.fillText('a = b = c = 0: δεν υπάρχει κύριο μέρος', 12, 18);
+    else if (Dr < 0) h.fillText('Δ < 0: καμία πραγματική χαρακτηριστική', 12, 18);
+    else h.fillText(fams.length === 1 ? 'μία οικογένεια (διπλή ρίζα)' : 'δύο οικογένειες', 12, 18);
+    // ---- αναγνώσεις
+    var typ = degenerate ? '—' : (Dr > 0 ? 'υπερβολική' : (Dr === 0 ? 'παραβολική' : 'ελλειπτική'));
+    document.getElementById('typ').textContent = 'Δ = b² − ac = ' + fmt(D, 3) + ' ⇒ ' + typ;
+    var chr = '';
+    if (degenerate) chr = '—';
+    else if (Dr < 0){ chr = 'dy/dx = ' + (Math.abs(a) > EPS ? fmt(b/a) + ' ± ' + fmt(Math.sqrt(-Dr)/Math.abs(a)) + 'i' : '—') + ' (μιγαδικές)'; }
+    else chr = fams.map(function(F){ return F.v ? 'x = C' : lineLabel(F.m); }).join(' και ');
+    document.getElementById('chr').textContent = chr;
+    document.getElementById('can').textContent = degenerate ? '—' : (Dr > 0 ? 'w_ξη = Φ  (ή w_αα − w_ββ = Φ)' : (Dr === 0 ? 'w_ηη = Φ' : 'w_αα + w_ββ = Φ'));
+    var note;
+    if (degenerate) note = 'ορίστε τουλάχιστον έναν μη μηδενικό συντελεστή';
+    else if (Dr > 0 && Dr < 0.3) note = 'η Δ είναι μικρή: οι δύο οικογένειες έχουν σχεδόν την ίδια κλίση και ετοιμάζονται να ταυτιστούν';
+    else if (Dr === 0) note = 'παραβολική: οι δύο οικογένειες έχουν ταυτιστεί σε μία';
+    else if (Dr < 0) note = 'ελλειπτική: οι ρίζες της χαρακτηριστικής εξίσωσης είναι συζυγείς μιγαδικές';
+    else if (Math.abs(a) <= EPS) note = 'a = 0: η μία οικογένεια είναι οι κατακόρυφες ευθείες x = C';
+    else note = 'αλλάξτε το πρόσημο του b: ο τύπος μένει ίδιος, οι κλίσεις όμως αλλάζουν';
+    document.getElementById('note').textContent = note;
+  }
+  [sa, sb, sc].forEach(function(s){ s.addEventListener('input', draw); });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-p]'), function(bt){
+    bt.addEventListener('click', function(){ var p = bt.getAttribute('data-p').split(','); sa.value = p[0]; sb.value = p[1]; sc.value = p[2]; draw(); });
+  });
+  document.getElementById('flip').addEventListener('click', function(){ sb.value = -parseFloat(sb.value); draw(); });
+  var playing = null, dir = 1;
+  document.getElementById('play').addEventListener('click', function(){
+    var bt = this;
+    if (playing){ cancelAnimationFrame(playing); playing = null; bt.textContent = '▶ Σάρωση του c'; return; }
+    bt.textContent = '❚❚ Παύση';
+    (function step(){ var v = parseFloat(sc.value) + dir*0.01; if (v >= 3){ v = 3; dir = -1; } if (v <= -3){ v = -3; dir = 1; } sc.value = v.toFixed(2); draw(); playing = requestAnimationFrame(step); })();
+  });
+  document.getElementById('reset').addEventListener('click', function(){ sa.value = 1; sb.value = 0; sc.value = -1; draw(); });
+  draw();
+})();
+</script>
+
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Από τον παλμό στην κρούση · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Από τον παλμό στην κρούση">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script src="../../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../../index.html">Αρχική</a> › <a href="../../../index.html#ch02">Κεφάλαιο 2</a> › Animation</nav>
+<p><span class="badge anim">▶ Animation</span></p>
+<!--TITLE:Από τον παλμό στην κρούση-->
+<h1>Από τον παλμό στην κρούση</h1>
+<p class="subtitle">Κεφάλαιο 2 · Ο παλμός $J\,\delta_\varepsilon(t-1)$, η απόκριση ενός ταλαντωτή και το όριο $\varepsilon\to0^+$</p>
+
+<div class="card">
+<p>Ένας ταλαντωτής χωρίς απόσβεση, αρχικά σε ηρεμία, δέχεται τη δύναμη $J\,\delta_\varepsilon(t-1)$: ύψος $J/\varepsilon$ για $1\le t<1+\varepsilon$ και εμβαδόν (ώθηση) $J$, ανεξάρτητα από τη διάρκεια $\varepsilon$:
+\[ y''+4y=J\,\delta_\varepsilon(t-1),\qquad y(0)=y'(0)=0 . \]
+Η απόκριση υπολογίζεται <strong>αριθμητικά</strong> (μέθοδος Runge–Kutta 4ης τάξης) και συγκρίνεται με την απόκριση στην κρούση $J\,\delta(t-1)$, δηλαδή την $\frac J2\sin2(t-1)\,u(t-1)$.</p>
+<div class="ctrl"><label for="ee"><strong>ε</strong></label><input type="range" id="ee" min="0" max="1" step="0.001" value="0.62"><output id="eOut">1,00</output></div>
+<div class="ctrl"><label for="jj"><strong>J</strong></label><input type="range" id="jj" min="0.5" max="2" step="0.05" value="1"><output id="jOut">1,00</output></div>
+<div class="row"><button class="btn primary" type="button" id="play">▶ ε → 0</button><button class="btn" type="button" id="reset">↺ Επαναφορά</button>
+<button class="btn ghost" type="button" data-e="3.14159265">ε = π</button><button class="btn ghost" type="button" data-e="1.5707963">ε = π/2</button><button class="btn ghost" type="button" data-e="0.1">ε = 0,1</button></div>
+</div>
+
+<div class="anim-grid">
+  <div><canvas id="cTime" width="440" height="360" aria-label="Ο παλμός και η απόκριση του ταλαντωτή"></canvas>
+  <p class="legend">Ο παλμός $J\,\delta_\varepsilon(t-1)$ (σκιασμένος, κλίμακα δεξιά), η απόκριση $y(t)$ (μπλε) και η απόκριση στην κρούση (πορτοκαλί, διακεκομμένη).</p></div>
+  <div><canvas id="cS" width="440" height="360" aria-label="Ο μετασχηματισμός του παλμού"></canvas>
+  <p class="legend">Πεδίο του $s$: $J\,e^{-s}\,\Phi(\varepsilon s)$ με $\Phi(x)=\frac{1-e^{-x}}{x}$ (μπλε) και το όριό του $J\,e^{-s}$ (πορτοκαλί, διακεκομμένη).</p></div>
+</div>
+
+<div class="readout">
+  <div><strong>Ύψος παλμού:</strong><br><span id="hgt"></span></div>
+  <div><strong>Πλάτος μετά τον παλμό:</strong><br><span id="amp"></span></div>
+  <div><strong>Πλάτος για την κρούση:</strong><br><span id="ampd"></span></div>
+  <div><strong>Απόκλιση:</strong><br><span id="dev"></span></div>
+</div>
+
+<h2>Θεωρία &amp; αιτιολόγηση</h2>
+<div class="card">
+<ul>
+<li>Από τον ορισμό, $\Lap\{\delta_\varepsilon(t-1)\}=e^{-s}\,\dfrac{1-e^{-\varepsilon s}}{\varepsilon s}=e^{-s}\,\Phi(\varepsilon s)$ και, αφού $\Phi(x)\to1$ καθώς $x\to0$, ο μετασχηματισμός τείνει στον $e^{-s}=\Lap\{\delta(t-1)\}$ (Θεώρημα 2.2).</li>
+<li>Μετά τον παλμό, η λύση (με τη μέθοδο του Κεφαλαίου 4) είναι $y=\dfrac{J}{2\varepsilon}\,\sin\varepsilon\;\sin\bigl(2(t-1)-\varepsilon\bigr)$, με πλάτος $\dfrac J2\cdot\dfrac{\sin\varepsilon}{\varepsilon}$. Όταν η διάρκεια $\varepsilon$ είναι πολύ μικρότερη από την περίοδο $\pi$ του ταλαντωτή, ο λόγος $\sin\varepsilon/\varepsilon$ είναι σχεδόν $1$ και η απόκριση εξαρτάται μόνο από την ώθηση $J$, όχι από τη μορφή του παλμού.</li>
+<li>Για $\varepsilon=\pi$ (μία ολόκληρη περίοδος) το πλάτος μηδενίζεται: ο παλμός «σπρώχνει» το σώμα τόσο όσο το «φρενάρει». Η ιδανική κρούση είναι το όριο που αγνοεί τέτοιες λεπτομέρειες.</li>
+</ul>
+<p><strong>Σύνδεση με το βιβλίο:</strong> Ορισμοί 2.3 και 2.4, Θεώρημα 2.2, Σχήμα 2.4 και Εφαρμογή 2.2.</p>
+<p class="small muted">Ερώτηση για σκέψη: πόσο μικρό πρέπει να είναι το $\varepsilon$, ώστε το πλάτος να διαφέρει λιγότερο από $1\%$ από το $J/2$;</p>
+</div>
+
+<script>
+(function(){
+  function fmt(x, d){ var s = Math.abs(x).toFixed(d===undefined?2:d).replace('.', ','); return (x < -1e-12 && parseFloat(s.replace(',', '.')) !== 0 ? '−' : '') + s; }
+  function setup(c){
+    var dpr = window.devicePixelRatio || 1, w = c.width, h = c.height;
+    if (!c._w){ c._w = w; c._h = h; c.width = w*dpr; c.height = h*dpr; }
+    var g = c.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,c._w,c._h); return g;
+  }
+  function mapper(c, x0, x1, y0, y1, pad){
+    pad = pad || 36; var W = c._w, H = c._h;
+    return { X: function(x){ return pad + (x-x0)/(x1-x0)*(W-2*pad); }, Y: function(y){ return H-pad - (y-y0)/(y1-y0)*(H-2*pad); }, x0:x0,x1:x1,y0:y0,y1:y1,W:W,H:H };
+  }
+  function axes(g, m, xl, yl, xt, yt, yd){
+    g.strokeStyle = '#9aa4b2'; g.lineWidth = 1; g.fillStyle = '#5b6575'; g.font = '12px "Noto Sans", sans-serif';
+    g.beginPath(); g.moveTo(m.X(m.x0), m.Y(0)); g.lineTo(m.X(m.x1), m.Y(0)); g.stroke();
+    g.beginPath(); g.moveTo(m.X(0), m.Y(m.y0)); g.lineTo(m.X(0), m.Y(m.y1)); g.stroke();
+    xt.forEach(function(v){ g.beginPath(); g.moveTo(m.X(v), m.Y(0)-3); g.lineTo(m.X(v), m.Y(0)+3); g.stroke(); g.fillText(fmt(v, v%1?1:0), m.X(v)-6, m.Y(0)+15); });
+    yt.forEach(function(v){ g.beginPath(); g.moveTo(m.X(0)-3, m.Y(v)); g.lineTo(m.X(0)+3, m.Y(v)); g.stroke(); g.fillText(fmt(v, yd||0), m.X(0)-32, m.Y(v)+4); });
+    g.fillStyle = '#1d2430'; g.font = 'italic 14px "Noto Serif", serif';
+    g.fillText(xl, m.X(m.x1)-14, m.Y(0)-8); g.fillText(yl, m.X(0)+8, m.Y(m.y1)+12);
+  }
+  // ε σε λογαριθμική κλίμακα: ο δρομέας 0..1 αντιστοιχεί στο 0,01..π
+  var EMIN = 0.01, EMAX = Math.PI;
+  function epsOf(v){ return EMIN*Math.pow(EMAX/EMIN, v); }
+  function sliderOf(e){ return Math.log(e/EMIN)/Math.log(EMAX/EMIN); }
+  // Runge–Kutta 4 για y'' + 4y = F(t)
+  // ολοκλήρωση ανά διάστημα [0,1], [1,1+ε], [1+ε,T], ώστε τα άκρα του παλμού να είναι κόμβοι
+  function solve(J, e, T){
+    var y = 0, v = 0, out = [[0, 0, 0]];
+    [[0, 1, 0], [1, 1+e, J/e], [1+e, T, 0]].forEach(function(seg){
+      var a = seg[0], b = seg[1], F = seg[2], n = Math.max(20, Math.ceil((b-a)/0.004)), dt = (b-a)/n, t = a;
+      for (var i=0;i<n;i++){
+        var k1y = v, k1v = F - 4*y;
+        var k2y = v + 0.5*dt*k1v, k2v = F - 4*(y + 0.5*dt*k1y);
+        var k3y = v + 0.5*dt*k2v, k3v = F - 4*(y + 0.5*dt*k2y);
+        var k4y = v + dt*k3v, k4v = F - 4*(y + dt*k3y);
+        y += dt*(k1y + 2*k2y + 2*k3y + k4y)/6; v += dt*(k1v + 2*k2v + 2*k3v + k4v)/6; t += dt;
+        out.push([t, y, v]);
+      }
+    });
+    return out;
+  }
+  var cT = document.getElementById('cTime'), cS = document.getElementById('cS');
+  var se = document.getElementById('ee'), sj = document.getElementById('jj');
+  function draw(){
+    var e = epsOf(parseFloat(se.value)), J = parseFloat(sj.value), T = 10;
+    document.getElementById('eOut').textContent = fmt(e, e < 0.1 ? 3 : 2);
+    document.getElementById('jOut').textContent = fmt(J);
+    // ---- πεδίο του χρόνου
+    var g = setup(cT), m = mapper(cT, 0, T, -1.25, 1.25);
+    g.fillStyle = '#fff'; g.fillRect(0,0,m.W,m.H);
+    axes(g, m, 't', 'y', [2,4,6,8,10], [-1,-0.5,0.5,1], 1);
+    // παλμός σε δική του κλίμακα (δεξιός άξονας: 0..Pmax)
+    var Pmax = 6, hgt = J/e, ph = Math.min(hgt, Pmax), Yp = function(p){ return m.Y(0) - p/Pmax*(m.Y(0)-m.Y(1.25)); };
+    g.fillStyle = 'rgba(155,27,42,.16)'; g.strokeStyle = 'rgba(155,27,42,.7)'; g.lineWidth = 1.2;
+    var x1 = m.X(1), x2 = Math.max(m.X(1+e), m.X(1)+1.5);
+    g.fillRect(x1, Yp(ph), x2-x1, m.Y(0)-Yp(ph)); g.strokeRect(x1, Yp(ph), x2-x1, m.Y(0)-Yp(ph));
+    if (hgt > Pmax){ g.fillStyle = 'rgba(155,27,42,.85)'; g.beginPath(); g.moveTo(x1-5, Yp(Pmax)+8); g.lineTo((x1+x2)/2, Yp(Pmax)-2); g.lineTo(x2+5, Yp(Pmax)+8); g.fill(); }
+    g.fillStyle = '#9b1b2a'; g.font = '12px "Noto Sans", sans-serif'; g.fillText('J/ε = ' + fmt(hgt, hgt < 10 ? 2 : 1), Math.min(x2+6, m.W-110), Math.max(Yp(ph)-6, m.Y(1.25)+12));
+    // δεξιός άξονας για το ύψος του παλμού
+    g.strokeStyle = 'rgba(155,27,42,.6)'; g.lineWidth = 1; g.beginPath(); g.moveTo(m.X(T), m.Y(0)); g.lineTo(m.X(T), Yp(Pmax)); g.stroke();
+    [2, 4, 6].forEach(function(q){ g.beginPath(); g.moveTo(m.X(T)-3, Yp(q)); g.lineTo(m.X(T)+3, Yp(q)); g.stroke(); g.fillText(String(q), m.X(T)+6, Yp(q)+4); });
+    // απόκριση στην κρούση
+    g.setLineDash([6,4]); g.strokeStyle = '#d9822b'; g.lineWidth = 2; g.beginPath();
+    for (var i=0;i<=800;i++){ var t = T*i/800, v = t < 1 ? 0 : 0.5*J*Math.sin(2*(t-1)); if(i) g.lineTo(m.X(t), m.Y(v)); else g.moveTo(m.X(t), m.Y(v)); }
+    g.stroke(); g.setLineDash([]);
+    // αριθμητική λύση
+    var sol = solve(J, e, T);
+    g.strokeStyle = '#0082b4'; g.lineWidth = 2.4; g.beginPath();
+    sol.forEach(function(p, k){ if (k) g.lineTo(m.X(p[0]), m.Y(p[1])); else g.moveTo(m.X(p[0]), m.Y(p[1])); });
+    g.stroke();
+    // πλάτος μετά τον παλμό από την αριθμητική λύση: sqrt(y^2 + (y'/2)^2)
+    var last = sol[sol.length-1], ampNum = Math.sqrt(last[1]*last[1] + 0.25*last[2]*last[2]), ampEx = 0.5*J*Math.sin(e)/e;
+    // ---- πεδίο του s
+    var h = setup(cS), n = mapper(cS, 0, 5, -0.1*J, 1.08*J);
+    h.fillStyle = '#fff'; h.fillRect(0,0,n.W,n.H);
+    axes(h, n, 's', '', [1,2,3,4,5], [0.5*J, J].map(function(v){ return Math.round(v*100)/100; }), 2);
+    h.setLineDash([6,4]); h.strokeStyle = '#d9822b'; h.lineWidth = 2; h.beginPath();
+    for (i=0;i<=300;i++){ var s = 5*i/300, w = J*Math.exp(-s); if(i) h.lineTo(n.X(s), n.Y(w)); else h.moveTo(n.X(s), n.Y(w)); }
+    h.stroke(); h.setLineDash([]);
+    h.strokeStyle = '#0082b4'; h.lineWidth = 2.4; h.beginPath();
+    for (i=0;i<=300;i++){ s = 5*i/300; var x = e*s, Phi = x < 1e-8 ? 1 : (1-Math.exp(-x))/x; w = J*Math.exp(-s)*Phi; if(i) h.lineTo(n.X(s), n.Y(w)); else h.moveTo(n.X(s), n.Y(w)); }
+    h.stroke();
+    // ---- αναγνώσεις
+    document.getElementById('hgt').textContent = 'J/ε = ' + fmt(hgt, hgt < 10 ? 2 : 1) + ' για ' + fmt(e, e < 0.1 ? 3 : 2) + ' s';
+    document.getElementById('amp').textContent = fmt(ampNum, 4) + '  (τύπος: ' + fmt(ampEx, 4) + ')';
+    document.getElementById('ampd').textContent = 'J/2 = ' + fmt(0.5*J, 4);
+    document.getElementById('dev').textContent = fmt(100*Math.abs(1 - Math.sin(e)/e), 2) + ' %  (1 − sin ε / ε)';
+  }
+  se.addEventListener('input', draw); sj.addEventListener('input', draw);
+  Array.prototype.forEach.call(document.querySelectorAll('[data-e]'), function(b){ b.addEventListener('click', function(){ se.value = sliderOf(parseFloat(b.getAttribute('data-e'))); draw(); }); });
+  var playing = null;
+  document.getElementById('play').addEventListener('click', function(){
+    var b = this;
+    if (playing){ cancelAnimationFrame(playing); playing = null; b.textContent = '▶ ε → 0'; return; }
+    b.textContent = '❚❚ Παύση'; se.value = 1;
+    (function step(){ var v = parseFloat(se.value) - 0.003; if (v <= 0){ se.value = 0; draw(); playing = null; b.textContent = '▶ ε → 0'; return; } se.value = v.toFixed(4); draw(); playing = requestAnimationFrame(step); })();
+  });
+  document.getElementById('reset').addEventListener('click', function(){ se.value = sliderOf(1); sj.value = 1; draw(); });
+  se.value = sliderOf(1);
+  draw();
+})();
+</script>
+
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

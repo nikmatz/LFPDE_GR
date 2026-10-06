@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Καθυστέρηση ή ενεργοποίηση; · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Καθυστέρηση ή ενεργοποίηση;">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script src="../../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../../index.html">Αρχική</a> › <a href="../../../index.html#ch02">Κεφάλαιο 2</a> › Animation</nav>
+<p><span class="badge anim">▶ Animation</span></p>
+<!--TITLE:Καθυστέρηση ή ενεργοποίηση;-->
+<h1>Καθυστέρηση ή ενεργοποίηση;</h1>
+<p class="subtitle">Κεφάλαιο 2 · Οι συναρτήσεις $u(t-a)\,f(t-a)$ και $u(t-a)\,f(t)$ και οι μετασχηματισμοί τους</p>
+
+<div class="card">
+<p>Δύο τρόποι να «ανάψει» ένα σήμα τη στιγμή $a$ μοιάζουν αλλά <em>δεν</em> είναι ίδιοι:</p>
+<ul>
+<li><strong>καθυστέρηση</strong> $u(t-a)\,f(t-a)$: ολόκληρο το σήμα μετατοπίζεται κατά $a$ και $\Lap\{u(t-a)\,f(t-a)\}=e^{-as}F(s)$·</li>
+<li><strong>ενεργοποίηση</strong> $u(t-a)\,f(t)$: κρατάμε μόνο το τμήμα της $f$ μετά τη στιγμή $a$ και $\Lap\{u(t-a)\,f(t)\}=e^{-as}\,\Lap\{f(t+a)\}$.</li>
+</ul>
+<p>Επιλέξτε σήμα, μετακινήστε τον δρομέα του $a$ και συγκρίνετε τα γραφήματα και τους μετασχηματισμούς.</p>
+<div class="row" id="sigs"><button class="btn ghost" type="button" data-sig="ramp">ράμπα $t$</button><button class="btn ghost" type="button" data-sig="sin">ημίτονο $\sin t$</button><button class="btn ghost" type="button" data-sig="exp">εκθετική $e^{-t}$</button><button class="btn ghost" type="button" data-sig="pulse">παλμός $t\,e^{1-t}$</button></div>
+<div class="ctrl"><label for="aa"><strong>a</strong></label><input type="range" id="aa" min="0" max="7" step="0.01" value="2"><output id="aOut">2,00</output></div>
+<div class="row"><button class="btn primary" type="button" id="play">▶ Αναπαραγωγή</button><button class="btn" type="button" id="reset">↺ Επαναφορά</button>
+<button class="btn ghost" type="button" data-a="3.14159265">a = π</button><button class="btn ghost" type="button" data-a="6.28318531">a = 2π</button></div>
+</div>
+
+<div class="anim-grid">
+  <div><canvas id="cTime" width="440" height="360" aria-label="Γράφημα των συναρτήσεων στο πεδίο του χρόνου"></canvas>
+  <p class="legend">Πεδίο του χρόνου: $f(t)$ (γκρι, διακεκομμένη), καθυστέρηση $u(t-a)\,f(t-a)$ (μπλε) και ενεργοποίηση $u(t-a)\,f(t)$ (πορτοκαλί, με το άλμα της στο $t=a$).</p></div>
+  <div><canvas id="cS" width="440" height="360" aria-label="Γράφημα των μετασχηματισμών για πραγματικά s"></canvas>
+  <p class="legend">Πεδίο του $s$ (για πραγματικά $s$): $F(s)$ (γκρι), $e^{-as}F(s)$ (μπλε) και $\Lap\{u(t-a)\,f(t)\}$ (πορτοκαλί).</p></div>
+</div>
+
+<div class="readout">
+  <div><strong>F(s):</strong><br><span class="formula" id="Fs"></span></div>
+  <div><strong>Καθυστέρηση:</strong><br><span class="formula" id="Ds"></span></div>
+  <div><strong>Ενεργοποίηση:</strong><br><span class="formula" id="As"></span></div>
+  <div><strong>Συμπίπτουν;</strong><br><span id="same"></span></div>
+</div>
+
+<h2>Θεωρία &amp; αιτιολόγηση</h2>
+<div class="card">
+<ul>
+<li>Στην <strong>καθυστέρηση</strong>, με την αντικατάσταση $\tau=t-a$, $\displaystyle\int_a^\infty e^{-st}f(t-a)\,dt=e^{-as}\int_0^\infty e^{-s\tau}f(\tau)\,d\tau=e^{-as}F(s)$ (Θεώρημα 2.1). Το σχήμα της $f$ δεν αλλάζει· αν $f(0)=0$, το σήμα «ανάβει» χωρίς άλμα.</li>
+<li>Στην <strong>ενεργοποίηση</strong> η ίδια αντικατάσταση δίνει $\displaystyle\int_a^\infty e^{-st}f(t)\,dt=e^{-as}\int_0^\infty e^{-s\tau}f(\tau+a)\,d\tau=e^{-as}\,\Lap\{f(t+a)\}$ (Πρόταση 2.2). Τη στιγμή $a$ το σήμα κάνει άλμα ύψους $f(a)$.</li>
+<li>Οι δύο μετασχηματισμοί συμπίπτουν μόνο όταν $f(t+a)=f(t)$, δηλαδή όταν η $f$ είναι περιοδική με περίοδο $a$: δοκιμάστε το ημίτονο με $a=2\pi$ (και, με αντίθετο πρόσημο, με $a=\pi$).</li>
+<li>Το συνηθισμένο λάθος είναι να γράψουμε $\Lap\{u(t-a)\,f(t)\}=e^{-as}F(s)$ (Σχόλιο 2.3): το πορτοκαλί γράφημα του πεδίου του $s$ δείχνει πόσο απέχει από την αλήθεια.</li>
+</ul>
+<p><strong>Σύνδεση με το βιβλίο:</strong> Θεώρημα 2.1, Πρόταση 2.2, Σχόλιο 2.3 και Σχήμα 2.3.</p>
+<p class="small muted">Ερώτηση για σκέψη: για την εκθετική $e^{-t}$ οι δύο μετασχηματισμοί διαφέρουν μόνο κατά έναν σταθερό παράγοντα. Ποιον, και γιατί;</p>
+</div>
+
+<script>
+(function(){
+  function fmt(x, d){ var s = Math.abs(x).toFixed(d===undefined?2:d).replace('.', ','); return (x < -1e-12 && parseFloat(s.replace(',', '.')) !== 0 ? '−' : '') + s; }
+  function sg(x, d){ return (x < -1e-12 ? ' − ' : ' + ') + fmt(Math.abs(x), d); }
+  function setup(c){
+    var dpr = window.devicePixelRatio || 1, w = c.width, h = c.height;
+    if (!c._w){ c._w = w; c._h = h; c.width = w*dpr; c.height = h*dpr; }
+    var g = c.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,c._w,c._h); return g;
+  }
+  function mapper(c, x0, x1, y0, y1, pad){
+    pad = pad || 36; var W = c._w, H = c._h;
+    return { X: function(x){ return pad + (x-x0)/(x1-x0)*(W-2*pad); }, Y: function(y){ return H-pad - (y-y0)/(y1-y0)*(H-2*pad); }, x0:x0,x1:x1,y0:y0,y1:y1,W:W,H:H };
+  }
+  function axes(g, m, xl, yl, xt, yt, yd){
+    g.strokeStyle = '#9aa4b2'; g.lineWidth = 1; g.fillStyle = '#5b6575'; g.font = '12px "Noto Sans", sans-serif';
+    var y0 = Math.min(Math.max(0, m.y0), m.y1), x0 = Math.min(Math.max(0, m.x0), m.x1);
+    g.beginPath(); g.moveTo(m.X(m.x0), m.Y(y0)); g.lineTo(m.X(m.x1), m.Y(y0)); g.stroke();
+    g.beginPath(); g.moveTo(m.X(x0), m.Y(m.y0)); g.lineTo(m.X(x0), m.Y(m.y1)); g.stroke();
+    xt.forEach(function(v){ g.beginPath(); g.moveTo(m.X(v), m.Y(y0)-3); g.lineTo(m.X(v), m.Y(y0)+3); g.stroke(); g.fillText(fmt(v, v%1?1:0), m.X(v)-6, m.Y(y0)+15); });
+    yt.forEach(function(v){ g.beginPath(); g.moveTo(m.X(x0)-3, m.Y(v)); g.lineTo(m.X(x0)+3, m.Y(v)); g.stroke(); g.fillText(fmt(v, yd||0), m.X(x0)-32, m.Y(v)+4); });
+    g.fillStyle = '#1d2430'; g.font = 'italic 14px "Noto Serif", serif';
+    g.fillText(xl, m.X(m.x1)-14, m.Y(y0)-8); g.fillText(yl, m.X(x0)+8, m.Y(m.y1)+12);
+  }
+  function curve(g, m, f, a, b, n, col, w, dash){
+    g.strokeStyle = col; g.lineWidth = w; g.setLineDash(dash || []); g.beginPath();
+    var first = true;
+    for (var i=0;i<=n;i++){ var x = a + (b-a)*i/n, v = f(x); if (!isFinite(v)){ first = true; continue; }
+      if (first){ g.moveTo(m.X(x), m.Y(v)); first = false; } else g.lineTo(m.X(x), m.Y(v)); }
+    g.stroke(); g.setLineDash([]);
+  }
+  var E = Math.E;
+  var SIG = {
+    ramp:  { f: function(t){ return t; }, F: function(s){ return 1/(s*s); }, Ftxt: '1/s²',
+             A: function(s, a){ return Math.exp(-a*s)*(1/(s*s) + a/s); },
+             Atxt: function(a){ return 'e^(−' + fmt(a) + 's)·(1/s²' + sg(a) + '/s)'; }, y: [-1, 14.5], yt: [5, 10] },
+    sin:   { f: Math.sin, F: function(s){ return 1/(s*s+1); }, Ftxt: '1/(s² + 1)',
+             A: function(s, a){ return Math.exp(-a*s)*(Math.cos(a) + s*Math.sin(a))/(s*s+1); },
+             Atxt: function(a){ return 'e^(−' + fmt(a) + 's)·(' + fmt(Math.cos(a)) + sg(Math.sin(a)) + ' s)/(s² + 1)'; }, y: [-1.3, 1.3], yt: [-1, 1] },
+    exp:   { f: function(t){ return Math.exp(-t); }, F: function(s){ return 1/(s+1); }, Ftxt: '1/(s + 1)',
+             A: function(s, a){ return Math.exp(-a*s)*Math.exp(-a)/(s+1); },
+             Atxt: function(a){ return 'e^(−' + fmt(a) + 's)·' + fmt(Math.exp(-a), 3) + '/(s + 1)'; }, y: [-0.15, 1.2], yt: [0.5, 1] },
+    pulse: { f: function(t){ return t*Math.exp(1-t); }, F: function(s){ return E/((s+1)*(s+1)); }, Ftxt: 'e/(s + 1)²',
+             A: function(s, a){ return Math.exp(-a*s)*Math.exp(1-a)*(1/((s+1)*(s+1)) + a/(s+1)); },
+             Atxt: function(a){ return 'e^(−' + fmt(a) + 's)·' + fmt(Math.exp(1-a), 3) + '·(1/(s + 1)²' + sg(a) + '/(s + 1))'; }, y: [-0.15, 1.3], yt: [0.5, 1] }
+  };
+  var cur = 'pulse', cT = document.getElementById('cTime'), cS = document.getElementById('cS');
+  var sa = document.getElementById('aa');
+  function draw(){
+    var a = parseFloat(sa.value), S = SIG[cur], T = 14;
+    document.getElementById('aOut').textContent = fmt(a);
+    Array.prototype.forEach.call(document.querySelectorAll('[data-sig]'), function(b){ b.classList.toggle('sel', b.getAttribute('data-sig') === cur); });
+    // ---- πεδίο του χρόνου
+    var g = setup(cT), m = mapper(cT, 0, T, S.y[0], S.y[1]);
+    g.fillStyle = '#fff'; g.fillRect(0,0,m.W,m.H);
+    axes(g, m, 't', '', [2,4,6,8,10,12,14], S.yt, S.yt[0] % 1 ? 1 : 0);
+    g.save(); g.beginPath(); g.rect(m.X(0), m.Y(S.y[1]), m.X(T)-m.X(0), m.Y(S.y[0])-m.Y(S.y[1])); g.clip();
+    curve(g, m, S.f, 0, T, 700, '#9aa4b2', 1.6, [5,4]);
+    // ενεργοποίηση: 0 ως το a, μετά f(t)
+    g.strokeStyle = '#d9822b'; g.lineWidth = 3.2; g.beginPath(); g.moveTo(m.X(0), m.Y(0)); g.lineTo(m.X(a), m.Y(0)); g.stroke();
+    curve(g, m, S.f, a, T, 700, '#d9822b', 3.2);
+    // καθυστέρηση: 0 ως το a, μετά f(t-a)
+    g.strokeStyle = '#0082b4'; g.lineWidth = 2.2; g.beginPath(); g.moveTo(m.X(0), m.Y(0)); g.lineTo(m.X(a), m.Y(0)); g.stroke();
+    curve(g, m, function(t){ return S.f(t-a); }, a, T, 700, '#0082b4', 2.2);
+    // άλμα της ενεργοποίησης
+    var fa = S.f(a);
+    if (Math.abs(fa) > 1e-3){
+      g.setLineDash([3,3]); g.strokeStyle = '#d9822b'; g.lineWidth = 1.2; g.beginPath(); g.moveTo(m.X(a), m.Y(0)); g.lineTo(m.X(a), m.Y(fa)); g.stroke(); g.setLineDash([]);
+      g.fillStyle = '#d9822b'; g.beginPath(); g.arc(m.X(a), m.Y(fa), 4, 0, 2*Math.PI); g.fill();
+      g.fillStyle = '#fff'; g.strokeStyle = '#d9822b'; g.beginPath(); g.arc(m.X(a), m.Y(0), 4, 0, 2*Math.PI); g.fill(); g.stroke();
+    }
+    g.restore();
+    g.fillStyle = '#5b6575'; g.font = '12px "Noto Sans", sans-serif'; g.fillText('a = ' + fmt(a), m.X(a)+4, m.Y(S.y[1])+14);
+    // ---- πεδίο του s (πραγματικά s)
+    var s0 = 0.5, s1 = 4, lo = 0, hi = 0, i, s;
+    for (i=0;i<=200;i++){ s = s0 + (s1-s0)*i/200; [S.F(s), Math.exp(-a*s)*S.F(s), S.A(s, a)].forEach(function(v){ lo = Math.min(lo, v); hi = Math.max(hi, v); }); }
+    hi = Math.min(hi, 6); var pad = 0.08*(hi-lo || 1);
+    var h = setup(cS), n = mapper(cS, 0, s1, lo - pad, hi + pad);
+    h.fillStyle = '#fff'; h.fillRect(0,0,n.W,n.H);
+    var tick = hi > 3 ? [1, 2, 3, 4, 5].filter(function(v){ return v < hi; }) : (hi > 1 ? [0.5, 1, 1.5, 2, 2.5].filter(function(v){ return v < hi; }) : [0.25, 0.5, 0.75].filter(function(v){ return v < hi; }));
+    if (lo < -0.05) tick.unshift(Math.max(lo, -1) < -0.5 ? -0.5 : -0.25);
+    axes(h, n, 's', '', [1,2,3,4], tick, 2);
+    h.save(); h.beginPath(); h.rect(n.X(0), n.Y(hi+pad), n.X(s1)-n.X(0), n.Y(lo-pad)-n.Y(hi+pad)); h.clip();
+    curve(h, n, S.F, s0, s1, 300, '#9aa4b2', 1.6, [5,4]);
+    curve(h, n, function(s){ return S.A(s, a); }, s0, s1, 300, '#d9822b', 3.2);
+    curve(h, n, function(s){ return Math.exp(-a*s)*S.F(s); }, s0, s1, 300, '#0082b4', 2.2);
+    h.restore();
+    // ---- αναγνώσεις
+    document.getElementById('Fs').textContent = S.Ftxt;
+    document.getElementById('Ds').textContent = a < 0.005 ? S.Ftxt : 'e^(−' + fmt(a) + 's)·' + S.Ftxt;
+    document.getElementById('As').textContent = S.Atxt(a);
+    var md = 0, mx = 0;
+    for (i=0;i<=100;i++){ s = s0 + (s1-s0)*i/100; var d = Math.exp(-a*s)*S.F(s), q = S.A(s, a); md = Math.max(md, Math.abs(d-q)); mx = Math.max(mx, Math.abs(d)); }
+    var same = document.getElementById('same');
+    if (a < 0.005) same.textContent = 'ναι — για a = 0 οι δύο συναρτήσεις ταυτίζονται με την f';
+    else if (md <= 2e-3*mx) same.textContent = 'ναι — εδώ f(t + a) = f(t): η f είναι περιοδική με περίοδο a';
+    else same.textContent = 'όχι — άλμα ενεργοποίησης f(a) = ' + fmt(fa, 3);
+  }
+  sa.addEventListener('input', draw);
+  Array.prototype.forEach.call(document.querySelectorAll('[data-sig]'), function(b){ b.addEventListener('click', function(){ cur = b.getAttribute('data-sig'); draw(); }); });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-a]'), function(b){ b.addEventListener('click', function(){ cur = 'sin'; sa.value = b.getAttribute('data-a'); draw(); }); });
+  var playing = null, dir = 1;
+  document.getElementById('play').addEventListener('click', function(){
+    var b = this;
+    if (playing){ cancelAnimationFrame(playing); playing = null; b.textContent = '▶ Αναπαραγωγή'; return; }
+    b.textContent = '❚❚ Παύση';
+    (function step(){ var a = parseFloat(sa.value) + dir*0.01; if (a >= 7){ a = 7; dir = -1; } if (a <= 0){ a = 0; dir = 1; } sa.value = a.toFixed(3); draw(); playing = requestAnimationFrame(step); })();
+  });
+  document.getElementById('reset').addEventListener('click', function(){ cur = 'pulse'; sa.value = 2; draw(); });
+  draw();
+})();
+</script>
+
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

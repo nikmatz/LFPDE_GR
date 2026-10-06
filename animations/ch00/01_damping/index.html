@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Από την ταλάντωση στην απόσβεση · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Από την ταλάντωση στην απόσβεση">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script src="../../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../../index.html">Αρχική</a> › <a href="../../../index.html#ch00">Κεφάλαιο 0</a> › Animation</nav>
+<p><span class="badge anim">▶ Animation</span></p>
+<!--TITLE:Από την ταλάντωση στην απόσβεση-->
+<h1>Από την ταλάντωση στην απόσβεση</h1>
+<p class="subtitle">Κεφάλαιο 0 · Ρίζες της χαρακτηριστικής εξίσωσης και απόκριση ταλαντωτή</p>
+
+<div class="card">
+<p>Μελετάμε την ελεύθερη ταλάντωση με απόσβεση
+\[ y''+2\zeta\omega_0\,y'+\omega_0^2\,y=0,\qquad y(0)=1,\quad y'(0)=0, \]
+με $\omega_0=1$. Μετακινήστε τον δρομέα του <strong>λόγου απόσβεσης</strong> $\zeta$ και παρατηρήστε <em>ταυτόχρονα</em> τις ρίζες
+$r=\omega_0\bigl(-\zeta\pm\sqrt{\zeta^2-1}\bigr)$ της χαρακτηριστικής εξίσωσης $r^2+2\zeta\omega_0 r+\omega_0^2=0$ και την απόκριση $y(t)$.</p>
+<div class="ctrl"><label for="zeta"><strong>ζ</strong></label><input type="range" id="zeta" min="0" max="2" step="0.01" value="0.2"><output id="zetaOut">0,20</output></div>
+<div class="row"><button class="btn primary" type="button" id="play">▶ Αναπαραγωγή</button><button class="btn" type="button" id="reset">↺ Επαναφορά</button>
+<button class="btn ghost" type="button" data-z="0">ζ = 0</button><button class="btn ghost" type="button" data-z="0.2">ζ = 0,2</button><button class="btn ghost" type="button" data-z="1">ζ = 1</button><button class="btn ghost" type="button" data-z="2">ζ = 2</button></div>
+</div>
+
+<div class="anim-grid">
+  <div><canvas id="cPlane" width="440" height="360" aria-label="Μιγαδικό επίπεδο με τις ρίζες"></canvas>
+  <p class="legend">Μιγαδικό επίπεδο: οι ρίζες (×), ο κύκλος $|r|=\omega_0$ και η διαδρομή τους καθώς το $\zeta$ αυξάνεται.</p></div>
+  <div><canvas id="cTime" width="440" height="360" aria-label="Γράφημα της απόκρισης y(t)"></canvas>
+  <p class="legend">Απόκριση $y(t)$ (μπλε) και περιβάλλουσα $\pm e^{-\zeta\omega_0 t}$ (πορτοκαλί), όταν υπάρχει ταλάντωση.</p></div>
+</div>
+
+<div class="readout">
+  <div><strong>Τύπος:</strong><br><span id="kind"></span></div>
+  <div><strong>Ρίζες:</strong><br><span id="roots"></span></div>
+  <div><strong>Συχνότητα ταλάντωσης:</strong><br><span id="wd"></span></div>
+  <div><strong>Χρόνος για |y| &lt; 2%:</strong><br><span id="ts"></span></div>
+</div>
+
+<h2>Θεωρία &amp; αιτιολόγηση</h2>
+<div class="card">
+<ul>
+<li><strong>$0\le\zeta<1$ (υποκρίσιμη απόσβεση):</strong> οι ρίζες είναι συζυγείς μιγαδικές $-\zeta\omega_0\pm i\omega_d$, με $\omega_d=\omega_0\sqrt{1-\zeta^2}$, και βρίσκονται πάνω στον κύκλο ακτίνας $\omega_0$, αφού $(\zeta\omega_0)^2+\omega_d^2=\omega_0^2$. Η λύση $y=e^{-\zeta\omega_0t}\bigl(\cos\omega_dt+\tfrac{\zeta}{\sqrt{1-\zeta^2}}\sin\omega_dt\bigr)$ ταλαντώνεται μέσα σε μια φθίνουσα περιβάλλουσα.</li>
+<li><strong>$\zeta=1$ (κρίσιμη απόσβεση):</strong> οι ρίζες συναντώνται στη διπλή ρίζα $r=-\omega_0$ και $y=(1+\omega_0t)e^{-\omega_0t}$: η ταλάντωση εξαφανίζεται.</li>
+<li><strong>$\zeta>1$ (υπερκρίσιμη απόσβεση):</strong> δύο αρνητικές πραγματικές ρίζες· η μία πλησιάζει το $0$ καθώς το $\zeta$ μεγαλώνει, γι' αυτό η επιστροφή στην ισορροπία γίνεται <em>πιο αργή</em> και όχι πιο γρήγορη.</li>
+</ul>
+<p><strong>Σύνδεση με το βιβλίο:</strong> Θεώρημα 0.6 (οι τρεις περιπτώσεις της χαρακτηριστικής εξίσωσης), Σχήμα 0.3 και η δραστηριότητα Python του Κεφαλαίου 0. Στο Κεφάλαιο 3 οι ίδιες ρίζες θα εμφανιστούν ως <em>πόλοι</em> του μετασχηματισμού Laplace $Y(s)$.</p>
+<p class="small muted">Ερώτηση για σκέψη: για ποιο $\zeta$ μένει η απόκριση πιο γρήγορα μέσα στη ζώνη $\pm2\%$; Είναι το $\zeta=1$;</p>
+</div>
+
+<script>
+(function(){
+  var W0 = 1;
+  function fmt(x, d){ return (x<0?'−':'') + Math.abs(x).toFixed(d===undefined?2:d).replace('.', ','); }
+  function setup(c){
+    var dpr = window.devicePixelRatio || 1, w = c.width, h = c.height;
+    if (!c._w){ c._w = w; c._h = h; c.width = w*dpr; c.height = h*dpr; }
+    var g = c.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,c._w,c._h); return g;
+  }
+  function mapper(c, x0, x1, y0, y1, pad){
+    pad = pad || 34; var W = c._w, H = c._h;
+    return { X: function(x){ return pad + (x-x0)/(x1-x0)*(W-2*pad); }, Y: function(y){ return H-pad - (y-y0)/(y1-y0)*(H-2*pad); }, x0:x0,x1:x1,y0:y0,y1:y1,pad:pad,W:W,H:H };
+  }
+  function axes(g, m, xl, yl, xt, yt){
+    g.strokeStyle = '#9aa4b2'; g.lineWidth = 1; g.fillStyle = '#5b6575'; g.font = '12px "Noto Sans", sans-serif';
+    g.beginPath(); g.moveTo(m.X(m.x0), m.Y(0)); g.lineTo(m.X(m.x1), m.Y(0)); g.stroke();
+    g.beginPath(); g.moveTo(m.X(0), m.Y(m.y0)); g.lineTo(m.X(0), m.Y(m.y1)); g.stroke();
+    xt.forEach(function(v){ g.beginPath(); g.moveTo(m.X(v), m.Y(0)-3); g.lineTo(m.X(v), m.Y(0)+3); g.stroke(); g.fillText(fmt(v, v%1?1:0), m.X(v)-6, m.Y(0)+15); });
+    yt.forEach(function(v){ g.beginPath(); g.moveTo(m.X(0)-3, m.Y(v)); g.lineTo(m.X(0)+3, m.Y(v)); g.stroke(); g.fillText(fmt(v, v%1?1:0), m.X(0)-30, m.Y(v)+4); });
+    g.fillStyle = '#1d2430'; g.font = 'italic 14px "Noto Serif", serif';
+    g.fillText(xl, m.X(m.x1)-18, m.Y(0)-8); g.fillText(yl, m.X(0)+8, m.Y(m.y1)+12);
+  }
+  function roots(z){
+    if (z < 1) { var wd = W0*Math.sqrt(1-z*z); return {type: z===0?'none':'under', re:[-z*W0,-z*W0], im:[wd,-wd]}; }
+    if (z === 1) return {type:'crit', re:[-W0,-W0], im:[0,0]};
+    var q = W0*Math.sqrt(z*z-1); return {type:'over', re:[-z*W0+q, -z*W0-q], im:[0,0]};
+  }
+  function y(t, z){
+    if (z < 1){ var wd = Math.sqrt(1-z*z); return Math.exp(-z*t)*(Math.cos(wd*t) + z/wd*Math.sin(wd*t)); }
+    if (Math.abs(z-1) < 1e-9) return (1+t)*Math.exp(-t);
+    var q = Math.sqrt(z*z-1), r1 = -z+q, r2 = -z-q; return (r2*Math.exp(r1*t) - r1*Math.exp(r2*t))/(r2-r1);
+  }
+  var cP = document.getElementById('cPlane'), cT = document.getElementById('cTime');
+  var sl = document.getElementById('zeta'), out = document.getElementById('zetaOut');
+  function draw(){
+    var z = parseFloat(sl.value); if (Math.abs(z-1) < 0.005) z = 1;
+    out.textContent = fmt(z);
+    // ---- μιγαδικό επίπεδο
+    var g = setup(cP), yr = 0.5*(cP._h-68)/(cP._w-68)*5.4, m = mapper(cP, -4.2, 1.2, -yr, yr);   // ίδια κλίμακα στους δύο άξονες
+    g.fillStyle = '#fff'; g.fillRect(0,0,m.W,m.H);
+    g.fillStyle = 'rgba(0,148,68,.06)'; g.fillRect(m.X(m.x0), m.Y(m.y1), m.X(0)-m.X(m.x0), m.Y(m.y0)-m.Y(m.y1));
+    axes(g, m, 'Re', 'Im', [-4,-3,-2,-1,1], [-1,1]);
+    g.setLineDash([4,4]); g.strokeStyle = '#c64800'; g.beginPath();
+    g.arc(m.X(0), m.Y(0), m.X(1)-m.X(0), 0, 2*Math.PI); g.stroke(); g.setLineDash([]);
+    // διαδρομή (root locus) για ζ από 0 έως 2
+    g.strokeStyle = 'rgba(0,130,180,.25)'; g.lineWidth = 3; g.beginPath();
+    g.arc(m.X(0), m.Y(0), m.X(1)-m.X(0), Math.PI/2, 3*Math.PI/2); g.stroke();
+    g.beginPath(); g.moveTo(m.X(-(2+Math.sqrt(3))), m.Y(0)); g.lineTo(m.X(-(2-Math.sqrt(3))), m.Y(0)); g.stroke();
+    var r = roots(z); g.strokeStyle = '#b3261e'; g.lineWidth = 2.5;
+    for (var k=0;k<2;k++){ var px = m.X(r.re[k]), py = m.Y(r.im[k]); g.beginPath(); g.moveTo(px-7,py-7); g.lineTo(px+7,py+7); g.moveTo(px+7,py-7); g.lineTo(px-7,py+7); g.stroke(); }
+    g.fillStyle = '#5b6575'; g.font = '12px "Noto Sans", sans-serif'; g.fillText('|r| = ω₀', m.X(0.35), m.Y(1.05));
+    // ---- απόκριση
+    var h = setup(cT), n = mapper(cT, 0, 20, -1.15, 1.15);
+    h.fillStyle = '#fff'; h.fillRect(0,0,n.W,n.H);
+    h.fillStyle = 'rgba(0,0,0,.05)'; h.fillRect(n.X(0), n.Y(0.02), n.X(20)-n.X(0), n.Y(-0.02)-n.Y(0.02));
+    axes(h, n, 't', 'y', [5,10,15,20], [-1,1]);
+    if (r.type === 'under'){
+      h.setLineDash([5,4]); h.strokeStyle = '#c64800'; h.lineWidth = 1.5;
+      [1,-1].forEach(function(sg){ h.beginPath(); for (var i=0;i<=400;i++){ var t = 20*i/400, v = sg*Math.exp(-z*t); if(i) h.lineTo(n.X(t), n.Y(v)); else h.moveTo(n.X(t), n.Y(v)); } h.stroke(); });
+      h.setLineDash([]);
+    }
+    h.strokeStyle = '#0082b4'; h.lineWidth = 2.4; h.beginPath();
+    var tsVal = 0;
+    for (var i=0;i<=1000;i++){ var t = 20*i/1000, v = y(t, z); if (Math.abs(v) >= 0.02) tsVal = t; if(i) h.lineTo(n.X(t), n.Y(v)); else h.moveTo(n.X(t), n.Y(v)); }
+    h.stroke();
+    // ---- αναγνώσεις
+    var names = {none:'χωρίς απόσβεση (ζ = 0): αμείωτη ταλάντωση', under:'υποκρίσιμη απόσβεση (ζ < 1)', crit:'κρίσιμη απόσβεση (ζ = 1)', over:'υπερκρίσιμη απόσβεση (ζ > 1)'};
+    document.getElementById('kind').textContent = names[r.type];
+    document.getElementById('roots').textContent = (r.type==='none'||r.type==='under') ?
+      ('r = ' + fmt(r.re[0]) + ' ± ' + fmt(Math.abs(r.im[0])) + ' i') :
+      (r.type==='crit' ? 'r = −1 (διπλή)' : ('r₁ = ' + fmt(r.re[0]) + ',  r₂ = ' + fmt(r.re[1])));
+    document.getElementById('wd').textContent = z < 1 ? ('ω_d = ' + fmt(Math.sqrt(1-z*z)) + ' rad/s') : 'δεν ταλαντώνεται';
+    document.getElementById('ts').textContent = tsVal >= 19.9 ? 'μεγαλύτερος από 20' : ('t ≈ ' + fmt(tsVal, 1));
+  }
+  sl.addEventListener('input', draw);
+  var playing = null, dir = 1;
+  document.getElementById('play').addEventListener('click', function(){
+    var b = this;
+    if (playing){ cancelAnimationFrame(playing); playing = null; b.textContent = '▶ Αναπαραγωγή'; return; }
+    b.textContent = '❚❚ Παύση';
+    (function step(){ var z = parseFloat(sl.value) + dir*0.005; if (z >= 2){ z = 2; dir = -1; } if (z <= 0){ z = 0; dir = 1; } sl.value = z.toFixed(3); draw(); playing = requestAnimationFrame(step); })();
+  });
+  document.getElementById('reset').addEventListener('click', function(){ sl.value = 0.2; draw(); });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-z]'), function(b){ b.addEventListener('click', function(){ sl.value = b.getAttribute('data-z'); draw(); }); });
+  draw();
+})();
+</script>
+
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

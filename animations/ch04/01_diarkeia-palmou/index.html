@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Η διάρκεια του παλμού · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Η διάρκεια του παλμού">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../../assets/style.css">
+<script src="../../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../../index.html">Αρχική</a> › <a href="../../../index.html#ch04">Κεφάλαιο 4</a> › Animation</nav>
+<p><span class="badge anim">▶ Animation</span></p>
+<!--TITLE:Η διάρκεια του παλμού-->
+<h1>Η διάρκεια του παλμού</h1>
+<p class="subtitle">Κεφάλαιο 4 · Ορθογώνιος παλμός δύναμης σε ταλαντωτή: πότε «φορτίζει» και πότε «αδειάζει» την ταλάντωση</p>
+
+<div class="card">
+<p>Όπως στο Παράδειγμα 4.8, σώμα μάζας $1\,\mathrm{kg}$ σε ελατήριο σταθεράς $4\,\mathrm{N/m}$ ξεκινά από την ηρεμία και δέχεται σταθερή δύναμη $8\,\mathrm N$ για χρόνο $T$:
+\[ y''+4y=8\,\bigl[u(t)-u(t-T)\bigr],\qquad y(0)=y'(0)=0 . \]
+Μεταβάλετε τη διάρκεια $T$ του παλμού από $0$ έως $2\pi$ και παρακολουθήστε την απόκριση και το πλάτος της ταλάντωσης <em>μετά</em> τον παλμό. Η ιδιοπερίοδος του ταλαντωτή είναι $\pi$.</p>
+<div class="ctrl"><label for="TT"><strong>T</strong></label><input type="range" id="TT" min="0" max="6.2832" step="0.005" value="1.5708"><output id="TOut">1,571</output></div>
+<div class="row"><button class="btn primary" type="button" id="play">▶ Αναπαραγωγή</button><button class="btn" type="button" id="reset">↺ Επαναφορά</button>
+<button class="btn ghost" type="button" data-T="0.7853982">T = π/4</button><button class="btn ghost" type="button" data-T="1.5707963">T = π/2</button><button class="btn ghost" type="button" data-T="3.1415927">T = π</button><button class="btn ghost" type="button" data-T="4.712389">T = 3π/2</button></div>
+</div>
+
+<div class="anim-grid">
+  <div><canvas id="cTime" width="440" height="360" aria-label="Η δύναμη και η απόκριση y(t)"></canvas>
+  <p class="legend">Η δύναμη (σκιασμένη) και η απόκριση $y(t)$ (μπλε)· μετά τον παλμό η κίνηση μένει ανάμεσα στις διακεκομμένες $\pm4|\sin T|$.</p></div>
+  <div><canvas id="cAmp" width="440" height="360" aria-label="Το πλάτος μετά τον παλμό ως συνάρτηση του T"></canvas>
+  <p class="legend">Πλάτος της ταλάντωσης μετά τον παλμό, $4|\sin T|$, ως συνάρτηση της διάρκειας $T$· η κουκκίδα δείχνει την τρέχουσα τιμή.</p></div>
+</div>
+
+<div class="readout">
+  <div><strong>Τέλος παλμού:</strong><br><span id="end"></span></div>
+  <div><strong>Πλάτος μετά τον παλμό:</strong><br><span id="amp"></span></div>
+  <div><strong>Ενέργεια που απέμεινε:</strong><br><span id="en"></span></div>
+  <div><strong>Σχόλιο:</strong><br><span id="note"></span></div>
+</div>
+
+<h2>Θεωρία &amp; αιτιολόγηση</h2>
+<div class="card">
+<ul>
+<li>Η απόκριση στη σταθερή δύναμη $8\,u(t)$ είναι η $2(1-\cos2t)$. Επειδή η εξίσωση έχει σταθερούς συντελεστές, η απόκριση στη $8\,u(t-T)$ είναι η ίδια καθυστερημένη (Πρόταση 4.1), οπότε για $t\ge T$
+\[ y(t)=2\bigl[1-\cos2t\bigr]-2\bigl[1-\cos2(t-T)\bigr]=2\bigl[\cos2(t-T)-\cos2t\bigr]=4\sin T\,\sin(2t-T) . \]</li>
+<li>Το πλάτος $4|\sin T|$ γίνεται μέγιστο, $4$, για $T=\pi/2$ (μισή ιδιοπερίοδος: η δύναμη ωθεί το σώμα όσο αυτό κινείται προς τη φορά της) και μηδενίζεται για $T=\pi$: μετά από μία ολόκληρη περίοδο το σώμα επιστρέφει στη θέση $y=0$ με μηδενική ταχύτητα και η κατάργηση της δύναμης το βρίσκει σε ηρεμία.</li>
+<li>Ενεργειακά, η ενέργεια που μένει στον ταλαντωτή ισούται με το έργο της δύναμης, $8\,y(T)=16(1-\cos2T)=32\sin^2T$, ενώ η ενέργεια ταλάντωσης πλάτους $A$ είναι $\frac12\cdot4\cdot A^2$: προκύπτει ξανά $A=4|\sin T|$.</li>
+</ul>
+<p><strong>Σύνδεση με το βιβλίο:</strong> Παράδειγμα 4.8, Πρόταση 4.1 και Σχήμα 4.2.</p>
+<p class="small muted">Ερώτηση για σκέψη: μια κούνια σπρώχνεται για λίγο σε κάθε περίοδο. Πότε πρέπει να ξεκινά και πόσο να διαρκεί το σπρώξιμο, ώστε το πλάτος να μεγαλώνει όσο το δυνατόν περισσότερο;</p>
+</div>
+
+<script>
+(function(){
+  function fmt(x, d){ var s = Math.abs(x).toFixed(d===undefined?2:d).replace('.', ','); return (x < -1e-12 && parseFloat(s.replace(',', '.')) !== 0 ? '−' : '') + s; }
+  function setup(c){
+    var dpr = window.devicePixelRatio || 1, w = c.width, h = c.height;
+    if (!c._w){ c._w = w; c._h = h; c.width = w*dpr; c.height = h*dpr; }
+    var g = c.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,c._w,c._h); return g;
+  }
+  function mapper(c, x0, x1, y0, y1, pad){
+    pad = pad || 36; var W = c._w, H = c._h;
+    return { X: function(x){ return pad + (x-x0)/(x1-x0)*(W-2*pad); }, Y: function(y){ return H-pad - (y-y0)/(y1-y0)*(H-2*pad); }, x0:x0,x1:x1,y0:y0,y1:y1,W:W,H:H };
+  }
+  function axes(g, m, xl, yl, xt, xlab, yt, yd){
+    g.strokeStyle = '#9aa4b2'; g.lineWidth = 1; g.fillStyle = '#5b6575'; g.font = '12px "Noto Sans", sans-serif';
+    g.beginPath(); g.moveTo(m.X(m.x0), m.Y(0)); g.lineTo(m.X(m.x1), m.Y(0)); g.stroke();
+    g.beginPath(); g.moveTo(m.X(0), m.Y(m.y0)); g.lineTo(m.X(0), m.Y(m.y1)); g.stroke();
+    xt.forEach(function(v, k){ g.beginPath(); g.moveTo(m.X(v), m.Y(0)-3); g.lineTo(m.X(v), m.Y(0)+3); g.stroke(); g.fillText(xlab[k], m.X(v)-8, m.Y(0)+15); });
+    yt.forEach(function(v){ g.beginPath(); g.moveTo(m.X(0)-3, m.Y(v)); g.lineTo(m.X(0)+3, m.Y(v)); g.stroke(); g.fillText(fmt(v, yd||0), m.X(0)-30, m.Y(v)+4); });
+    g.fillStyle = '#1d2430'; g.font = 'italic 14px "Noto Serif", serif';
+    g.fillText(xl, m.X(m.x1)-14, m.Y(0)-8); g.fillText(yl, m.X(0)+8, m.Y(m.y1)+12);
+  }
+  var PI = Math.PI, cT = document.getElementById('cTime'), cA = document.getElementById('cAmp'), sT = document.getElementById('TT');
+  function y(t, T){ return t < T ? 2*(1 - Math.cos(2*t)) : 2*(Math.cos(2*(t-T)) - Math.cos(2*t)); }
+  function draw(){
+    var T = parseFloat(sT.value), A = 4*Math.abs(Math.sin(T)), tmax = 4*PI;
+    document.getElementById('TOut').textContent = fmt(T, 3);
+    // ---- απόκριση
+    var g = setup(cT), m = mapper(cT, 0, tmax, -4.7, 4.7);
+    g.fillStyle = '#fff'; g.fillRect(0,0,m.W,m.H);
+    // δύναμη: 8 N σχεδιάζεται με ύψος 4 μονάδων
+    if (T > 0.001){ g.fillStyle = 'rgba(155,27,42,.13)'; g.strokeStyle = 'rgba(155,27,42,.65)'; g.lineWidth = 1.2;
+      g.fillRect(m.X(0), m.Y(4), m.X(Math.min(T, tmax))-m.X(0), m.Y(0)-m.Y(4)); g.strokeRect(m.X(0), m.Y(4), m.X(Math.min(T, tmax))-m.X(0), m.Y(0)-m.Y(4));
+      g.fillStyle = '#9b1b2a'; g.font = '12px "Noto Sans", sans-serif'; g.fillText('f = 8 N', m.X(0)+6, m.Y(4)-6); }
+    axes(g, m, 't', '', [PI, 2*PI, 3*PI, 4*PI], ['π', '2π', '3π', '4π'], [-4, -2, 2, 4]);
+    g.setLineDash([5,4]); g.strokeStyle = '#c64800'; g.lineWidth = 1.4;
+    [A, -A].forEach(function(v){ g.beginPath(); g.moveTo(m.X(T), m.Y(v)); g.lineTo(m.X(tmax), m.Y(v)); g.stroke(); });
+    g.setLineDash([]);
+    g.strokeStyle = '#0082b4'; g.lineWidth = 2.4; g.beginPath();
+    for (var i=0;i<=1400;i++){ var t = tmax*i/1400, v = y(t, T); if(i) g.lineTo(m.X(t), m.Y(v)); else g.moveTo(m.X(t), m.Y(v)); }
+    g.stroke();
+    g.fillStyle = '#0082b4'; g.beginPath(); g.arc(m.X(T), m.Y(y(T, T)), 4, 0, 2*PI); g.fill();
+    // ---- πλάτος ως συνάρτηση του T
+    var h = setup(cA), n = mapper(cA, 0, 2*PI, -0.3, 4.6);
+    h.fillStyle = '#fff'; h.fillRect(0,0,n.W,n.H);
+    axes(h, n, 'T', 'πλάτος', [PI/2, PI, 3*PI/2, 2*PI], ['π/2', 'π', '3π/2', '2π'], [1, 2, 3, 4]);
+    h.strokeStyle = '#0082b4'; h.lineWidth = 2.4; h.beginPath();
+    for (i=0;i<=500;i++){ var x = 2*PI*i/500, w = 4*Math.abs(Math.sin(x)); if(i) h.lineTo(n.X(x), n.Y(w)); else h.moveTo(n.X(x), n.Y(w)); }
+    h.stroke();
+    h.setLineDash([3,3]); h.strokeStyle = '#9aa4b2'; h.lineWidth = 1; h.beginPath(); h.moveTo(n.X(T), n.Y(0)); h.lineTo(n.X(T), n.Y(A)); h.stroke(); h.setLineDash([]);
+    h.fillStyle = '#b3261e'; h.beginPath(); h.arc(n.X(T), n.Y(A), 6, 0, 2*PI); h.fill();
+    // ---- αναγνώσεις
+    var yT = 2*(1 - Math.cos(2*T)), vT = 4*Math.sin(2*T);
+    document.getElementById('end').textContent = 'y(T) = ' + fmt(yT) + ',  y′(T) = ' + fmt(vT);
+    document.getElementById('amp').textContent = '4|sin T| = ' + fmt(A, 3);
+    document.getElementById('en').textContent = '32 sin²T = ' + fmt(32*Math.sin(T)*Math.sin(T), 2) + ' J';
+    var note;
+    if (Math.abs(T - PI/2) < 0.02 || Math.abs(T - 3*PI/2) < 0.02) note = 'μέγιστο πλάτος: η δύναμη καταργείται τη στιγμή που το σώμα έχει τη μέγιστη απομάκρυνση';
+    else if (Math.abs(T - PI) < 0.02 || T > 2*PI - 0.02 || T < 0.02) note = 'πλάτος 0: μετά από ακέραιο αριθμό περιόδων το σώμα σταματά';
+    else if (T < PI/2 || (T > PI && T < 3*PI/2)) note = 'η δύναμη καταργείται ενώ το σώμα απομακρύνεται';
+    else note = 'η δύναμη καταργείται ενώ το σώμα επιστρέφει: μέρος του έργου της «επιστρέφεται»';
+    document.getElementById('note').textContent = note;
+  }
+  sT.addEventListener('input', draw);
+  Array.prototype.forEach.call(document.querySelectorAll('[data-T]'), function(b){ b.addEventListener('click', function(){ sT.value = b.getAttribute('data-T'); draw(); }); });
+  var playing = null, dir = 1;
+  document.getElementById('play').addEventListener('click', function(){
+    var b = this;
+    if (playing){ cancelAnimationFrame(playing); playing = null; b.textContent = '▶ Αναπαραγωγή'; return; }
+    b.textContent = '❚❚ Παύση';
+    (function step(){ var T = parseFloat(sT.value) + dir*0.01; if (T >= 2*PI){ T = 2*PI; dir = -1; } if (T <= 0){ T = 0; dir = 1; } sT.value = T.toFixed(4); draw(); playing = requestAnimationFrame(step); })();
+  });
+  document.getElementById('reset').addEventListener('click', function(){ sT.value = PI/2; draw(); });
+  draw();
+})();
+</script>
+
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>
