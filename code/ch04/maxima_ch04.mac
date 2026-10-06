@@ -1,0 +1,59 @@
+/* =====================================================================
+   Κεφάλαιο 4 — Π.Α.Τ., συστήματα και κρουστικές διεγέρσεις
+   Συνοδευτικός κώδικας του βιβλίου «Μετασχηματισμοί Laplace και Fourier,
+   Μερικές Διαφορικές Εξισώσεις», Ν. Ματζάκος.
+   Εκτέλεση: στο wxMaxima, File > Batch File… ή  batch("maxima_ch04.mac")$
+   Οι αρχικές συνθήκες δηλώνονται ΠΡΙΝ από τον μετασχηματισμό με την atvalue.
+   ===================================================================== */
+
+/* ---------- Α. Παράδειγμα 4.2 βήμα–βήμα: y'' + 4y' + 3y = 8e^t, y(0)=1, y'(0)=-1 ---------- */
+atvalue(y(t), t=0, 1)$
+atvalue(diff(y(t), t), t=0, -1)$
+eq: diff(y(t), t, 2) + 4*diff(y(t), t) + 3*y(t) = 8*exp(t)$
+L: laplace(eq, t, s);                         /* 1ο βήμα: μετασχηματισμός */
+Ys: solve(L, laplace(y(t), t, s));            /* 2ο βήμα: αλγεβρική επίλυση */
+Y: rhs(Ys[1])$
+partfrac(Y, s);                               /* απλά κλάσματα */
+ilt(Y, s, t);                                 /* 3ο βήμα: y = e^t - e^(-t) + e^(-3t) */
+desolve(eq, y(t));                            /* όλα τα βήματα μαζί */
+kill(y)$
+
+/* ---------- Β. Παραδείγματα 4.3–4.6 με την desolve ---------- */
+atvalue(y(t), t=0, 1)$  atvalue(diff(y(t), t), t=0, 0)$
+desolve(diff(y(t),t,2) + 4*diff(y(t),t) + 4*y(t) = 8*t, y(t));          /* Παράδειγμα 4.3 */
+kill(y)$
+atvalue(y(t), t=0, 0)$  atvalue(diff(y(t), t), t=0, 0)$
+desolve(diff(y(t),t,2) + 2*diff(y(t),t) + 5*y(t) = 20*cos(t), y(t));    /* Παράδειγμα 4.4 */
+kill(y)$
+atvalue(y(t), t=0, 1)$  atvalue(diff(y(t), t), t=0, 2)$  atvalue(diff(y(t), t, 2), t=0, -4)$
+desolve(diff(y(t),t,3) + diff(y(t),t,2) + 4*diff(y(t),t) + 4*y(t) = 10*exp(t), y(t));   /* Παράδειγμα 4.5 */
+kill(y)$
+atvalue(y(t), t=0, 0)$  atvalue(diff(y(t), t), t=0, 0)$
+desolve(diff(y(t),t,2) - 2*diff(y(t),t) - 3*y(t) = 16*exp(3*t), y(t));  /* Παράδειγμα 4.6 */
+kill(y)$
+
+/* ---------- Γ. Σύστημα ΣΔΕ (Παράδειγμα 4.15) ---------- */
+atvalue(x(t), t=0, 0)$  atvalue(y(t), t=0, 2)$
+e1: diff(x(t),t) + diff(y(t),t) + 2*x(t) + 3*y(t) = 0$
+e2: 2*diff(x(t),t) + diff(y(t),t) + x(t) - y(t) = 0$
+desolve([e1, e2], [x(t), y(t)]);
+kill(x, y)$
+
+/* ---------- Δ. Κρουστική διέγερση (Παράδειγμα 4.11): y'' + 2y' + 10y = 3δ(t-1), y(0)=1, y'(0)=-1 ---------- */
+atvalue(y(t), t=0, 1)$  atvalue(diff(y(t), t), t=0, -1)$
+desolve(diff(y(t),t,2) + 2*diff(y(t),t) + 10*y(t) = 3*delta(t-1), y(t));  /* μένει ανεπεξέργαστο ilt(...) */
+kill(y)$
+/* Y(s) = (s+1)/((s+1)^2+9) + 3 e^(-s)/((s+1)^2+9): καθυστέρηση «με το χέρι» */
+y0: ilt((s+1)/((s+1)^2+9), s, t)$             /* απόκριση μηδενικής εισόδου: e^(-t) cos 3t */
+g: ilt(3/((s+1)^2+9), s, t)$                  /* e^(-t) sin 3t */
+ysol: y0 + subst(t-1, t, g)*unit_step(t-1);
+plot2d(ysol, [t, 0, 6], [ylabel, "y(t)"])$
+
+/* ---------- Ε. Η απόκριση ως συνέλιξη (Θεώρημα 4.2, Παράδειγμα 4.4) ---------- */
+/* h(t) = L^{-1}{1/(s^2+2s+5)} = e^(-t) sin(2t)/2 και f(t) = 20 cos t */
+assume(t > 0)$
+yconv: integrate(exp(-x)*sin(2*x)/2*20*cos(t-x), x, 0, t)$
+atvalue(y(t), t=0, 0)$  atvalue(diff(y(t), t), t=0, 0)$
+ydes: rhs(desolve(diff(y(t),t,2) + 2*diff(y(t),t) + 5*y(t) = 20*cos(t), y(t)))$
+ratsimp(trigsimp(yconv - ydes));              /* 0 */
+forget(t > 0)$  kill(y)$

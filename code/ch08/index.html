@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Κώδικας Κεφ. 8 — Μερικές Διαφορικές Εξισώσεις – Βασικές Έννοιες και Ταξινόμηση · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Κώδικας Κεφ. 8 — Μερικές Διαφορικές Εξισώσεις – Βασικές Έννοιες και Ταξινόμηση">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../assets/style.css">
+<script src="../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../index.html">Αρχική</a> › <a href="../../index.html#ch08">Κεφάλαιο 8</a> › Κώδικας</nav>
+<p><span class="badge cas">∫ CAS</span> <span class="badge py">π Python</span></p>
+<h1>Κώδικας Κεφ. 8 — Μερικές Διαφορικές Εξισώσεις – Βασικές Έννοιες και Ταξινόμηση</h1>
+<p class="subtitle">Οι δραστηριότητες CAS και Python του βιβλίου, με έτοιμο κώδικα</p>
+<div class="card"><p>Επιλέξτε γλώσσα από τις καρτέλες. Ο κώδικας <strong>Python</strong> τρέχει απευθείας στη σελίδα (Pyodide) με το κουμπί <strong>▶ Τρέξε</strong> και μπορείτε να τον τροποποιήσετε. Τον κώδικα <strong>Maxima</strong> τον εκτελείτε στο <a href="https://wxmaxima-developers.github.io/wxmaxima/" target="_blank" rel="noopener">wxMaxima</a> (δωρεάν). Δοκιμάστε πρώτα μόνοι σας τις δραστηριότητες και μετά συγκρίνετε.</p></div>
+<div class="tabs"><button type="button" class="on" data-t="max" onclick="mxTab('max')">⚙ Maxima</button><button type="button" data-t="py" onclick="mxTab('py')">🐍 Python</button></div>
+<div class="tabpane on" id="tab-max">
+<h2>Δραστηριότητα CAS: Επαλήθευση λύσεων και κανονικές μορφές</h2>
+<div class="card"><p>Το Maxima δεν εφαρμόζει από μόνο του τον κανόνα της αλυσίδας σε μια άγνωστη συνάρτηση με σύνθετο όρισμα. Του τον «διδάσκουμε» δηλώνοντας τις παραγώγους της με την <code>gradef</code>.</p>
+<ol class="gr"><li><span class="lbl">(α)</span><em>Γενική λύση.</em> Δηλώστε τις παραγώγους των $F$, $G$ και ελέγξτε το Παράδειγμα 8.12:<br>
+<code>gradef(F(s),F1(s))\$ gradef(F1(s),F2(s))\$</code> (ανάλογα για τη $G$)<br>
+<code>u: F(y-3*x)+G(2*y-x)\$</code><br>
+<code>ratsimp(2*diff(u,x,2)+7*diff(u,x,1,y,1)+3*diff(u,y,2));</code>  $\to0$.</li><li><span class="lbl">(β)</span><em>Κανονική μορφή.</em> Για μια άγνωστη $w(p,q)$ με $p=\xi$, $q=\eta$:<br>
+<code>gradef(w(p,q),wp(p,q),wq(p,q))\$ gradef(wp(p,q),wpp(p,q),wpq(p,q))\$</code><br>
+<code>gradef(wq(p,q),wpq(p,q),wqq(p,q))\$</code><br>
+<code>u: w(y-2*x,y+x)\$</code><br>
+Υπολογίστε με <code>ratsimp</code> τον τελεστή του Παραδείγματος 8.13· το αποτέλεσμα $9\,\texttt{wq}-9\,\texttt{wpq}$ είναι η κανονική μορφή. Επαναλάβετε με <code>u: w(x+2*y,x)</code> για το Παράδειγμα 8.14.</li></ol></div>
+<p class="row dl"><a class="btn" href="maxima_ch08.mac" download>⬇ Λήψη .mac</a><button class="btn ghost" type="button" onclick="mxCopy('maccode', this)">⧉ Αντιγραφή</button>
+<span class="small muted">Στο wxMaxima: File › Batch File… ή <code>batch("maxima_ch08.mac")$</code></span></p>
+<pre class="code tex2jax_ignore" id="maccode">/* =====================================================================
+   Κεφάλαιο 8 — Μερικές διαφορικές εξισώσεις: βασικές έννοιες και ταξινόμηση
+   Συνοδευτικός κώδικας του βιβλίου «Μετασχηματισμοί Laplace και Fourier,
+   Μερικές Διαφορικές Εξισώσεις», Ν. Ματζάκος.
+   Εκτέλεση: στο wxMaxima, File &gt; Batch File… ή  batch(&quot;maxima_ch08.mac&quot;)$
+   Το Maxima δεν ξέρει να παραγωγίζει μια ΑΓΝΩΣΤΗ συνάρτηση με σύνθετο
+   όρισμα· με την gradef του δηλώνουμε ποιες είναι οι παράγωγοί της.
+   ===================================================================== */
+
+/* ---------- Α. Επαλήθευση λύσεων πρώτης τάξης ---------- */
+u: (x/3 - y)*exp(-(x - 3*y)^2)$                    /* μια λύση της 3u_x + u_y = 0 (Παράδειγμα 8.6) */
+u: (x - 3*y)*exp(-(x - 3*y)^2)$                    /* η λύση με u(x,0) = x e^{-x²} */
+ratsimp(3*diff(u, x) + diff(u, y));                /* 0 */
+u: x^2 + phi(y + 3*x)$                             /* Παράδειγμα 8.7: u_x - 3u_y = 2x */
+gradef(phi(s), phi1(s))$
+ratsimp(diff(u, x) - 3*diff(u, y));                /* 2x */
+u: 1/(1 + (y - 2*x^2)^2)$                          /* Παράδειγμα 8.8: u_x + 4x u_y = 0 */
+ratsimp(diff(u, x) + 4*x*diff(u, y));              /* 0 */
+
+/* ---------- Β. Ταξινόμηση: διακρίνουσα Δ = b² - ac ---------- */
+/* a u_xx + 2b u_xy + c u_yy + ...: προσοχή, ο συντελεστής του u_xy είναι 2b */
+typos(a, b2, c) := block([D: (b2/2)^2 - a*c],
+    if D &gt; 0 then [D, &quot;υπερβολική&quot;] elseif D = 0 then [D, &quot;παραβολική&quot;] else [D, &quot;ελλειπτική&quot;])$
+typos(2, 7, 3);                                    /* Παράδειγμα 8.12: 25/4 &gt; 0 */
+typos(4, -4, 1);                                   /* Παράδειγμα 8.14: 0 */
+typos(1, 4, 13);                                   /* Παράδειγμα 8.15: -9 &lt; 0 */
+typos(1, 3, 3);                                    /* η «παγίδα» της ΤΝ 8.1: b = 3/2, Δ = -3/4 */
+/* χαρακτηριστικές: a (dy)² - 2b dx dy + c (dx)² = 0 ⇒ a λ² - 2b λ + c = 0, λ = dy/dx */
+solve(2*l^2 - 7*l + 3 = 0, l);                     /* λ = 1/2, 3: y - x/2 = C, y - 3x = C */
+
+/* ---------- Γ. Γενική λύση υπερβολικής εξίσωσης (Παράδειγμα 8.12) ---------- */
+gradef(F(s), F1(s))$  gradef(F1(s), F2(s))$
+gradef(G(s), G1(s))$  gradef(G1(s), G2(s))$
+u: F(y - 3*x) + G(2*y - x)$
+ratsimp(2*diff(u, x, 2) + 7*diff(u, x, 1, y, 1) + 3*diff(u, y, 2));      /* 0 */
+
+/* ---------- Δ. Κανονικές μορφές με άγνωστη w(p,q), p = ξ, q = η ---------- */
+gradef(w(p, q), wp(p, q), wq(p, q))$
+gradef(wp(p, q), wpp(p, q), wpq(p, q))$
+gradef(wq(p, q), wpq(p, q), wqq(p, q))$
+/* Παράδειγμα 8.13: u_xx + u_xy - 2u_yy + 3u_x + 6u_y, ξ = y - 2x, η = y + x */
+u: w(y - 2*x, y + x)$
+ratsimp(diff(u, x, 2) + diff(u, x, 1, y, 1) - 2*diff(u, y, 2) + 3*diff(u, x) + 6*diff(u, y));
+/* → 9 wq - 9 wpq, δηλαδή w_ξη = w_η */
+/* Παράδειγμα 8.14: 4u_xx - 4u_xy + u_yy - 2u_y, ξ = x + 2y, η = x */
+u: w(x + 2*y, x)$
+ratsimp(4*diff(u, x, 2) - 4*diff(u, x, 1, y, 1) + diff(u, y, 2) - 2*diff(u, y));
+/* → 4 wqq - 4 wp, δηλαδή w_ηη = w_ξ: η εξίσωση θερμότητας */
+
+/* ---------- Ε. Γενικός τύπος των νέων συντελεστών (σχέσεις 8.x) ---------- */
+transform(a, b, c, d, e, xi, eta) := block([A, B, C, D, E],
+    A: a*diff(xi, x)^2 + 2*b*diff(xi, x)*diff(xi, y) + c*diff(xi, y)^2,
+    B: a*diff(xi, x)*diff(eta, x) + b*(diff(xi, x)*diff(eta, y) + diff(xi, y)*diff(eta, x)) + c*diff(xi, y)*diff(eta, y),
+    C: a*diff(eta, x)^2 + 2*b*diff(eta, x)*diff(eta, y) + c*diff(eta, y)^2,
+    D: a*diff(xi, x, 2) + 2*b*diff(xi, x, 1, y, 1) + c*diff(xi, y, 2) + d*diff(xi, x) + e*diff(xi, y),
+    E: a*diff(eta, x, 2) + 2*b*diff(eta, x, 1, y, 1) + c*diff(eta, y, 2) + d*diff(eta, x) + e*diff(eta, y),
+    ratsimp([A, B, C, D, E]))$
+transform(1, 1/2, -2, 3, 6, y - 2*x, y + x);       /* [0, -9/2, 0, 0, 9]: -9 w_ξη + 9 w_η = 0 */
+transform(2, -5/2, 3, 1, 1, y + x, 2*y + 3*x);     /* Λυμένη Άσκηση 8.4 */
+transform(x^2, 0, -y^2, 0, 0, x*y, y/x);           /* Παράδειγμα 8.16: [0, -4y², 0, 0, 2y/x] */
+</pre>
+<p class="small muted">Για περισσότερα: Ν. Ματζάκος (2024), <em>Μαθηματικό Λογισμικό: Maxima και Octave</em>, Κάλλιπος (ελεύθερα διαθέσιμο).</p>
+</div>
+<div class="tabpane" id="tab-py">
+<h2>Δραστηριότητα Python: ΜΔΕ πρώτης τάξης και αλλαγή μεταβλητών με SymPy</h2>
+<div class="card"><ol class="gr"><li><span class="lbl">(α)</span>Λύστε τα Παραδείγματα 8.6, 8.7, 8.9 και τη Λυμένη Άσκηση 8.3 με την <code>pdsolve</code> και ελέγξτε τις λύσεις με την <code>checkpdesol</code>. Για το Παράδειγμα 8.7 η\ <code>pdsolve(Eq(u.diff(x)-3*u.diff(y), 2*x))</code>\ επιστρέφει $\frac{19}{100}x^2-\frac{27}{50}xy-\frac{9}{100}y^2+F(-3x-y)$: δείξτε ότι η διαφορά από το $x^2+F(y+3x)$ είναι συνάρτηση του $y+3x$.</li><li><span class="lbl">(β)</span>Η <code>classify_pde</code> αναγνωρίζει μόνο εξισώσεις πρώτης τάξης. Γράψτε μια συνάρτηση <code>transform</code> που υπολογίζει με την <code>diff</code> τους συντελεστές (8.2) και επαληθεύστε τις κανονικές μορφές των Παραδειγμάτων 8.13–8.15 και της Λυμένης Άσκησης 8.4.</li></ol></div>
+<p class="row"><button class="btn primary" id="pyrun" type="button" onclick="mxRun()">▶ Τρέξε</button><button class="btn" type="button" onclick="mxReset()">↺ Επαναφορά</button>
+<a class="btn" href="python_ch08.py" download>⬇ Λήψη .py</a><span class="small muted" id="pystatus">Ο κώδικας τρέχει στον browser σας (Pyodide).</span></p>
+<textarea class="code tex2jax_ignore" id="pycode" spellcheck="false"># =====================================================================
+#  Κεφάλαιο 8 — ΜΔΕ πρώτης τάξης, ταξινόμηση και κανονικές μορφές με SymPy
+#  Συνοδευτικός κώδικας του βιβλίου «Μετασχηματισμοί Laplace και Fourier,
+#  Μερικές Διαφορικές Εξισώσεις», Ν. Ματζάκος.
+#  Τρέχει όπως είναι σε Python 3 (sympy, numpy, matplotlib)
+#  ή απευθείας στη σελίδα του βιβλίου (Pyodide).
+# =====================================================================
+import sympy as sp
+from sympy.solvers.pde import pdsolve, checkpdesol, classify_pde
+import numpy as np
+import matplotlib.pyplot as plt
+
+x, y = sp.symbols(&#x27;x y&#x27;, real=True)
+u = sp.Function(&#x27;u&#x27;)(x, y)
+
+# ---------- Α. ΜΔΕ πρώτης τάξης με την pdsolve ----------
+print(&quot;Α. Εξισώσεις πρώτης τάξης&quot;)
+for eq in [sp.Eq(3*u.diff(x) + u.diff(y), 0),            # σταθεροί συντελεστές
+           sp.Eq(u.diff(x) - 3*u.diff(y), 2*x),           # με όρο πηγής
+           sp.Eq(u.diff(x) + 4*x*u.diff(y), 0),           # μεταβλητοί συντελεστές
+           sp.Eq(x*u.diff(x) + y*u.diff(y), 2*u)]:        # ομογενείς συναρτήσεις
+    sol = pdsolve(eq)
+    print(&quot;  &quot;, eq.lhs, &quot;=&quot;, eq.rhs, &quot;  -&gt;  &quot;, sol.rhs, &quot;   έλεγχος:&quot;, checkpdesol(eq, sol)[0])
+
+# η SymPy δίνει άλλη (ισοδύναμη) μορφή: η διαφορά από το x² + F(y+3x) είναι συνάρτηση του y+3x
+s = sp.symbols(&#x27;s&#x27;)
+diff_ = sp.expand(sp.Rational(19, 100)*x**2 - sp.Rational(27, 50)*x*y - sp.Rational(9, 100)*y**2 - x**2)
+print(&quot;   διαφορά:&quot;, diff_, &quot; =&quot;, sp.factor(diff_.subs(y, s - 3*x)), &quot; με s = y + 3x&quot;)
+
+# ---------- Β. Ταξινόμηση: Δ = b² - ac (προσοχή: ο συντελεστής του u_xy είναι 2b) ----------
+def typos(a, b2, c):
+    D = sp.Rational(b2, 2)**2 - a*c
+    return D, (&quot;υπερβολική&quot; if D &gt; 0 else &quot;παραβολική&quot; if D == 0 else &quot;ελλειπτική&quot;)
+
+print(&quot;\nΒ. Ταξινόμηση&quot;)
+for coeffs in [(2, 7, 3), (4, -4, 1), (1, 4, 13), (1, 3, 3), (2, -5, 3)]:
+    print(&quot;  &quot;, coeffs, &quot;-&gt;&quot;, typos(*coeffs))
+
+# ---------- Γ. Οι νέοι συντελεστές μετά την αλλαγή μεταβλητών ξ(x,y), η(x,y) ----------
+def transform(a, b, c, d, e, xi, eta):
+    D = lambda f, *v: sp.diff(f, *v)
+    A = a*D(xi, x)**2 + 2*b*D(xi, x)*D(xi, y) + c*D(xi, y)**2
+    B = a*D(xi, x)*D(eta, x) + b*(D(xi, x)*D(eta, y) + D(xi, y)*D(eta, x)) + c*D(xi, y)*D(eta, y)
+    C = a*D(eta, x)**2 + 2*b*D(eta, x)*D(eta, y) + c*D(eta, y)**2
+    Dn = a*D(xi, x, 2) + 2*b*D(xi, x, y) + c*D(xi, y, 2) + d*D(xi, x) + e*D(xi, y)
+    En = a*D(eta, x, 2) + 2*b*D(eta, x, y) + c*D(eta, y, 2) + d*D(eta, x) + e*D(eta, y)
+    return [sp.simplify(t) for t in (A, B, C, Dn, En)]
+
+print(&quot;\nΓ. Κανονικές μορφές [Ā, B̄, C̄, D̄, Ē]&quot;)
+print(&quot;   u_xx+u_xy-2u_yy+3u_x+6u_y, ξ=y-2x, η=y+x  :&quot;, transform(1, sp.Rational(1, 2), -2, 3, 6, y - 2*x, y + x))
+print(&quot;   4u_xx-4u_xy+u_yy-2u_y,      ξ=x+2y, η=x    :&quot;, transform(4, -2, 1, 0, -2, x + 2*y, x))
+print(&quot;   u_xx+4u_xy+13u_yy,          ξ=y-2x, η=3x   :&quot;, transform(1, 2, 13, 0, 0, y - 2*x, 3*x))
+print(&quot;   2u_xx-5u_xy+3u_yy+u_x+u_y,  ξ=x+y,  η=3x+2y:&quot;, transform(2, sp.Rational(-5, 2), 3, 1, 1, x + y, 3*x + 2*y))
+print(&quot;   x²u_xx-y²u_yy,              ξ=xy,   η=y/x  :&quot;, transform(x**2, 0, -y**2, 0, 0, x*y, y/x))
+
+# ---------- Δ. Επαλήθευση της γενικής λύσης με άγνωστες F, G ----------
+F, G = sp.Function(&#x27;F&#x27;), sp.Function(&#x27;G&#x27;)
+w = F(y - 3*x) + G(2*y - x)
+print(&quot;\nΔ. 2u_xx+7u_xy+3u_yy για u = F(y-3x)+G(2y-x):&quot;,
+      sp.simplify(2*w.diff(x, 2) + 7*w.diff(x, y) + 3*w.diff(y, 2)))
+
+# ---------- Ε. Οι χαρακτηριστικές μεταφέρουν την πληροφορία ----------
+# u_x + 4x u_y = 0, u(0,y) = 1/(1+y²): η λύση είναι σταθερή πάνω στις παραβολές y - 2x² = C
+X, Y = np.meshgrid(np.linspace(-1.5, 1.5, 301), np.linspace(-2, 6, 301))
+U = 1/(1 + (Y - 2*X**2)**2)
+plt.figure(figsize=(6, 4))
+plt.contourf(X, Y, U, 20, cmap=&quot;viridis&quot;)
+for C in (-2, 0, 2, 4):
+    xs = np.linspace(-1.5, 1.5, 200); plt.plot(xs, 2*xs**2 + C, &quot;w--&quot;, lw=.8)
+plt.colorbar(label=&quot;u&quot;); plt.xlabel(&quot;x&quot;); plt.ylabel(&quot;y&quot;)
+plt.title(&quot;u = 1/(1+(y-2x²)²) και χαρακτηριστικές y = 2x² + C&quot;); plt.show()
+</textarea>
+<pre id="pyorig" style="display:none" class="tex2jax_ignore"># =====================================================================
+#  Κεφάλαιο 8 — ΜΔΕ πρώτης τάξης, ταξινόμηση και κανονικές μορφές με SymPy
+#  Συνοδευτικός κώδικας του βιβλίου «Μετασχηματισμοί Laplace και Fourier,
+#  Μερικές Διαφορικές Εξισώσεις», Ν. Ματζάκος.
+#  Τρέχει όπως είναι σε Python 3 (sympy, numpy, matplotlib)
+#  ή απευθείας στη σελίδα του βιβλίου (Pyodide).
+# =====================================================================
+import sympy as sp
+from sympy.solvers.pde import pdsolve, checkpdesol, classify_pde
+import numpy as np
+import matplotlib.pyplot as plt
+
+x, y = sp.symbols(&#x27;x y&#x27;, real=True)
+u = sp.Function(&#x27;u&#x27;)(x, y)
+
+# ---------- Α. ΜΔΕ πρώτης τάξης με την pdsolve ----------
+print(&quot;Α. Εξισώσεις πρώτης τάξης&quot;)
+for eq in [sp.Eq(3*u.diff(x) + u.diff(y), 0),            # σταθεροί συντελεστές
+           sp.Eq(u.diff(x) - 3*u.diff(y), 2*x),           # με όρο πηγής
+           sp.Eq(u.diff(x) + 4*x*u.diff(y), 0),           # μεταβλητοί συντελεστές
+           sp.Eq(x*u.diff(x) + y*u.diff(y), 2*u)]:        # ομογενείς συναρτήσεις
+    sol = pdsolve(eq)
+    print(&quot;  &quot;, eq.lhs, &quot;=&quot;, eq.rhs, &quot;  -&gt;  &quot;, sol.rhs, &quot;   έλεγχος:&quot;, checkpdesol(eq, sol)[0])
+
+# η SymPy δίνει άλλη (ισοδύναμη) μορφή: η διαφορά από το x² + F(y+3x) είναι συνάρτηση του y+3x
+s = sp.symbols(&#x27;s&#x27;)
+diff_ = sp.expand(sp.Rational(19, 100)*x**2 - sp.Rational(27, 50)*x*y - sp.Rational(9, 100)*y**2 - x**2)
+print(&quot;   διαφορά:&quot;, diff_, &quot; =&quot;, sp.factor(diff_.subs(y, s - 3*x)), &quot; με s = y + 3x&quot;)
+
+# ---------- Β. Ταξινόμηση: Δ = b² - ac (προσοχή: ο συντελεστής του u_xy είναι 2b) ----------
+def typos(a, b2, c):
+    D = sp.Rational(b2, 2)**2 - a*c
+    return D, (&quot;υπερβολική&quot; if D &gt; 0 else &quot;παραβολική&quot; if D == 0 else &quot;ελλειπτική&quot;)
+
+print(&quot;\nΒ. Ταξινόμηση&quot;)
+for coeffs in [(2, 7, 3), (4, -4, 1), (1, 4, 13), (1, 3, 3), (2, -5, 3)]:
+    print(&quot;  &quot;, coeffs, &quot;-&gt;&quot;, typos(*coeffs))
+
+# ---------- Γ. Οι νέοι συντελεστές μετά την αλλαγή μεταβλητών ξ(x,y), η(x,y) ----------
+def transform(a, b, c, d, e, xi, eta):
+    D = lambda f, *v: sp.diff(f, *v)
+    A = a*D(xi, x)**2 + 2*b*D(xi, x)*D(xi, y) + c*D(xi, y)**2
+    B = a*D(xi, x)*D(eta, x) + b*(D(xi, x)*D(eta, y) + D(xi, y)*D(eta, x)) + c*D(xi, y)*D(eta, y)
+    C = a*D(eta, x)**2 + 2*b*D(eta, x)*D(eta, y) + c*D(eta, y)**2
+    Dn = a*D(xi, x, 2) + 2*b*D(xi, x, y) + c*D(xi, y, 2) + d*D(xi, x) + e*D(xi, y)
+    En = a*D(eta, x, 2) + 2*b*D(eta, x, y) + c*D(eta, y, 2) + d*D(eta, x) + e*D(eta, y)
+    return [sp.simplify(t) for t in (A, B, C, Dn, En)]
+
+print(&quot;\nΓ. Κανονικές μορφές [Ā, B̄, C̄, D̄, Ē]&quot;)
+print(&quot;   u_xx+u_xy-2u_yy+3u_x+6u_y, ξ=y-2x, η=y+x  :&quot;, transform(1, sp.Rational(1, 2), -2, 3, 6, y - 2*x, y + x))
+print(&quot;   4u_xx-4u_xy+u_yy-2u_y,      ξ=x+2y, η=x    :&quot;, transform(4, -2, 1, 0, -2, x + 2*y, x))
+print(&quot;   u_xx+4u_xy+13u_yy,          ξ=y-2x, η=3x   :&quot;, transform(1, 2, 13, 0, 0, y - 2*x, 3*x))
+print(&quot;   2u_xx-5u_xy+3u_yy+u_x+u_y,  ξ=x+y,  η=3x+2y:&quot;, transform(2, sp.Rational(-5, 2), 3, 1, 1, x + y, 3*x + 2*y))
+print(&quot;   x²u_xx-y²u_yy,              ξ=xy,   η=y/x  :&quot;, transform(x**2, 0, -y**2, 0, 0, x*y, y/x))
+
+# ---------- Δ. Επαλήθευση της γενικής λύσης με άγνωστες F, G ----------
+F, G = sp.Function(&#x27;F&#x27;), sp.Function(&#x27;G&#x27;)
+w = F(y - 3*x) + G(2*y - x)
+print(&quot;\nΔ. 2u_xx+7u_xy+3u_yy για u = F(y-3x)+G(2y-x):&quot;,
+      sp.simplify(2*w.diff(x, 2) + 7*w.diff(x, y) + 3*w.diff(y, 2)))
+
+# ---------- Ε. Οι χαρακτηριστικές μεταφέρουν την πληροφορία ----------
+# u_x + 4x u_y = 0, u(0,y) = 1/(1+y²): η λύση είναι σταθερή πάνω στις παραβολές y - 2x² = C
+X, Y = np.meshgrid(np.linspace(-1.5, 1.5, 301), np.linspace(-2, 6, 301))
+U = 1/(1 + (Y - 2*X**2)**2)
+plt.figure(figsize=(6, 4))
+plt.contourf(X, Y, U, 20, cmap=&quot;viridis&quot;)
+for C in (-2, 0, 2, 4):
+    xs = np.linspace(-1.5, 1.5, 200); plt.plot(xs, 2*xs**2 + C, &quot;w--&quot;, lw=.8)
+plt.colorbar(label=&quot;u&quot;); plt.xlabel(&quot;x&quot;); plt.ylabel(&quot;y&quot;)
+plt.title(&quot;u = 1/(1+(y-2x²)²) και χαρακτηριστικές y = 2x² + C&quot;); plt.show()
+</pre>
+<h3>Έξοδος</h3>
+<div class="out tex2jax_ignore" id="pyout"></div>
+</div>
+
+<script>
+var mxPy = null, mxPyLoading = null;
+function mxLoadPy(status){
+  if (mxPy) return Promise.resolve(mxPy);
+  if (mxPyLoading) return mxPyLoading;
+  status.textContent = 'Φόρτωση της Python στον browser (Pyodide)… την πρώτη φορά μπορεί να χρειαστούν 20–60 δευτερόλεπτα.';
+  mxPyLoading = new Promise(function(resolve, reject){
+    var sc = document.createElement('script');
+    sc.src = 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js';
+    sc.onload = function(){ loadPyodide().then(function(py){ mxPy = py; resolve(py); }, reject); };
+    sc.onerror = function(){ reject(new Error('Δεν ήταν δυνατή η φόρτωση του Pyodide.')); };
+    document.head.appendChild(sc);
+  });
+  return mxPyLoading;
+}
+var MX_PRE = [
+  'import io, base64',
+  'import matplotlib',
+  'matplotlib.use("Agg")',
+  'import matplotlib.pyplot as plt',
+  '__mx_figs = []',
+  'def __mx_show(*a, **k):',
+  '    for num in plt.get_fignums():',
+  '        f = plt.figure(num); b = io.BytesIO()',
+  '        f.savefig(b, format="png", dpi=110, bbox_inches="tight")',
+  '        __mx_figs.append(base64.b64encode(b.getvalue()).decode())',
+  '    plt.close("all")',
+  'plt.show = __mx_show'
+].join('\n');
+function mxRun(){
+  var code = document.getElementById('pycode').value;
+  var out = document.getElementById('pyout'), st = document.getElementById('pystatus'), btn = document.getElementById('pyrun');
+  out.textContent = ''; btn.disabled = true;
+  function add(t){ out.appendChild(document.createTextNode(t + '\n')); }
+  mxLoadPy(st).then(function(py){
+    st.textContent = 'Φόρτωση βιβλιοθηκών (numpy, scipy, sympy, matplotlib)…';
+    py.setStdout({batched: add}); py.setStderr({batched: add});
+    var usesPlt = /matplotlib|plt\./.test(code);
+    var need = usesPlt ? 'import matplotlib\n' + code : code;
+    return py.loadPackagesFromImports(need).then(function(){
+      st.textContent = 'Εκτέλεση…';
+      return usesPlt ? py.runPythonAsync(MX_PRE) : null;
+    }).then(function(){ return py.runPythonAsync(code); })
+      .then(function(){ return usesPlt ? py.runPythonAsync('__mx_show()') : null; })
+      .then(function(){
+        if (usesPlt) {
+          var figs = py.globals.get('__mx_figs').toJs();
+          figs.forEach(function(b64){ var im = document.createElement('img'); im.src = 'data:image/png;base64,' + b64; im.alt = 'Γράφημα'; out.appendChild(im); });
+        }
+        st.textContent = '✓ Ολοκληρώθηκε.';
+      });
+  }).catch(function(e){ add(String(e && e.message ? e.message : e)); st.textContent = '✗ Σφάλμα (δείτε την έξοδο).'; })
+    .finally(function(){ btn.disabled = false; });
+}
+function mxReset(){ document.getElementById('pycode').value = document.getElementById('pyorig').textContent; }
+function mxTab(name){
+  document.querySelectorAll('.tabs button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-t')===name); });
+  document.querySelectorAll('.tabpane').forEach(function(p){ p.classList.toggle('on', p.id==='tab-'+name); });
+}
+</script>
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

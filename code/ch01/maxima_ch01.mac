@@ -1,0 +1,51 @@
+/* =====================================================================
+   Κεφάλαιο 1 — Ο Μετασχηματισμός Laplace: μετασχηματισμοί και ιδιότητες
+   Συνοδευτικός κώδικας του βιβλίου «Μετασχηματισμοί Laplace και Fourier,
+   Μερικές Διαφορικές Εξισώσεις», Ν. Ματζάκος.
+   Εκτέλεση: στο wxMaxima, File > Batch File… ή  batch("maxima_ch01.mac")$
+   ===================================================================== */
+
+/* ---------- Α. Ο Πίνακας 1.1 ---------- */
+assume(w > 0)$
+laplace(1, t, s);
+laplace(t^5, t, s);                          /* 5!/s^6 */
+laplace(exp(-3*t), t, s);
+laplace(cos(w*t), t, s);
+laplace(sin(w*t), t, s);
+laplace(sinh(2*t), t, s);
+laplace(sqrt(t), t, s);                      /* Γ(3/2)/s^(3/2) = sqrt(%pi)/(2 s^(3/2)) */
+
+/* Ο ορισμός «με το χέρι»: το ολοκλήρωμα χρειάζεται s > 0 */
+assume(s > 0)$
+integrate(exp(-s*t)*t, t, 0, inf);           /* 1/s^2 */
+forget(s > 0)$
+
+/* ---------- Β. Πρώτο θεώρημα μετατόπισης ---------- */
+laplace(exp(a*t)*sin(t), t, s);
+subst(s - a, s, laplace(sin(t), t, s));      /* το ίδιο αποτέλεσμα */
+laplace(exp(-2*t)*cos(3*t), t, s);
+
+/* ---------- Γ. Πολλαπλασιασμός και διαίρεση με t ---------- */
+laplace(t*sin(w*t), t, s);                   /* Παράδειγμα 1.14 */
+ratsimp(laplace(t*cos(w*t), t, s));
+-diff(laplace(sin(w*t), t, s), s);           /* ίδιο με τον τύπο -F'(s) */
+factor(ratsimp(laplace(t^2*cos(t), t, s)));   /* Παράδειγμα 1.15 */
+/* Παράδειγμα 1.16(α): L{sin t / t} = ∫_s^∞ F(σ) dσ */
+assume(s > 0)$
+integrate(1/(u^2+1), u, s, inf);             /* %pi/2 - atan(s) = atan(1/s) */
+forget(s > 0)$
+
+/* ---------- Δ. Λυμένη Άσκηση 1.7: y'' - 4y' + 4y = t e^(2t), y(0)=1, y'(0)=0 ---------- */
+atvalue(y(t), t=0, 1)$
+atvalue(diff(y(t), t), t=0, 0)$
+eq: laplace(diff(y(t),t,2) - 4*diff(y(t),t) + 4*y(t) = t*exp(2*t), t, s);
+Ysol: solve(eq, laplace(y(t), t, s));
+Y: rhs(Ysol[1])$
+partfrac(Y, s);                              /* όροι της μορφής c/(s-2)^k */
+ilt(Y, s, t);                                /* η λύση y(t) */
+
+/* ---------- Ε. Θεωρήματα αρχικής και τελικής τιμής (Λυμένη Άσκηση 1.8) ---------- */
+F: (s+4)/(s*(s+2))$
+limit(s*F, s, inf);                          /* f(0+) = 1 */
+limit(s*F, s, 0);                            /* lim f(t) = 2 */
+ilt(F, s, t);                                /* επαλήθευση: f(t) = 2 - e^(-2t) */

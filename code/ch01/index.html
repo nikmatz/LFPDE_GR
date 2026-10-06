@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Κώδικας Κεφ. 1 — Ο Μετασχηματισμός Laplace · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Κώδικας Κεφ. 1 — Ο Μετασχηματισμός Laplace">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../assets/style.css">
+<script src="../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../index.html">Αρχική</a> › <a href="../../index.html#ch01">Κεφάλαιο 1</a> › Κώδικας</nav>
+<p><span class="badge cas">∫ CAS</span> <span class="badge py">π Python</span></p>
+<h1>Κώδικας Κεφ. 1 — Ο Μετασχηματισμός Laplace</h1>
+<p class="subtitle">Οι δραστηριότητες CAS και Python του βιβλίου, με έτοιμο κώδικα</p>
+<div class="card"><p>Επιλέξτε γλώσσα από τις καρτέλες. Ο κώδικας <strong>Python</strong> τρέχει απευθείας στη σελίδα (Pyodide) με το κουμπί <strong>▶ Τρέξε</strong> και μπορείτε να τον τροποποιήσετε. Τον κώδικα <strong>Maxima</strong> τον εκτελείτε στο <a href="https://wxmaxima-developers.github.io/wxmaxima/" target="_blank" rel="noopener">wxMaxima</a> (δωρεάν). Δοκιμάστε πρώτα μόνοι σας τις δραστηριότητες και μετά συγκρίνετε.</p></div>
+<div class="tabs"><button type="button" class="on" data-t="max" onclick="mxTab('max')">⚙ Maxima</button><button type="button" data-t="py" onclick="mxTab('py')">🐍 Python</button></div>
+<div class="tabpane on" id="tab-max">
+<h2>Δραστηριότητα CAS: Μετασχηματισμοί Laplace και ιδιότητες</h2>
+<div class="card"><p>Στο Maxima η εντολή <code>laplace(f, t, s)</code> υπολογίζει τον μετασχηματισμό της έκφρασης <code>f</code>. Για παραμέτρους χρειάζεται συχνά να δηλώσετε το πρόσημό τους με <code>assume</code>.</p>
+<ol class="gr"><li><span class="lbl">(α)</span>Επαληθεύστε τον Πίνακα 1.1: υπολογίστε τους μετασχηματισμούς των $t^5$, $e^{-3t}$, $\sin\omega t$, $\cos\omega t$, $\sinh 2t$ (με <code>assume(w&gt;0)</code>).</li><li><span class="lbl">(β)</span>Επαληθεύστε το πρώτο θεώρημα μετατόπισης: συγκρίνετε τα <code>laplace(exp(a*t)*sin(t), t, s)</code> και <code>subst(s-a, s, laplace(sin(t), t, s))</code>.</li><li><span class="lbl">(γ)</span>Υπολογίστε τους $\Lap\{t\sin\omega t\}$, $\Lap\{\sin t/t\}$ και $\Lap\{\sqrt t\}$ και συγκρίνετε με τα Παραδείγματα 1.14, 1.16 και την Πρόταση 1.3.</li><li><span class="lbl">(δ)</span>Μετασχηματίστε τη διαφορική εξίσωση της Λυμένης Άσκησης 1.7 με <code>atvalue</code> και <code>laplace</code> και λύστε ως προς τον μετασχηματισμό με <code>solve</code>.</li></ol></div>
+<p class="row dl"><a class="btn" href="maxima_ch01.mac" download>⬇ Λήψη .mac</a><button class="btn ghost" type="button" onclick="mxCopy('maccode', this)">⧉ Αντιγραφή</button>
+<span class="small muted">Στο wxMaxima: File › Batch File… ή <code>batch("maxima_ch01.mac")$</code></span></p>
+<pre class="code tex2jax_ignore" id="maccode">/* =====================================================================
+   Κεφάλαιο 1 — Ο Μετασχηματισμός Laplace: μετασχηματισμοί και ιδιότητες
+   Συνοδευτικός κώδικας του βιβλίου «Μετασχηματισμοί Laplace και Fourier,
+   Μερικές Διαφορικές Εξισώσεις», Ν. Ματζάκος.
+   Εκτέλεση: στο wxMaxima, File &gt; Batch File… ή  batch(&quot;maxima_ch01.mac&quot;)$
+   ===================================================================== */
+
+/* ---------- Α. Ο Πίνακας 1.1 ---------- */
+assume(w &gt; 0)$
+laplace(1, t, s);
+laplace(t^5, t, s);                          /* 5!/s^6 */
+laplace(exp(-3*t), t, s);
+laplace(cos(w*t), t, s);
+laplace(sin(w*t), t, s);
+laplace(sinh(2*t), t, s);
+laplace(sqrt(t), t, s);                      /* Γ(3/2)/s^(3/2) = sqrt(%pi)/(2 s^(3/2)) */
+
+/* Ο ορισμός «με το χέρι»: το ολοκλήρωμα χρειάζεται s &gt; 0 */
+assume(s &gt; 0)$
+integrate(exp(-s*t)*t, t, 0, inf);           /* 1/s^2 */
+forget(s &gt; 0)$
+
+/* ---------- Β. Πρώτο θεώρημα μετατόπισης ---------- */
+laplace(exp(a*t)*sin(t), t, s);
+subst(s - a, s, laplace(sin(t), t, s));      /* το ίδιο αποτέλεσμα */
+laplace(exp(-2*t)*cos(3*t), t, s);
+
+/* ---------- Γ. Πολλαπλασιασμός και διαίρεση με t ---------- */
+laplace(t*sin(w*t), t, s);                   /* Παράδειγμα 1.14 */
+ratsimp(laplace(t*cos(w*t), t, s));
+-diff(laplace(sin(w*t), t, s), s);           /* ίδιο με τον τύπο -F&#x27;(s) */
+factor(ratsimp(laplace(t^2*cos(t), t, s)));   /* Παράδειγμα 1.15 */
+/* Παράδειγμα 1.16(α): L{sin t / t} = ∫_s^∞ F(σ) dσ */
+assume(s &gt; 0)$
+integrate(1/(u^2+1), u, s, inf);             /* %pi/2 - atan(s) = atan(1/s) */
+forget(s &gt; 0)$
+
+/* ---------- Δ. Λυμένη Άσκηση 1.7: y&#x27;&#x27; - 4y&#x27; + 4y = t e^(2t), y(0)=1, y&#x27;(0)=0 ---------- */
+atvalue(y(t), t=0, 1)$
+atvalue(diff(y(t), t), t=0, 0)$
+eq: laplace(diff(y(t),t,2) - 4*diff(y(t),t) + 4*y(t) = t*exp(2*t), t, s);
+Ysol: solve(eq, laplace(y(t), t, s));
+Y: rhs(Ysol[1])$
+partfrac(Y, s);                              /* όροι της μορφής c/(s-2)^k */
+ilt(Y, s, t);                                /* η λύση y(t) */
+
+/* ---------- Ε. Θεωρήματα αρχικής και τελικής τιμής (Λυμένη Άσκηση 1.8) ---------- */
+F: (s+4)/(s*(s+2))$
+limit(s*F, s, inf);                          /* f(0+) = 1 */
+limit(s*F, s, 0);                            /* lim f(t) = 2 */
+ilt(F, s, t);                                /* επαλήθευση: f(t) = 2 - e^(-2t) */
+</pre>
+<p class="small muted">Για περισσότερα: Ν. Ματζάκος (2024), <em>Μαθηματικό Λογισμικό: Maxima και Octave</em>, Κάλλιπος (ελεύθερα διαθέσιμο).</p>
+</div>
+<div class="tabpane" id="tab-py">
+<h2>Δραστηριότητα Python: Ο μετασχηματισμός με SymPy και αριθμητικός έλεγχος</h2>
+<div class="card"><ol class="gr"><li><span class="lbl">(α)</span>Με τη συνάρτηση <code>laplace_transform</code> της SymPy υπολογίστε τους μετασχηματισμούς των Λυμένων Ασκήσεων 1.3–1.5 (χρησιμοποιήστε <code>noconds=True</code>).</li><li><span class="lbl">(β)</span>Για $s=2$ υπολογίστε <em>αριθμητικά</em> το ολοκλήρωμα $\int_0^\infty e^{-2t}\,t\cos t\,dt$ με <code>scipy.integrate.quad</code> και συγκρίνετε με την ακριβή τιμή $3/25$ της Εφαρμογής 1.3.</li><li><span class="lbl">(γ)</span>Σχεδιάστε με Matplotlib την ολοκληρωτέα συνάρτηση $e^{-st}f(t)$ για $f(t)=e^{0{,}5t}$ και $s=0{,}6,\ 1,\ 2$. Για ποιες τιμές του $s$ «σβήνει» η ουρά; Συνδέστε την παρατήρηση με το Παράδειγμα 1.3.</li><li><span class="lbl">(δ)</span><em>Προαιρετικό:</em> Γράψτε μια συνάρτηση που ελέγχει αριθμητικά το θεώρημα τελικής τιμής για τη $Y(s)$ του Παραδείγματος 1.19.</li></ol></div>
+<p class="row"><button class="btn primary" id="pyrun" type="button" onclick="mxRun()">▶ Τρέξε</button><button class="btn" type="button" onclick="mxReset()">↺ Επαναφορά</button>
+<a class="btn" href="python_ch01.py" download>⬇ Λήψη .py</a><span class="small muted" id="pystatus">Ο κώδικας τρέχει στον browser σας (Pyodide).</span></p>
+<textarea class="code tex2jax_ignore" id="pycode" spellcheck="false"># =====================================================================
+#  Κεφάλαιο 1 — Ο Μετασχηματισμός Laplace με SymPy και αριθμητικός έλεγχος
+#  Συνοδευτικός κώδικας του βιβλίου «Μετασχηματισμοί Laplace και Fourier,
+#  Μερικές Διαφορικές Εξισώσεις», Ν. Ματζάκος.
+#  Τρέχει όπως είναι σε Python 3 (sympy, numpy, scipy, matplotlib)
+#  ή απευθείας στη σελίδα του βιβλίου (Pyodide).
+# =====================================================================
+import sympy as sp
+import numpy as np
+from scipy.integrate import quad
+import matplotlib.pyplot as plt
+
+t, s = sp.symbols(&#x27;t s&#x27;, positive=True)
+
+def L(f):
+    &quot;&quot;&quot;Μετασχηματισμός Laplace (χωρίς τις συνθήκες σύγκλισης), απλοποιημένος.&quot;&quot;&quot;
+    return sp.simplify(sp.laplace_transform(f, t, s, noconds=True))
+
+# ---------- Α. Λυμένες Ασκήσεις 1.3–1.5 ----------
+print(&quot;Α. Μετασχηματισμοί&quot;)
+print(&quot;  L{4t²e^(-t) + 3cosh2t - 5e^(2t)sin3t} =&quot;, L(4*t**2*sp.exp(-t) + 3*sp.cosh(2*t) - 5*sp.exp(2*t)*sp.sin(3*t)))
+print(&quot;  L{t e^(-2t) sin t}                  =&quot;, sp.factor(L(t*sp.exp(-2*t)*sp.sin(t))))
+print(&quot;  L{sin²t / t}                        =&quot;, L(sp.sin(t)**2/t))
+print(&quot;  L{√t}                               =&quot;, L(sp.sqrt(t)))
+
+# ---------- Β. Αριθμητικός έλεγχος της Εφαρμογής 1.3(α) ----------
+print(&quot;\nΒ. ∫_0^∞ e^(-2t) t cos t dt&quot;)
+val, err = quad(lambda u: np.exp(-2*u)*u*np.cos(u), 0, np.inf)
+print(f&quot;  αριθμητικά ≈ {val:.12f},  ακριβής τιμή 3/25 = {3/25:.12f}&quot;)
+
+# ---------- Γ. Πότε «σβήνει» η ουρά της e^(-st) e^(0.5t); (Παράδειγμα 1.3) ----------
+tt = np.linspace(0, 12, 600)
+plt.figure(figsize=(7, 3.6))
+for sv in (0.6, 1.0, 2.0):
+    plt.plot(tt, np.exp(-(sv - 0.5)*tt), label=f&quot;s = {sv}&quot;)
+plt.xlabel(&quot;t&quot;); plt.ylabel(&quot;e^(-st) e^(0.5t)&quot;)
+plt.title(&quot;Η ολοκληρωτέα του ορισμού για f(t) = e^(0.5t)&quot;)
+plt.legend(); plt.grid(alpha=.3)
+plt.show()
+print(&quot;\nΓ. Για s &gt; 0.5 η ολοκληρωτέα φθίνει εκθετικά· όσο πιο κοντά στο 0.5, τόσο πιο αργά.&quot;)
+
+# ---------- Δ. (Προαιρετικό) θεώρημα τελικής τιμής για το Παράδειγμα 1.19 ----------
+# y&#x27;&#x27; + 3y&#x27; + 2y = 0, y(0) = 1, y&#x27;(0) = 0  -&gt;  Y(s) = (s+3)/((s+1)(s+2))
+Y = (s + 3)/((s + 1)*(s + 2))
+y = sp.inverse_laplace_transform(Y, s, t)
+print(&quot;\nΔ. y(t) =&quot;, sp.simplify(y))
+print(&quot;   lim_{s→0} sY(s) =&quot;, sp.limit(s*Y, s, 0), &quot;  και  y(20) ≈&quot;, float(y.subs(t, 20)))
+</textarea>
+<pre id="pyorig" style="display:none" class="tex2jax_ignore"># =====================================================================
+#  Κεφάλαιο 1 — Ο Μετασχηματισμός Laplace με SymPy και αριθμητικός έλεγχος
+#  Συνοδευτικός κώδικας του βιβλίου «Μετασχηματισμοί Laplace και Fourier,
+#  Μερικές Διαφορικές Εξισώσεις», Ν. Ματζάκος.
+#  Τρέχει όπως είναι σε Python 3 (sympy, numpy, scipy, matplotlib)
+#  ή απευθείας στη σελίδα του βιβλίου (Pyodide).
+# =====================================================================
+import sympy as sp
+import numpy as np
+from scipy.integrate import quad
+import matplotlib.pyplot as plt
+
+t, s = sp.symbols(&#x27;t s&#x27;, positive=True)
+
+def L(f):
+    &quot;&quot;&quot;Μετασχηματισμός Laplace (χωρίς τις συνθήκες σύγκλισης), απλοποιημένος.&quot;&quot;&quot;
+    return sp.simplify(sp.laplace_transform(f, t, s, noconds=True))
+
+# ---------- Α. Λυμένες Ασκήσεις 1.3–1.5 ----------
+print(&quot;Α. Μετασχηματισμοί&quot;)
+print(&quot;  L{4t²e^(-t) + 3cosh2t - 5e^(2t)sin3t} =&quot;, L(4*t**2*sp.exp(-t) + 3*sp.cosh(2*t) - 5*sp.exp(2*t)*sp.sin(3*t)))
+print(&quot;  L{t e^(-2t) sin t}                  =&quot;, sp.factor(L(t*sp.exp(-2*t)*sp.sin(t))))
+print(&quot;  L{sin²t / t}                        =&quot;, L(sp.sin(t)**2/t))
+print(&quot;  L{√t}                               =&quot;, L(sp.sqrt(t)))
+
+# ---------- Β. Αριθμητικός έλεγχος της Εφαρμογής 1.3(α) ----------
+print(&quot;\nΒ. ∫_0^∞ e^(-2t) t cos t dt&quot;)
+val, err = quad(lambda u: np.exp(-2*u)*u*np.cos(u), 0, np.inf)
+print(f&quot;  αριθμητικά ≈ {val:.12f},  ακριβής τιμή 3/25 = {3/25:.12f}&quot;)
+
+# ---------- Γ. Πότε «σβήνει» η ουρά της e^(-st) e^(0.5t); (Παράδειγμα 1.3) ----------
+tt = np.linspace(0, 12, 600)
+plt.figure(figsize=(7, 3.6))
+for sv in (0.6, 1.0, 2.0):
+    plt.plot(tt, np.exp(-(sv - 0.5)*tt), label=f&quot;s = {sv}&quot;)
+plt.xlabel(&quot;t&quot;); plt.ylabel(&quot;e^(-st) e^(0.5t)&quot;)
+plt.title(&quot;Η ολοκληρωτέα του ορισμού για f(t) = e^(0.5t)&quot;)
+plt.legend(); plt.grid(alpha=.3)
+plt.show()
+print(&quot;\nΓ. Για s &gt; 0.5 η ολοκληρωτέα φθίνει εκθετικά· όσο πιο κοντά στο 0.5, τόσο πιο αργά.&quot;)
+
+# ---------- Δ. (Προαιρετικό) θεώρημα τελικής τιμής για το Παράδειγμα 1.19 ----------
+# y&#x27;&#x27; + 3y&#x27; + 2y = 0, y(0) = 1, y&#x27;(0) = 0  -&gt;  Y(s) = (s+3)/((s+1)(s+2))
+Y = (s + 3)/((s + 1)*(s + 2))
+y = sp.inverse_laplace_transform(Y, s, t)
+print(&quot;\nΔ. y(t) =&quot;, sp.simplify(y))
+print(&quot;   lim_{s→0} sY(s) =&quot;, sp.limit(s*Y, s, 0), &quot;  και  y(20) ≈&quot;, float(y.subs(t, 20)))
+</pre>
+<h3>Έξοδος</h3>
+<div class="out tex2jax_ignore" id="pyout"></div>
+</div>
+
+<script>
+var mxPy = null, mxPyLoading = null;
+function mxLoadPy(status){
+  if (mxPy) return Promise.resolve(mxPy);
+  if (mxPyLoading) return mxPyLoading;
+  status.textContent = 'Φόρτωση της Python στον browser (Pyodide)… την πρώτη φορά μπορεί να χρειαστούν 20–60 δευτερόλεπτα.';
+  mxPyLoading = new Promise(function(resolve, reject){
+    var sc = document.createElement('script');
+    sc.src = 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js';
+    sc.onload = function(){ loadPyodide().then(function(py){ mxPy = py; resolve(py); }, reject); };
+    sc.onerror = function(){ reject(new Error('Δεν ήταν δυνατή η φόρτωση του Pyodide.')); };
+    document.head.appendChild(sc);
+  });
+  return mxPyLoading;
+}
+var MX_PRE = [
+  'import io, base64',
+  'import matplotlib',
+  'matplotlib.use("Agg")',
+  'import matplotlib.pyplot as plt',
+  '__mx_figs = []',
+  'def __mx_show(*a, **k):',
+  '    for num in plt.get_fignums():',
+  '        f = plt.figure(num); b = io.BytesIO()',
+  '        f.savefig(b, format="png", dpi=110, bbox_inches="tight")',
+  '        __mx_figs.append(base64.b64encode(b.getvalue()).decode())',
+  '    plt.close("all")',
+  'plt.show = __mx_show'
+].join('\n');
+function mxRun(){
+  var code = document.getElementById('pycode').value;
+  var out = document.getElementById('pyout'), st = document.getElementById('pystatus'), btn = document.getElementById('pyrun');
+  out.textContent = ''; btn.disabled = true;
+  function add(t){ out.appendChild(document.createTextNode(t + '\n')); }
+  mxLoadPy(st).then(function(py){
+    st.textContent = 'Φόρτωση βιβλιοθηκών (numpy, scipy, sympy, matplotlib)…';
+    py.setStdout({batched: add}); py.setStderr({batched: add});
+    var usesPlt = /matplotlib|plt\./.test(code);
+    var need = usesPlt ? 'import matplotlib\n' + code : code;
+    return py.loadPackagesFromImports(need).then(function(){
+      st.textContent = 'Εκτέλεση…';
+      return usesPlt ? py.runPythonAsync(MX_PRE) : null;
+    }).then(function(){ return py.runPythonAsync(code); })
+      .then(function(){ return usesPlt ? py.runPythonAsync('__mx_show()') : null; })
+      .then(function(){
+        if (usesPlt) {
+          var figs = py.globals.get('__mx_figs').toJs();
+          figs.forEach(function(b64){ var im = document.createElement('img'); im.src = 'data:image/png;base64,' + b64; im.alt = 'Γράφημα'; out.appendChild(im); });
+        }
+        st.textContent = '✓ Ολοκληρώθηκε.';
+      });
+  }).catch(function(e){ add(String(e && e.message ? e.message : e)); st.textContent = '✗ Σφάλμα (δείτε την έξοδο).'; })
+    .finally(function(){ btn.disabled = false; });
+}
+function mxReset(){ document.getElementById('pycode').value = document.getElementById('pyorig').textContent; }
+function mxTab(name){
+  document.querySelectorAll('.tabs button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-t')===name); });
+  document.querySelectorAll('.tabpane').forEach(function(p){ p.classList.toggle('on', p.id==='tab-'+name); });
+}
+</script>
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>

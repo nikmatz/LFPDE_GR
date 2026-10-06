@@ -1,0 +1,57 @@
+/* =====================================================================
+   Κεφάλαιο 9 — Η κυματική εξίσωση και η μέθοδος d'Alembert
+   Συνοδευτικός κώδικας του βιβλίου «Μετασχηματισμοί Laplace και Fourier,
+   Μερικές Διαφορικές Εξισώσεις», Ν. Ματζάκος.
+   Εκτέλεση: στο wxMaxima, File > Batch File… ή  batch("maxima_ch09.mac")$
+   ===================================================================== */
+
+/* ---------- Α. Ο τύπος του d'Alembert (Παράδειγμα 9.6) ---------- */
+dalembert(f, g, c) := (f(x - c*t) + f(x + c*t))/2 + integrate(g(s), s, x - c*t, x + c*t)/(2*c)$
+f(x) := x^2$  g(x) := cos(x)$
+u: dalembert(f, g, 3)$
+trigsimp(trigexpand(u));                       /* x² + 9t² + (1/3) cos x sin 3t */
+ratsimp(diff(u, t, 2) - 9*diff(u, x, 2));      /* 0: λύνει την u_tt = 9 u_xx */
+[subst(t = 0, u), subst(t = 0, diff(u, t))];   /* οι αρχικές συνθήκες [x², cos x] */
+
+/* ---------- Β. Κύμα μίας κατεύθυνσης (Παράδειγμα 9.7) ---------- */
+kill(f, g)$  assume(c > 0)$
+f(x) := exp(-x^2)$  g(x) := 2*c*x*exp(-x^2)$
+u: dalembert(f, g, c)$
+ratsimp(u);                                    /* e^{-(x-ct)²}: μόνο το κύμα προς τα δεξιά */
+
+/* ---------- Γ. Υπερβολική εξίσωση με τη μέθοδο d'Alembert (Παράδειγμα 9.8) ---------- */
+/* ρίζες της C λ² - 2B λ + A = 0 και λύση της μορφής Φ(x - λ1 y) + Ψ(x - λ2 y) */
+gradef(Phi(s), Phi1(s))$  gradef(Phi1(s), Phi2(s))$
+gradef(Psi(s), Psi1(s))$  gradef(Psi1(s), Psi2(s))$
+solve(l^2 + l - 2 = 0, l);                     /* για την 2u_xx + u_xy - u_yy: λ = 1, -2 */
+w: Phi(x - y) + Psi(x + 2*y)$
+ratsimp(2*diff(w, x, 2) + diff(w, x, 1, y, 1) - diff(w, y, 2));          /* 0 */
+u: 2/3*cos(x - y) + 1/3*cos(x + 2*y) + 3*x^2*y + 3*x*y^2 + 3*y^3$
+ratsimp(2*diff(u, x, 2) + diff(u, x, 1, y, 1) - diff(u, y, 2));          /* 0 */
+[subst(y = 0, u), subst(y = 0, diff(u, y))];   /* [cos x, 3x²] */
+
+/* ---------- Δ. Συντελεστές της τραβηγμένης χορδής (Παράδειγμα 9.13) ---------- */
+declare(n, integer)$  assume(L > 0)$
+A: 2/L*(integrate(3*h/L*x*sin(n*%pi*x/L), x, 0, L/3)
+      + integrate(3*h/(2*L)*(L - x)*sin(n*%pi*x/L), x, L/3, L))$
+ratsimp(A);                                    /* 9h/(π² n²) sin(πn/3) */
+makelist(ratsimp(subst(n = k, A)), k, 1, 6);   /* η 3η και η 6η αρμονική λείπουν */
+
+/* ---------- Ε. Στιγμιότυπα με L = h = c = 1 (Σχήμα 9.8) ---------- */
+U(x, t, N) := sum(9/(%pi^2*m^2)*sin(%pi*m/3)*sin(m*%pi*x)*cos(m*%pi*t), m, 1, N)$
+plot2d([U(x, 0, 30), U(x, 1/3, 30), U(x, 2/3, 30), U(x, 1, 30)], [x, 0, 1],
+       [legend, "t = 0", "t = 1/3", "t = 2/3", "t = 1"])$
+
+/* ---------- ΣΤ. Ενέργεια κανονικών τρόπων (Πρόταση 9.6) ---------- */
+assume(rho > 0, T > 0)$
+cc: sqrt(T/rho)$  om: n*%pi*cc/L$
+un: sin(n*%pi*x/L)*(a*cos(om*t) + b*sin(om*t))$
+E: ratsimp(trigsimp(integrate(rho*diff(un, t)^2 + T*diff(un, x)^2, x, 0, L)/2))$
+ratsimp(E - rho*L/4*om^2*(a^2 + b^2));         /* 0: η ενέργεια δεν εξαρτάται από το t */
+
+/* ---------- Ζ. Θεώρημα 9.3: η μη ομογενής κυματική εξίσωση (Παράδειγμα 9.10, c = 1) ---------- */
+assume(t > 0)$
+duh(F) := ratsimp(integrate(integrate(F, s, x - (t - tau), x + (t - tau)), tau, 0, t)/2)$
+duh(s);                                        /* x t²/2 */
+ub: ratsimp(trigexpand(duh(sin(s)*sin(tau)))); /* (sin t − t cos t) sin x / 2 */
+ratsimp(trigexpand(diff(ub, t, 2) - diff(ub, x, 2) - sin(x)*sin(t)));   /* 0 */

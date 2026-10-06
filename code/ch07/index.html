@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Κώδικας Κεφ. 7 — Ο Μετασχηματισμός Fourier · Μετασχηματισμοί Laplace & Fourier, ΜΔΕ</title>
+<meta name="description" content="Κώδικας Κεφ. 7 — Ο Μετασχηματισμός Fourier">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Mono&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="../../assets/style.css">
+<script src="../../assets/site.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="../../index.html" aria-label="Αρχική">ℒ</a>
+<div><div class="t1"><a href="../../index.html">Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</a></div><div class="t2">Ψηφιακό υλικό του βιβλίου · Ν. Ματζάκος</div></div></div></header>
+<main class="wrap">
+<nav class="crumbs"><a href="../../index.html">Αρχική</a> › <a href="../../index.html#ch07">Κεφάλαιο 7</a> › Κώδικας</nav>
+<p><span class="badge cas">∫ CAS</span> <span class="badge py">π Python</span></p>
+<h1>Κώδικας Κεφ. 7 — Ο Μετασχηματισμός Fourier</h1>
+<p class="subtitle">Οι δραστηριότητες CAS και Python του βιβλίου, με έτοιμο κώδικα</p>
+<div class="card"><p>Επιλέξτε γλώσσα από τις καρτέλες. Ο κώδικας <strong>Python</strong> τρέχει απευθείας στη σελίδα (Pyodide) με το κουμπί <strong>▶ Τρέξε</strong> και μπορείτε να τον τροποποιήσετε. Τον κώδικα <strong>Maxima</strong> τον εκτελείτε στο <a href="https://wxmaxima-developers.github.io/wxmaxima/" target="_blank" rel="noopener">wxMaxima</a> (δωρεάν). Δοκιμάστε πρώτα μόνοι σας τις δραστηριότητες και μετά συγκρίνετε.</p></div>
+<div class="tabs"><button type="button" class="on" data-t="max" onclick="mxTab('max')">⚙ Maxima</button><button type="button" data-t="py" onclick="mxTab('py')">🐍 Python</button></div>
+<div class="tabpane on" id="tab-max">
+<h2>Δραστηριότητα CAS: Μετασχηματισμοί και ολοκληρώματα Fourier</h2>
+<div class="card"><p>Το Maxima δεν έχει εντολή για τον μετασχηματισμό Fourier με τη σύμβαση του βιβλίου, υπολογίζει όμως τα ολοκληρώματα του ορισμού, αρκεί να δηλώσετε με <code>assume</code> το πρόσημο των παραμέτρων.</p>
+<ol class="gr"><li><span class="lbl">(α)</span>Επαληθεύστε το Παράδειγμα 7.5 με <code>assume(a&gt;0)\$ integrate(exp(-a*t)*exp(-%i*w*t), t, 0, inf);</code> και, για την $e^{-a|t|}$, εφαρμόστε την <code>ratsimp</code> στο άθροισμα των ολοκληρωμάτων στα $(-\infty,0)$ και $(0,\infty)$.</li><li><span class="lbl">(β)</span>Υπολογίστε τη γκαουσιανή με <code>integrate(exp(-a*t\^{}2)*exp(-%i*w*t), t, minf, inf);</code> και τον παλμό με <code>trigsimp(demoivre(integrate(exp(-%i*w*t), t, -1, 1)));</code>.</li><li><span class="lbl">(γ)</span>Το πακέτο <code>fourie</code> (<code>load(fourie)\$</code>) δίνει τα $A$, $B$ του ολοκληρώματος Fourier με τη σύμβαση του βιβλίου (η μεταβλητή <code>z</code> είναι η $\omega$): δοκιμάστε <code>fourint(exp(-abs(x)), x);</code> και ελέγξτε τη Λυμένη Άσκηση 7.1 με <code>fourintcos(exp(-2*x), x);</code> και <code>fourintsin(exp(-2*x), x);</code>.</li><li><span class="lbl">(δ)</span>Επαληθεύστε το Παράδειγμα 7.15(β) με <code>integrate((sin(w)/w)\^{}2, w, minf, inf);</code>.</li></ol></div>
+<p class="row dl"><a class="btn" href="maxima_ch07.mac" download>⬇ Λήψη .mac</a><button class="btn ghost" type="button" onclick="mxCopy('maccode', this)">⧉ Αντιγραφή</button>
+<span class="small muted">Στο wxMaxima: File › Batch File… ή <code>batch("maxima_ch07.mac")$</code></span></p>
+<pre class="code tex2jax_ignore" id="maccode">/* =====================================================================
+   Κεφάλαιο 7 — Μετασχηματισμοί και ολοκληρώματα Fourier
+   Συνοδευτικός κώδικας του βιβλίου «Μετασχηματισμοί Laplace και Fourier,
+   Μερικές Διαφορικές Εξισώσεις», Ν. Ματζάκος.
+   Εκτέλεση: στο wxMaxima, File &gt; Batch File… ή  batch(&quot;maxima_ch07.mac&quot;)$
+   Ο μετασχηματισμός υπολογίζεται από τον ορισμό F(w) = ∫ f(t) e^{-iwt} dt·
+   δηλώνουμε με assume το πρόσημο των παραμέτρων.
+   ===================================================================== */
+assume(a &gt; 0)$
+
+/* ---------- Α. Παράδειγμα 7.5: εκθετικές συναρτήσεις ---------- */
+integrate(exp(-a*t)*exp(-%i*w*t), t, 0, inf);                                   /* 1/(a+iw) */
+ratsimp(integrate(exp(a*t)*exp(-%i*w*t), t, minf, 0)
+      + integrate(exp(-a*t)*exp(-%i*w*t), t, 0, inf));                         /* 2a/(a²+w²) */
+
+/* ---------- Β. Παραδείγματα 7.4 και 7.6: παλμός και γκαουσιανή ---------- */
+trigsimp(demoivre(integrate(exp(-%i*w*t), t, -1, 1)));                          /* 2 sin(w)/w */
+integrate(exp(-a*t^2)*exp(-%i*w*t), t, minf, inf);                              /* √(π/a) e^{-w²/(4a)} */
+
+/* ---------- Γ. Ολοκληρώματα Fourier με το πακέτο fourie (z = ω) ---------- */
+load(fourie)$
+fourint(exp(-abs(x)), x);
+fourintcos(exp(-2*x), x);                                                       /* Λυμένη Άσκηση 7.1 */
+fourintsin(exp(-2*x), x);
+
+/* ---------- Δ. Παράδειγμα 7.3: διπολικός παλμός ---------- */
+F: ratsimp(demoivre(integrate(exp(-%i*w*t), t, 0, 1) - integrate(exp(-%i*w*t), t, -1, 0)));
+ratsimp(trigreduce(F + 4*%i*sin(w/2)^2/w));                                     /* 0: F = -4i sin²(w/2)/w */
+integrate(sin(x)^3/x, x, 0, inf);                                               /* π/4 */
+
+/* ---------- Ε. Παράδειγμα 7.14: συνέλιξη και Parseval ---------- */
+partfrac(4/((1 + s)^2*(1 - s)^2), s);
+integrate(1/(1 + w^2)^2, w, minf, inf);                                         /* π/2 */
+integrate((sin(w)/w)^2, w, minf, inf);                                          /* Παράδειγμα 7.15(β): π */
+
+/* ---------- ΣΤ. Πρόταση 7.6: οι συντελεστές της παλμοσειράς από τον μετασχηματισμό ενός παλμού ---------- */
+assume(tau &gt; 0, T &gt; tau)$
+G(w) := 2*A*sin(w*tau/2)/w$                    /* μετασχηματισμός του παλμού ύψους A και διάρκειας τ */
+c(n) := G(n*2*%pi/T)/T$                        /* c_n = G(n ω0)/T */
+ratsimp(c(n));                                 /* A sin(π n τ/T)/(π n) = A d sinc(nπd) */
+</pre>
+<p class="small muted">Για περισσότερα: Ν. Ματζάκος (2024), <em>Μαθηματικό Λογισμικό: Maxima και Octave</em>, Κάλλιπος (ελεύθερα διαθέσιμο).</p>
+</div>
+<div class="tabpane" id="tab-py">
+<h2>Δραστηριότητα Python: Οι συμβάσεις της SymPy και το φάσμα με FFT</h2>
+<div class="card"><ol class="gr"><li><span class="lbl">(α)</span>Η <code>sympy.fourier_transform(f, t, k)</code> υπολογίζει το $\int f(t)e^{-2\pi ikt}dt$ (σύμβαση των $\mathrm{Hz}$, Σχόλιο 7.2). Για τη σύμβαση του βιβλίου θέστε $k=\omega/2\pi$: <code>fourier_transform(f, t, w/(2*pi))</code>. Επαληθεύστε έτσι τον Πίνακα 7.1.</li><li><span class="lbl">(β)</span>Με τον ίδιο τρόπο υπολογίστε τον μετασχηματισμό της $\frac{1}{1+t^2}$ και, με την <code>inverse_fourier_transform</code>, τον αντίστροφο του $\frac{2}{1+\omega^2}$ (γραμμένου ως $\frac{2}{1+4\pi^2k^2}$). Στη δοκιμή μας (SymPy 1.14) επιστράφηκαν τα $\pi e^{-\omega}$ και $e^{-t}$, που ισχύουν μόνο για $\omega&gt;0$ και $t&gt;0$. Ποια ιδιότητα (Πρόταση 7.4) αποκαλύπτει αμέσως το λάθος;</li><li><span class="lbl">(γ)</span>Προσεγγίστε το φάσμα της $e^{-|t|}$ με FFT (Ενότητα 6.6) και συγκρίνετε με το $\frac{2}{1+\omega^2}$. Κάντε το ίδιο για τον $p_1$, με ακριβή τιμή <code>2*np.sinc(w/np.pi)</code> (η <code>numpy.sinc</code> είναι η κανονικοποιημένη $\frac{\sin\pi x}{\pi x}$), και σχεδιάστε το Σχήμα 7.2 με τη <code>scipy.special.sici</code>.
+<p><pre class="code tex2jax_ignore">import numpy as np
+N, dt = 4096, 0.01; t = (np.arange(N) - N//2)*dt
+F = dt*np.fft.fftshift(np.fft.fft(np.fft.ifftshift(np.exp(-np.abs(t)))))
+w = 2*np.pi*np.fft.fftshift(np.fft.fftfreq(N, d=dt))
+print(np.max(np.abs(F - 2/(1 + w**2))))</pre></li><li><span class="lbl">(δ)</span>Δειγματοληπτήστε το μήνυμα $m(t)=\frac{\sin^2t}{\pi t^2}$ της Εφαρμογής 7.4 με $T_s=1$ και με $T_s=2\pi/3$ και ανακατασκευάστε το με τον τύπο του Θεωρήματος 7.9, κρατώντας τους όρους με $|k|\le4000$. Προσοχή στη σύμβαση: η $\sinc\frac{\omega_s(t-kT_s)}{2}$ του βιβλίου γράφεται <code>np.sinc((t - k*Ts)/Ts)</code>. Στη δοκιμή μας το μέγιστο σφάλμα στο $[-6,6]$ ήταν της τάξης του $10^{-15}$ για $T_s=1$ και περίπου $0{,}025$ για $T_s=2\pi/3$. Εξηγήστε τη διαφορά με το Σχήμα 7.8.</li></ol></p></div>
+<p class="row"><button class="btn primary" id="pyrun" type="button" onclick="mxRun()">▶ Τρέξε</button><button class="btn" type="button" onclick="mxReset()">↺ Επαναφορά</button>
+<a class="btn" href="python_ch07.py" download>⬇ Λήψη .py</a><span class="small muted" id="pystatus">Ο κώδικας τρέχει στον browser σας (Pyodide).</span></p>
+<textarea class="code tex2jax_ignore" id="pycode" spellcheck="false"># =====================================================================
+#  Κεφάλαιο 7 — Ο μετασχηματισμός Fourier με SymPy, NumPy και SciPy
+#  Συνοδευτικός κώδικας του βιβλίου «Μετασχηματισμοί Laplace και Fourier,
+#  Μερικές Διαφορικές Εξισώσεις», Ν. Ματζάκος.
+#  Τρέχει όπως είναι σε Python 3 (sympy, numpy, scipy, matplotlib)
+#  ή απευθείας στη σελίδα του βιβλίου (Pyodide).
+# =====================================================================
+import sympy as sp
+import numpy as np
+from scipy.integrate import quad
+from scipy.special import sici
+import matplotlib.pyplot as plt
+
+t, w = sp.symbols(&#x27;t omega&#x27;, real=True)
+k = sp.symbols(&#x27;k&#x27;, real=True)
+a = sp.symbols(&#x27;a&#x27;, positive=True)
+
+# Η SymPy υπολογίζει ∫ f(t) e^{-2πikt} dt (σύμβαση Hz)· για τη σύμβαση του βιβλίου k = ω/2π.
+FT = lambda f: sp.simplify(sp.fourier_transform(f, t, w/(2*sp.pi)))
+
+# ---------- Α. Πίνακας 7.1 ----------
+print(&quot;Α. u(t)e^{-at}  -&gt;&quot;, FT(sp.Heaviside(t)*sp.exp(-a*t)))
+print(&quot;   e^{-a|t|}    -&gt;&quot;, FT(sp.exp(-a*sp.Abs(t))))
+print(&quot;   e^{-at²}     -&gt;&quot;, FT(sp.exp(-a*t**2)))
+
+# ---------- Β. Μια παγίδα: απάντηση που ισχύει μόνο για ω &gt; 0 ----------
+print(&quot;\nΒ. F{1/(1+t²)}    -&gt;&quot;, FT(1/(1 + t**2)), &quot;   (σωστό: π e^{-|ω|})&quot;)
+print(&quot;   F^{-1}{2/(1+ω²)} -&gt;&quot;, sp.simplify(sp.inverse_fourier_transform(2/(1 + 4*sp.pi**2*k**2), k, t)),
+      &quot;   (σωστό: e^{-|t|})&quot;)
+# η Πρόταση 7.4 το προδίδει: πραγματική και άρτια συνάρτηση έχει πραγματικό και ΑΡΤΙΟ μετασχηματισμό
+print(&quot;   αριθμητικά F(-1) =&quot;, round(2*quad(lambda s: 1/(1 + s*s), 0, np.inf, weight=&#x27;cos&#x27;, wvar=1.0)[0], 6),
+      &quot; = π e^{-1} =&quot;, round(np.pi*np.exp(-1), 6))
+
+# ---------- Γ. Φάσμα με FFT (Ενότητα 6.6) ----------
+N, dt = 4096, 0.01
+tt = (np.arange(N) - N//2)*dt
+wf = 2*np.pi*np.fft.fftshift(np.fft.fftfreq(N, d=dt))
+F1 = dt*np.fft.fftshift(np.fft.fft(np.fft.ifftshift(np.exp(-np.abs(tt)))))
+p1 = np.where(np.abs(tt) &lt; 1, 1.0, 0.0); p1[np.abs(np.abs(tt) - 1) &lt; 1e-9] = 0.5
+F2 = dt*np.fft.fftshift(np.fft.fft(np.fft.ifftshift(p1)))
+band = np.abs(wf) &lt; 30
+print(&quot;\nΓ. FFT e^{-|t|}: μέγιστο σφάλμα&quot;, f&quot;{np.max(np.abs(F1 - 2/(1 + wf**2))):.1e}&quot;)
+print(&quot;   FFT p_1:      μέγιστο σφάλμα στο |ω|&lt;30&quot;, f&quot;{np.max(np.abs(F2 - 2*np.sinc(wf/np.pi))[band]):.1e}&quot;)
+
+# ---------- Δ. Σχήμα 7.2: μερικά ολοκληρώματα Fourier του παλμού ----------
+xs = np.linspace(-2.5, 2.5, 1001)
+plt.figure(figsize=(7, 3.4))
+plt.plot(xs, np.where(np.abs(xs) &lt; 1, 1.0, 0.0), &quot;k--&quot;, lw=1, label=&quot;f(x)&quot;)
+for Om in (4, 16, 64):
+    fO = (sici(Om*(1 + xs))[0] + sici(Om*(1 - xs))[0])/np.pi
+    plt.plot(xs, fO, label=f&quot;Ω = {Om}&quot;)
+plt.axhline(0.5 + sici(np.pi)[0]/np.pi, ls=&quot;:&quot;, c=&quot;r&quot;, lw=.8)
+plt.xlabel(&quot;x&quot;); plt.grid(alpha=.3); plt.legend(fontsize=8); plt.show()
+print(&quot;\nΔ. όριο της υπερύψωσης 1/2 + Si(π)/π =&quot;, round(0.5 + sici(np.pi)[0]/np.pi, 4))
+
+# ---------- Ε. Παράδειγμα 7.3: διπολικός παλμός ----------
+bip = lambda s: 1.0 if 0 &lt; s &lt; 1 else (-1.0 if -1 &lt; s &lt; 0 else 0.0)
+for wv in (0.5, 2.0, 2*np.pi):
+    re = quad(lambda s: bip(s)*np.cos(wv*s), -1, 1, points=[0])[0]
+    im = -quad(lambda s: bip(s)*np.sin(wv*s), -1, 1, points=[0])[0]
+    print(f&quot;Ε. ω = {wv:.3f}: F = {re:+.6f}{im:+.6f}i,   -4i sin²(ω/2)/ω = {-4*np.sin(wv/2)**2/wv:+.6f}i&quot;)
+x = sp.symbols(&#x27;x&#x27;, positive=True)
+print(&quot;   ∫_0^∞ sin³x/x dx =&quot;, sp.integrate(sp.sin(x)**3/x, (x, 0, sp.oo)))
+
+# ---------- ΣΤ. Παράδειγμα 7.14: e^{-|t|} * e^{-|t|} = (1+|t|) e^{-|t|} ----------
+for tv in (0.0, 0.8, -2.0):
+    h = quad(lambda s: np.exp(-abs(s))*np.exp(-abs(tv - s)), -40, 40, points=[0, tv], limit=200)[0]
+    print(f&quot;ΣΤ. t = {tv:+.1f}:  (f*f)(t) = {h:.6f},  (1+|t|)e^(-|t|) = {(1 + abs(tv))*np.exp(-abs(tv)):.6f}&quot;)
+print(&quot;    ∫ dω/(1+ω²)² =&quot;, sp.integrate(1/(1 + w**2)**2, (w, -sp.oo, sp.oo)))
+
+# ---------- Ζ. Θεώρημα 7.9 και Εφαρμογή 7.4: δειγματοληψία και ανακατασκευή ----------
+# Το μήνυμα m(t) = sin²t/(πt²) έχει φάσμα q_2(ω), άρα W = 2 και ρυθμός Nyquist ω_s = 4.
+# Η sinc του βιβλίου, sin x / x, γράφεται με την κανονικοποιημένη numpy.sinc: sinc(ω_s(t-kT_s)/2) = np.sinc((t-k T_s)/T_s).
+def m(t):
+    t = np.asarray(t, dtype=float)
+    out = np.full(t.shape, 1/np.pi)
+    nz = np.abs(t) &gt; 1e-12
+    out[nz] = np.sin(t[nz])**2/(np.pi*t[nz]**2)
+    return out
+
+tt = np.linspace(-6, 6, 241)
+k = np.arange(-4000, 4001, dtype=float)
+for Ts in (1.0, 2*np.pi/3):                  # ω_s = 2π &gt; 4 (χωρίς αναδίπλωση) και ω_s = 3 &lt; 4 (αναδίπλωση)
+    rec = np.array([np.sum(m(k*Ts)*np.sinc((t0 - k*Ts)/Ts)) for t0 in tt])
+    print(&quot;T_s = %.4f: μέγιστο σφάλμα ανακατασκευής = %.2e&quot; % (Ts, np.max(np.abs(rec - m(tt)))))
+</textarea>
+<pre id="pyorig" style="display:none" class="tex2jax_ignore"># =====================================================================
+#  Κεφάλαιο 7 — Ο μετασχηματισμός Fourier με SymPy, NumPy και SciPy
+#  Συνοδευτικός κώδικας του βιβλίου «Μετασχηματισμοί Laplace και Fourier,
+#  Μερικές Διαφορικές Εξισώσεις», Ν. Ματζάκος.
+#  Τρέχει όπως είναι σε Python 3 (sympy, numpy, scipy, matplotlib)
+#  ή απευθείας στη σελίδα του βιβλίου (Pyodide).
+# =====================================================================
+import sympy as sp
+import numpy as np
+from scipy.integrate import quad
+from scipy.special import sici
+import matplotlib.pyplot as plt
+
+t, w = sp.symbols(&#x27;t omega&#x27;, real=True)
+k = sp.symbols(&#x27;k&#x27;, real=True)
+a = sp.symbols(&#x27;a&#x27;, positive=True)
+
+# Η SymPy υπολογίζει ∫ f(t) e^{-2πikt} dt (σύμβαση Hz)· για τη σύμβαση του βιβλίου k = ω/2π.
+FT = lambda f: sp.simplify(sp.fourier_transform(f, t, w/(2*sp.pi)))
+
+# ---------- Α. Πίνακας 7.1 ----------
+print(&quot;Α. u(t)e^{-at}  -&gt;&quot;, FT(sp.Heaviside(t)*sp.exp(-a*t)))
+print(&quot;   e^{-a|t|}    -&gt;&quot;, FT(sp.exp(-a*sp.Abs(t))))
+print(&quot;   e^{-at²}     -&gt;&quot;, FT(sp.exp(-a*t**2)))
+
+# ---------- Β. Μια παγίδα: απάντηση που ισχύει μόνο για ω &gt; 0 ----------
+print(&quot;\nΒ. F{1/(1+t²)}    -&gt;&quot;, FT(1/(1 + t**2)), &quot;   (σωστό: π e^{-|ω|})&quot;)
+print(&quot;   F^{-1}{2/(1+ω²)} -&gt;&quot;, sp.simplify(sp.inverse_fourier_transform(2/(1 + 4*sp.pi**2*k**2), k, t)),
+      &quot;   (σωστό: e^{-|t|})&quot;)
+# η Πρόταση 7.4 το προδίδει: πραγματική και άρτια συνάρτηση έχει πραγματικό και ΑΡΤΙΟ μετασχηματισμό
+print(&quot;   αριθμητικά F(-1) =&quot;, round(2*quad(lambda s: 1/(1 + s*s), 0, np.inf, weight=&#x27;cos&#x27;, wvar=1.0)[0], 6),
+      &quot; = π e^{-1} =&quot;, round(np.pi*np.exp(-1), 6))
+
+# ---------- Γ. Φάσμα με FFT (Ενότητα 6.6) ----------
+N, dt = 4096, 0.01
+tt = (np.arange(N) - N//2)*dt
+wf = 2*np.pi*np.fft.fftshift(np.fft.fftfreq(N, d=dt))
+F1 = dt*np.fft.fftshift(np.fft.fft(np.fft.ifftshift(np.exp(-np.abs(tt)))))
+p1 = np.where(np.abs(tt) &lt; 1, 1.0, 0.0); p1[np.abs(np.abs(tt) - 1) &lt; 1e-9] = 0.5
+F2 = dt*np.fft.fftshift(np.fft.fft(np.fft.ifftshift(p1)))
+band = np.abs(wf) &lt; 30
+print(&quot;\nΓ. FFT e^{-|t|}: μέγιστο σφάλμα&quot;, f&quot;{np.max(np.abs(F1 - 2/(1 + wf**2))):.1e}&quot;)
+print(&quot;   FFT p_1:      μέγιστο σφάλμα στο |ω|&lt;30&quot;, f&quot;{np.max(np.abs(F2 - 2*np.sinc(wf/np.pi))[band]):.1e}&quot;)
+
+# ---------- Δ. Σχήμα 7.2: μερικά ολοκληρώματα Fourier του παλμού ----------
+xs = np.linspace(-2.5, 2.5, 1001)
+plt.figure(figsize=(7, 3.4))
+plt.plot(xs, np.where(np.abs(xs) &lt; 1, 1.0, 0.0), &quot;k--&quot;, lw=1, label=&quot;f(x)&quot;)
+for Om in (4, 16, 64):
+    fO = (sici(Om*(1 + xs))[0] + sici(Om*(1 - xs))[0])/np.pi
+    plt.plot(xs, fO, label=f&quot;Ω = {Om}&quot;)
+plt.axhline(0.5 + sici(np.pi)[0]/np.pi, ls=&quot;:&quot;, c=&quot;r&quot;, lw=.8)
+plt.xlabel(&quot;x&quot;); plt.grid(alpha=.3); plt.legend(fontsize=8); plt.show()
+print(&quot;\nΔ. όριο της υπερύψωσης 1/2 + Si(π)/π =&quot;, round(0.5 + sici(np.pi)[0]/np.pi, 4))
+
+# ---------- Ε. Παράδειγμα 7.3: διπολικός παλμός ----------
+bip = lambda s: 1.0 if 0 &lt; s &lt; 1 else (-1.0 if -1 &lt; s &lt; 0 else 0.0)
+for wv in (0.5, 2.0, 2*np.pi):
+    re = quad(lambda s: bip(s)*np.cos(wv*s), -1, 1, points=[0])[0]
+    im = -quad(lambda s: bip(s)*np.sin(wv*s), -1, 1, points=[0])[0]
+    print(f&quot;Ε. ω = {wv:.3f}: F = {re:+.6f}{im:+.6f}i,   -4i sin²(ω/2)/ω = {-4*np.sin(wv/2)**2/wv:+.6f}i&quot;)
+x = sp.symbols(&#x27;x&#x27;, positive=True)
+print(&quot;   ∫_0^∞ sin³x/x dx =&quot;, sp.integrate(sp.sin(x)**3/x, (x, 0, sp.oo)))
+
+# ---------- ΣΤ. Παράδειγμα 7.14: e^{-|t|} * e^{-|t|} = (1+|t|) e^{-|t|} ----------
+for tv in (0.0, 0.8, -2.0):
+    h = quad(lambda s: np.exp(-abs(s))*np.exp(-abs(tv - s)), -40, 40, points=[0, tv], limit=200)[0]
+    print(f&quot;ΣΤ. t = {tv:+.1f}:  (f*f)(t) = {h:.6f},  (1+|t|)e^(-|t|) = {(1 + abs(tv))*np.exp(-abs(tv)):.6f}&quot;)
+print(&quot;    ∫ dω/(1+ω²)² =&quot;, sp.integrate(1/(1 + w**2)**2, (w, -sp.oo, sp.oo)))
+
+# ---------- Ζ. Θεώρημα 7.9 και Εφαρμογή 7.4: δειγματοληψία και ανακατασκευή ----------
+# Το μήνυμα m(t) = sin²t/(πt²) έχει φάσμα q_2(ω), άρα W = 2 και ρυθμός Nyquist ω_s = 4.
+# Η sinc του βιβλίου, sin x / x, γράφεται με την κανονικοποιημένη numpy.sinc: sinc(ω_s(t-kT_s)/2) = np.sinc((t-k T_s)/T_s).
+def m(t):
+    t = np.asarray(t, dtype=float)
+    out = np.full(t.shape, 1/np.pi)
+    nz = np.abs(t) &gt; 1e-12
+    out[nz] = np.sin(t[nz])**2/(np.pi*t[nz]**2)
+    return out
+
+tt = np.linspace(-6, 6, 241)
+k = np.arange(-4000, 4001, dtype=float)
+for Ts in (1.0, 2*np.pi/3):                  # ω_s = 2π &gt; 4 (χωρίς αναδίπλωση) και ω_s = 3 &lt; 4 (αναδίπλωση)
+    rec = np.array([np.sum(m(k*Ts)*np.sinc((t0 - k*Ts)/Ts)) for t0 in tt])
+    print(&quot;T_s = %.4f: μέγιστο σφάλμα ανακατασκευής = %.2e&quot; % (Ts, np.max(np.abs(rec - m(tt)))))
+</pre>
+<h3>Έξοδος</h3>
+<div class="out tex2jax_ignore" id="pyout"></div>
+</div>
+
+<script>
+var mxPy = null, mxPyLoading = null;
+function mxLoadPy(status){
+  if (mxPy) return Promise.resolve(mxPy);
+  if (mxPyLoading) return mxPyLoading;
+  status.textContent = 'Φόρτωση της Python στον browser (Pyodide)… την πρώτη φορά μπορεί να χρειαστούν 20–60 δευτερόλεπτα.';
+  mxPyLoading = new Promise(function(resolve, reject){
+    var sc = document.createElement('script');
+    sc.src = 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js';
+    sc.onload = function(){ loadPyodide().then(function(py){ mxPy = py; resolve(py); }, reject); };
+    sc.onerror = function(){ reject(new Error('Δεν ήταν δυνατή η φόρτωση του Pyodide.')); };
+    document.head.appendChild(sc);
+  });
+  return mxPyLoading;
+}
+var MX_PRE = [
+  'import io, base64',
+  'import matplotlib',
+  'matplotlib.use("Agg")',
+  'import matplotlib.pyplot as plt',
+  '__mx_figs = []',
+  'def __mx_show(*a, **k):',
+  '    for num in plt.get_fignums():',
+  '        f = plt.figure(num); b = io.BytesIO()',
+  '        f.savefig(b, format="png", dpi=110, bbox_inches="tight")',
+  '        __mx_figs.append(base64.b64encode(b.getvalue()).decode())',
+  '    plt.close("all")',
+  'plt.show = __mx_show'
+].join('\n');
+function mxRun(){
+  var code = document.getElementById('pycode').value;
+  var out = document.getElementById('pyout'), st = document.getElementById('pystatus'), btn = document.getElementById('pyrun');
+  out.textContent = ''; btn.disabled = true;
+  function add(t){ out.appendChild(document.createTextNode(t + '\n')); }
+  mxLoadPy(st).then(function(py){
+    st.textContent = 'Φόρτωση βιβλιοθηκών (numpy, scipy, sympy, matplotlib)…';
+    py.setStdout({batched: add}); py.setStderr({batched: add});
+    var usesPlt = /matplotlib|plt\./.test(code);
+    var need = usesPlt ? 'import matplotlib\n' + code : code;
+    return py.loadPackagesFromImports(need).then(function(){
+      st.textContent = 'Εκτέλεση…';
+      return usesPlt ? py.runPythonAsync(MX_PRE) : null;
+    }).then(function(){ return py.runPythonAsync(code); })
+      .then(function(){ return usesPlt ? py.runPythonAsync('__mx_show()') : null; })
+      .then(function(){
+        if (usesPlt) {
+          var figs = py.globals.get('__mx_figs').toJs();
+          figs.forEach(function(b64){ var im = document.createElement('img'); im.src = 'data:image/png;base64,' + b64; im.alt = 'Γράφημα'; out.appendChild(im); });
+        }
+        st.textContent = '✓ Ολοκληρώθηκε.';
+      });
+  }).catch(function(e){ add(String(e && e.message ? e.message : e)); st.textContent = '✗ Σφάλμα (δείτε την έξοδο).'; })
+    .finally(function(){ btn.disabled = false; });
+}
+function mxReset(){ document.getElementById('pycode').value = document.getElementById('pyorig').textContent; }
+function mxTab(name){
+  document.querySelectorAll('.tabs button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-t')===name); });
+  document.querySelectorAll('.tabpane').forEach(function(p){ p.classList.toggle('on', p.id==='tab-'+name); });
+}
+</script>
+</main>
+<footer class="site"><div class="wrap">Συνοδευτικό ψηφιακό υλικό του βιβλίου: Ν. Ματζάκος (υπό έκδοση). <em>Μετασχηματισμοί Laplace και Fourier, Μερικές Διαφορικές Εξισώσεις</em>. · <a href="../../index.html">Αρχική σελίδα</a></div></footer>
+</body>
+</html>
